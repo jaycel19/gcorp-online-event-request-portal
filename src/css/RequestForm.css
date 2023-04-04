@@ -1,0 +1,259 @@
+.RequestForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.RequestForm > .first, .RequestForm > .second,
+.RequestForm > .third, .RequestForm > .fourth {
+    width: 90%;
+}
+
+input[type=text], textarea {
+    border: none;
+    background: #D9D9D9;
+}
+
+input[type=text] {padding: 5px;}
+
+.RequestForm > .first {
+    display: flex;
+    flex-direction: column;
+}
+
+.RequestForm > .first > .facilityList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+}
+
+.RequestForm > .first > .facilityList > input[type=checkbox] {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 9px;
+}
+
+.RequestForm > .first > .facilityList > .other {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.RequestForm > .first > .eventInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.RequestForm > .first > .eventInfo > .info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.RequestForm > .first > .eventInfo > .info > input {
+    padding: 5px;
+    background: #D9D9D9;
+    border: none;
+}
+
+.RequestForm > .second {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.RequestForm > .second > .duration {
+    display: flex;
+    flex-direction: column;
+}
+
+.RequestForm > .second > .duration > .fromTO {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.RequestForm > .second > .duration > .fromTO > .item > .singleItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.RequestForm > .second > .duration > .fromTO > .item > .singleItem > .singleDate {
+    display: flex;
+    align-items: center;
+}
+
+.RequestForm > .second > .duration > .fromTO > .item > .singleItem > .singleDate > * {
+    margin-left: 10px;
+    padding: 5px 0px;
+}
+
+.RequestForm > .second > .duration > .fromTO > .item > .singleItem > .singleDate > input {
+    padding: 5px;
+    background: #D9D9D9;
+}
+
+.to {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.from {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.RequestForm > .second > .duration > .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.RequestForm > .second > .descriptionAct {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.RequestForm > .second > .descriptionAct > textarea {
+    max-width: 450px;
+    min-height: 100px;
+    height: 100px;
+    width: 450px;   
+}
+
+.RequestForm > .third {
+    display: flex;
+    flex-direction: column;
+}
+
+.RequestForm > .third > .equipQuan {
+    display: flex;
+    flex-direction: column;
+}
+
+.RequestForm > .third > .equipQuan > .quan {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10%;
+}
+
+.RequestForm > .third > .equipQuan > .checkQuan > .everyItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.RequestForm > .third > .equipQuan > .checkQuan > .everyItem > .nthItems {
+    display: flex;
+    align-items: center;
+}
+
+.RequestForm > .third > .equipQuan > .checkQuan > .everyItem > .nthItems > * {
+    margin-left: 6px;
+}
+
+.RequestForm > .fourth {
+    display: flex;
+    flex-direction: column;
+}
+
+.RequestForm > .fourth > .pubOpen {
+    display: flex;
+    align-items: center;
+}
+
+.RequestForm > .fourth > .pubOpen > .opItem {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    font-size: 16px;
+}
+
+.RequestForm > .fourth > .otherSpec > .attendGc {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.RequestForm > .fourth > .otherSpec > .attendGc > textarea {
+    min-height: 100px;
+    min-width: 400px;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+.RequestForm > .fourth > .otherSpec > .caterItem {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.RequestForm > .fourth > .otherSpec > .caterItem > .right > .foodItem {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.RequestForm > .fourth > .otherSpec > .caterItem > .right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30%;
+}
+
+
+.RequestForm > .fourth > .otherSpec > .caterFood > .cateRight > .foodItem {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.RequestForm > .fourth > .otherSpec > .caterFood {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.RequestForm > .fourth > .otherSpec > .caterFood >  .cateRight {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 30%;
+}
+
+
+.RequestForm > .fourth > .otherSpec > .caterFood > .caterItem {
+    display: flex;
+}
+
+.RequestForm > .fourth > .otherSpec > .caterFood > .public {
+    display: flex;
+    flex-direction: column;
+}
+
+.RequestForm > .fourth > .addInfo > .disc > textarea {
+    max-width: 850px;
+    min-width: 850px;
+    width: 100%;
+    min-height: 200px;
+}
+
+.RequestForm > .fourth > .addInfo > .disc > .subBtn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.RequestForm > .fourth > .addInfo > .disc > .subBtn > button {
+    background: rgba(21, 78, 1, 0.92);
+    border-radius: 11px;
+    border: none;
+    color: #fff;
+    padding: 20px;
+    font-size: 17px;
+}

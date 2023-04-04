@@ -1,4 +1,5 @@
 import React from 'react';
+import '../css/RequestForm.css';
 
 const RequestForm = () => {
   return (
@@ -11,13 +12,13 @@ const RequestForm = () => {
                 <p>Please indicate the specific facility to use by checking the box:</p>
             </div>
             <div className="facilityList">
-                <input type="chekbox" />
+                <input type="checkbox" />
                 <span>FUNCTION HALL</span>
-                <input type="chekbox" />
+                <input type="checkbox" />
                 <span>P.E ROOM</span>
-                <input type="chekbox" />
+                <input type="checkbox" />
                 <span>OTHER: </span>
-                <input type="text" />
+                <input className="other" style={{backgroundColor: "#fff", borderBottom: "1px solid #000", padding: "5px"}} type="text" />
             </div>
             <div className="eventInfo">
                 <div className="info">
@@ -46,7 +47,9 @@ const RequestForm = () => {
             <div className="duration">
                 <div className="header">
                     <p>EVENT/ACTIVITY DURATION:</p>
-                    <h3>FROM</h3>
+                    <div className="from">
+                        <h3>FROM</h3>
+                    </div>
                 </div>
                 <div  className="fromTO">
                     <div className="item">
@@ -95,42 +98,56 @@ const RequestForm = () => {
                 </div>
                 <div className="checkQuan">
                     <div className="everyItem">
-                        <input type="checkbox" />
-                        <p>Single Monoblock Chair</p>
+                        <div className="nthItems">
+                            <input type="checkbox" />
+                            <p>Single Monoblock Chair</p>
+                        </div>
                         <input type="text" />
                     </div>
                     <div className="everyItem">
-                        <input type="checkbox" />
-                        <p>Armchairs</p>
+                        <div className="nthItems">
+                            <input type="checkbox" />
+                            <p>Armchairs</p>
+                        </div>
                         <input type="text" />
                     </div>
                     <div className="everyItem">
-                        <input type="checkbox" />
-                        <p>Tables</p>
+                        <div className="nthItems">
+                            <input type="checkbox" />
+                            <p>Tables</p>
+                        </div>
                         <input type="text" />
                     </div>
                     <div className="everyItem">
+                        <div className="nthItems">
                         <input type="checkbox" />
                         <p>Microphones {"(Max.2)"}</p>
+                        </div>
                         <input type="text" />
                     </div>
                     <div className="everyItem">
-                        <input type="checkbox" />
-                        <p>Speakers</p>
+                        <div className="nthItems">
+                            <input type="checkbox" />
+                            <p>Speakers</p>
+                        </div>
                         <input type="text" />
                     </div>
                     <div className="everyItem">
-                        <input type="checkbox" />
-                        <p>Whiteboard</p>
+                        <div className="nthItems">
+                            <input type="checkbox" />
+                            <p>Whiteboard</p>
+                        </div>
                         <input type="text" />
                     </div>
                     <div className="everyItem">
-                        <input type="checkbox" />
-                        <p className="specify">
-                            <span>Others</span>
-                            <span>pls.Specify</span>
-                            <input type="text" />
-                        </p>
+                        <div className="nthItems">
+                            <input type="checkbox" />
+                            <p className="specify">
+                                <span>Others </span>
+                                <span>pls.Specify </span>
+                                <input style={{borderBottom: "1px solid #000", backgroundColor: "#fff", width: "100px"}} type="text" />
+                            </p>
+                        </div>
                         <input type="text" />
                     </div>
                 </div>
@@ -153,8 +170,10 @@ const RequestForm = () => {
             </div>
             <div className="otherSpec">
                 <div className="attendGc">
-                    <p>Expected Number of Attedees</p>
-                    <p>From Gordon College:</p>
+                    <div className="attendP">
+                        <p>Expected Number of Attedees</p>
+                        <p>From Gordon College:</p>
+                    </div>
                     <textarea>
 
                     </textarea>
@@ -162,17 +181,19 @@ const RequestForm = () => {
             </div>
             <div className="otherSpec">
                 <div className="attendGc">
-                    <p>Expected Number of Attedees</p>
-                    <p>From Gordon College:</p>
+                    <div className="attendP">
+                        <p>Expected Number of Attedees</p>
+                        <p>Outside of Gordon College:</p>
+                    </div>
                     <textarea>
 
                     </textarea>
                 </div>
             </div>
             <div className="otherSpec">
-                <div className="caterFood">
-                    <div className="caterItem">
-                        <p>With Food Catering?</p>
+                <div className="caterItem">
+                    <p>With Food Catering?</p>
+                    <div className="right">
                         <div className="foodItem">
                             <p>Yes</p>
                             <input type="checkbox" />
@@ -186,18 +207,20 @@ const RequestForm = () => {
                 <div className="caterFood">
                     <p className="public">
                         <span>Open to the public?</span>
-                        <span>
+                        <span className="many">
                             <span>How many:</span>
-                            <input type="text" />
+                            <input style={{backgroundColor: "#fff", borderBottom: "1px solid #000", width: "55px"}} type="text" />
                         </span>
                     </p>
-                    <div className="foodItem">
-                        <p>Yes</p>
-                        <input type="checkbox" />
-                    </div>
-                    <div className="foodItem">
-                        <p>No</p>
-                        <input type="checkbox" />
+                    <div className="cateRight">
+                        <div className="foodItem">
+                            <p>Yes</p>
+                            <input type="checkbox" />
+                        </div>
+                        <div className="foodItem">
+                            <p>No</p>
+                            <input type="checkbox" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,6 +231,9 @@ const RequestForm = () => {
                     <textarea>
                         
                     </textarea>
+                    <div className="subBtn">
+                        <button>SUBMIT REQUEST <br />FORM</button>
+                    </div>
                 </div>
             </div>
         </div>
