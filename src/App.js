@@ -1,5 +1,6 @@
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import RequestForm from "./pages/RequestForm";
 import Header from "./components/Header";
 import "../src/css/App.css";
 
@@ -7,9 +8,9 @@ import "../src/css/App.css";
 function App() {
   return (
     <div className="App">
-      <Header />     
+      <Header />
       <div className="main-con">
-        <Home />
+        <RequestForm />
       </div>
     </div>
   );
