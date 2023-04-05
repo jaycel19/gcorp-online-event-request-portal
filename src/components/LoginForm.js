@@ -8,8 +8,8 @@ const LoginForm = () => {
         <p>Login your Credentials.</p>
       </div>
       <div className="form">
-        <input type="text" placeholder="Domain Account" />
-        <input type="password" placeholder="Password" />
+        <input style={{ backgroundColor:"#fff" }} type="text" placeholder="Domain Account" />
+        <input style={{ backgroundColor:"#fff" }} type="password" placeholder="Password" />
         <button>LOGIN</button>
         <p>Forget Password</p>
       </div>
