@@ -1,0 +1,96 @@
+.AdminHeader {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.AdminHeader > .upper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.AdminHeader > .upper > .left {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.AdminHeader > .upper > .left > .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.AdminHeader > .upper > .left img {
+    width: 20%;
+}
+
+.AdminHeader > .upper > .left .title h1,
+.AdminHeader > .upper > .left .title h2 {
+    margin: 0px;
+    font-style: normal;
+    font-weight: 700;
+    /* or 42% */
+
+    text-align: center;
+}
+
+.AdminHeader > .upper > .left .title h1 {
+    font-size: 35px;
+}
+
+.AdminHeader > .upper > .left .title h2 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.AdminHeader > .upper > .right {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.AdminHeader > .upper > .right > h3 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 20px;
+}
+
+.AdminHeader > .upper > .right button {
+    margin: 10px;
+    border: none;
+    background: rgba(34, 123, 3, 0.92);
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 10px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.AdminHeader > .lower {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(34, 123, 3, 0.92);
+    height: 50px;
+}
+
+.AdminHeader > .lower > .items {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+    height: 50px;
+}
+
+.AdminHeader > .lower > .items a {
+    font-size: 20px;
+    color: #fff;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+    text-decoration: none;
+}

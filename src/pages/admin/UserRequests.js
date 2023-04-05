@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../css/ManageUserRequestForm.css';
+import '../../css/UserRequests.css';
 
-const ManageUserRequestForm = () => {
+const UserRequests = () => {
     return (
-        <div className="ManageUserRequestForm">
+        <div className="UserRequest">
             <div className="controls">
                 <div className="search">
                     <p>SEARCH</p>
@@ -98,4 +98,4 @@ const ManageUserRequestForm = () => {
     )
 }
 
-export default ManageUserRequestForm
+export default UserRequests;
