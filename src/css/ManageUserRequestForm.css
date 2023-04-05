@@ -1,0 +1,68 @@
+.ManageUserRequestForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 90vh;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls > .search {
+    display: flex;
+    align-items: center;
+}
+
+.controls > .search > input {
+    padding: 10px;
+    margin-left: 5px;
+}
+
+.controls > .exportButton {
+    display: flex;
+    align-items: center;
+}
+
+.controls > .exportButton > button {
+    padding: 12px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.red {background: #D91414;}
+.green {background: rgba(34, 123, 2, 0.92);}
+
+th {
+    font-size: 18px;
+    padding: 5px;
+}
+
+td {
+    text-align: center;
+    padding: 20px 20px;
+    font-size: 17px;
+}
+
+.actions {
+    border: none;
+    background-color: #fff;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+}
+
+.pagination > .pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}

@@ -4,6 +4,7 @@ import RequestForm from "./pages/user/RequestForm";
 import Header from "./components/Header";
 
 import AdminLogin from "./pages/admin/AdminLogin";
+import ManageUserRequestForm from "./pages/admin/ManageUserRequestForm";
 
 import "../src/css/App.css";
 
@@ -13,7 +14,7 @@ function App() {
     <div className="App">
       <Header />
       <div className="main-con">
-        <AdminLogin />
+        <ManageUserRequestForm />
       </div>
     </div>
   );
