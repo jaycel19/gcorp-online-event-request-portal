@@ -22,6 +22,7 @@ function App() {
         ]}
       />
       <div className="main-con">
+        <Header />
         <DashBoard />
       </div>
     </div>

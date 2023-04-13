@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     width: 70%;
-    margin-top: 7%;
 }
 
 .DashBoard > .header {
@@ -11,11 +10,13 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(26, 96, 2, 0.92);
+    padding: 4%;
 }
 
 .DashBoard > .header > h1 {
     color: #fff;
     font-size: 38px;
+    margin: 0px;
 }
 
 
