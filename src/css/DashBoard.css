@@ -1,0 +1,44 @@
+.DashBoard {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-top: 7%;
+}
+
+.DashBoard > .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(26, 96, 2, 0.92);
+}
+
+.DashBoard > .header > h1 {
+    color: #fff;
+    font-size: 38px;
+}
+
+
+.DashBoard > .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: rgb(202, 202, 202);
+}
+
+.DashBoard > .content > p, .DashBoard > .content > .time > p {
+    font-weight: bold;
+    font-size: 27px;
+}
+
+.DashBoard > .content > .time > p {
+    margin: 0px;
+}
+
+.DashBoard > .content > .time {
+    display: flex;
+    flex-direction: column;
+    margin: 70px 0px;
+}

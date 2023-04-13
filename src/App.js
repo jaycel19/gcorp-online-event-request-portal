@@ -1,5 +1,5 @@
 import Login from "./pages/user/Login";
-import Home from "./pages/user/Home";
+import DashBoard from "./pages/user/DashBoard";
 import RequestForm from "./pages/user/RequestForm";
 import Header from "./components/Header";
 
@@ -14,11 +14,15 @@ import SideNav from "./components/SideNav";
 function App() {
   return (
     <div className="App">
-      <SideNav />
+      <SideNav 
+        navList={[
+          'Dashboard',
+          'Request Form',
+          'Event Request Information'
+        ]}
+      />
       <div className="main-con">
-        <Home />
-        <RequestForm />
-        <Login />
+        <DashBoard />
       </div>
     </div>
   );

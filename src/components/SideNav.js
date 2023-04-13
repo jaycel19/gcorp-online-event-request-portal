@@ -2,7 +2,7 @@ import React from 'react';
 import gcorpLogo from '../images/gcorp.png';
 import '../css/SideNav.css';
 
-const SideNav = () => {
+const SideNav = ({navList}) => {
   return (
     <div className="SideNav">
       <div className="close-side">
@@ -13,9 +13,9 @@ const SideNav = () => {
         <h1>USER PORTAL</h1>
       </div>
       <div className="nav">
-        <a>Dashboard</a>
-        <a>Request Form</a>
-        <a>Event Request Information</a>
+        {navList.map((item)=> (
+          <a>{ item }</a>
+        ))}
       </div>
     </div>
   )
