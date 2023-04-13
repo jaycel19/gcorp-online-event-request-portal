@@ -1,6 +1,5 @@
 import React from 'react';
 import LoginUnsuccessLogo from '../images/logo_x.png';
-import LoginSuccess from '../images/login_check.png'
 
 const LoginMessage = () => {
   return (

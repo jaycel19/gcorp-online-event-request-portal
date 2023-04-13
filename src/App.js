@@ -8,14 +8,17 @@ import ManageUserRequestForm from "./pages/admin/UserRequests";
 
 import "../src/css/App.css";
 import AdminHeader from "./components/AdminHeader";
+import SideNav from "./components/SideNav";
 
 
 function App() {
   return (
     <div className="App">
-      <AdminHeader />
+      <SideNav />
       <div className="main-con">
-        <ManageUserRequestForm />
+        <Home />
+        <RequestForm />
+        <Login />
       </div>
     </div>
   );

@@ -6,8 +6,15 @@ body {
     margin: 0px;
 }
 
+.App {
+    display: flex;
+    justify-content: space-between;
+}
+
 .App > .main-con{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 80%;
+    margin-left: 20%;
 }

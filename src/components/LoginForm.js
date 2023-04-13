@@ -11,7 +11,6 @@ const LoginForm = () => {
         <input style={{ backgroundColor:"#fff" }} type="text" placeholder="Domain Account" />
         <input style={{ backgroundColor:"#fff" }} type="password" placeholder="Password" />
         <button>LOGIN</button>
-        <p>Forget Password</p>
       </div>
       <div className="footer">
         <h2>Developed By: AlgoriTeam {"(BSIT 2023)"}</h2>
