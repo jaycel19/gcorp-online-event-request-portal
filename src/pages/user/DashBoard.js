@@ -1,7 +1,21 @@
 import React from 'react';
+import { useQuery } from "@tanstack/react-query";
+import Axios from 'axios';
+import { useAuthContext } from '../../context/AuthContext';
 import '../../css/DashBoard.css';
 
+
 const DashBoard = () => {
+  const { isLogged } = useAuthContext();
+
+  const { data: user, isLoading, isError } = useQuery(['user'], async () => {
+    const response = await Axios.get(`http://localhost:80/gcorp/api/user/single.php?id=${isLogged.id}`);
+    return response.data
+  });
+
+
+  console.log(user);
+
   return (
     <div className="DashBoard">
         <div className="header">
@@ -9,7 +23,7 @@ const DashBoard = () => {
             <h1>GCORP</h1>
         </div>
         <div className="content">
-            <p>Hello! {"(NAME)"}</p>
+            <p>Hello! {isLoading ? "Loading..." : user[5].name}</p>
             <div className="time">
                 <p>You logged in your account at April 05, 2023,</p>
                 <p>09:37pm</p>

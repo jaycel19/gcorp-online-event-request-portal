@@ -1,12 +1,21 @@
 import React from 'react';
 import "../css/Header.css";
+import { useQuery } from '@tanstack/react-query';
+import { useAuthContext } from '../context/AuthContext';
+import Axios from "axios";
 
 const Header = () => {
+    const {isLogged} = useAuthContext();
+    const { data: user, isLoading, isError } = useQuery(['user'], async () => {
+        const response = await Axios.get(`http://localhost:80/gcorp/api/user/single.php?id=${isLogged.id}`);
+        return response.data;
+    });
+
   return (
     <div className="Header">
         <div className="upper">
             <div className="right">
-                <h3>Welcome, {"NAME"}</h3>
+                <h3>Welcome, {isLoading ? "Loading..." : user[5].name}</h3>
                 <button>→</button>
             </div>
         </div>

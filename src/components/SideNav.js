@@ -1,6 +1,7 @@
 import React from 'react';
 import gcorpLogo from '../images/gcorp.png';
 import '../css/SideNav.css';
+import { Link } from 'react-router-dom';
 
 const SideNav = ({navList}) => {
   return (
@@ -13,8 +14,8 @@ const SideNav = ({navList}) => {
         <h1>USER PORTAL</h1>
       </div>
       <div className="nav">
-        {navList.map((item)=> (
-          <a>{ item }</a>
+        {navList.map(({name, path})=> (
+          <Link style={{textDecoration: "none"}} to={path}>{name}</Link>
         ))}
       </div>
     </div>
