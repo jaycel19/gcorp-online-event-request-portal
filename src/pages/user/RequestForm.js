@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import RequestFormMessage from '../../components/RequestFormMessage';
 import '../../css/RequestForm.css';
 import useInsertRequest from '../../components/useInsertRequest';
 import axios from 'axios';
+import EmptyAlert from '../../components/EmptyAlert';
 
 const RequestForm = () => {
     const [requestData, setRequestData] = useState({
@@ -35,7 +37,42 @@ const RequestForm = () => {
         whiteboard: 0,
         tables: 0,
     })
+
+    const [toSubmit, setToSubmit] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
     const useInsertRequestMutation = useInsertRequest();
+
+    const handleShowModal = () => {
+        const {
+            facility, 
+            title_event, 
+            user_name, 
+            department, 
+            contact_number, 
+            type_of_event,
+            duration_from,
+            duration_from_time,
+            duration_to,
+            duration_to_time,
+            description_of_activity,
+            expected_num_attend_gc,
+            expected_num_attend_out,
+            additional_info
+        } = requestData;
+
+        if (!facility && !title_event && !user_name && !department 
+            && !contact_number && !type_of_event && !duration_from
+            && !duration_from_time && !duration_to && !duration_to_time
+            && !description_of_activity && !expected_num_attend_gc && !expected_num_attend_out
+            && !additional_info) {
+            
+                setIsEmpty(true);
+            
+            } else {
+                setToSubmit(true);
+            }
+
+    }
 
     const handleSubmit = async () => {
         try {
@@ -334,11 +371,13 @@ const RequestForm = () => {
                         
                     </textarea>
                     <div className="subBtn">
-                        <button type="submit" onClick={handleSubmit}>SUBMIT REQUEST <br />FORM</button>
+                        <button type="submit" onClick={handleShowModal}>SUBMIT REQUEST <br />FORM</button>
                     </div>
                 </div>
             </div>
         </div>
+        <EmptyAlert isEmpty={isEmpty} setIsEmpty={setIsEmpty} />
+        {toSubmit && <RequestFormMessage setToSubmit={setToSubmit} toSubmit={toSubmit} handleSubmit={handleSubmit} />}
     </div>
   )
 }

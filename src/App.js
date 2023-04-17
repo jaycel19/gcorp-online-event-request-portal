@@ -58,7 +58,7 @@ function App() {
               <Route path="/" element={isLogged.login ? <DashBoard /> : <Login />} />
               <Route path="/request-form" element={isLogged.login ? <RequestForm /> : <Login />} />
               <Route path="/admin-login" element={isLogged.login ?  <DashBoard /> : <AdminLogin />} />
-              <Route path="/user-login" element={isLogged ? <DashBoard /> : <Login />  } />
+              <Route path="/user-login" element={isLogged.login ? <DashBoard /> : <Login />  } />
             </Routes>
         </div>
         </Router>

@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import useLogin from '../components/useLogin';
+import LoginMessage from './LoginMessage';
+import { useAuthContext } from '../context/AuthContext';
 
 const LoginForm = () => {
   const { login, isLoading, error } = useLogin();
   const [domainEmail, setDomainEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const {loggedIn, setIsLogged} = useAuthContext();
 
   const handleLogin = (event) => {
     event.preventDefault();
     login({ domainEmail, password });
+    setShowModal(true);
   }
 
   return (
@@ -28,6 +33,7 @@ const LoginForm = () => {
       <div className="footer">
         <h2>Developed By: AlgoriTeam {"(BSIT 2023)"}</h2>
       </div>
+      {loggedIn.login ? <LoginMessage showModal={showModal} setShowModal={setShowModal} img={true} msg="LOGIN" success="SUCCESSFULLY" loggedIn={loggedIn} setIsLogged={setIsLogged} /> : <LoginMessage showModal={showModal} setShowModal={setShowModal} img={false} msg="INVALID CREDENTIALS" success="Please try again" setIsLogged={setIsLogged} />}
     </div>
   )
 }

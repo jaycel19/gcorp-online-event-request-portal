@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from "@tanstack/react-query";
 import Axios from 'axios';
 import { useAuthContext } from '../../context/AuthContext';
@@ -7,6 +7,8 @@ import '../../css/DashBoard.css';
 
 const DashBoard = () => {
   const { isLogged } = useAuthContext();
+
+  
 
   const { data: user, isLoading, isError } = useQuery(['user'], async () => {
     const response = await Axios.get(`http://localhost:80/gcorp/api/user/single.php?id=${isLogged.id}`);

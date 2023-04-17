@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
 
 const useLogin = () => {
-    const { isLogged, setIsLogged } = useAuthContext();
+    const { setLoggedIn } = useAuthContext();
   const loginMutation = useMutation(
     async (loginData) => {
       const { data } = await axios.post('http://localhost:80/gcorp/api/user/login.php', loginData,{headers: {'Content-Type': 'application/json'}});
@@ -11,7 +11,7 @@ const useLogin = () => {
     },
     {
       onSuccess: (data) => {
-        setIsLogged(data);
+        setLoggedIn(data);
       },
       onError: (error) => {
         // handle login error
