@@ -1,15 +1,16 @@
 .AdminLogin {
     display: flex;
-    max-width: 60%;
+    max-width: 80%;
     min-height: 100v;
+    margin-top: 20px;
 }
 
 .AdminLogin > .left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 35%;
-    padding: 15px;
+    max-width: 37%;
+    padding: 20px;
 }
 
 .AdminLogin > .left > input {

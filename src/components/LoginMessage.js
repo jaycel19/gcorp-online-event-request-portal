@@ -1,13 +1,16 @@
-import React from 'react';
 import LoginUnsuccessLogo from '../images/logo_x.png';
 import LoginSuccessLogo from '../images/login_check.png';
 import '../css/LoginMessage.css';
+import { useNavigate } from 'react-router-dom';
 
 const LoginMessage = ({msg, success, img, showModal, setShowModal, setIsLogged, loggedIn}) => {
-  
+
+  const navigate = useNavigate();
+
   const handleButton = () => {
     setIsLogged(loggedIn);
     setShowModal(false);
+    navigate('/', {replace: true});
   }
 
   return (
