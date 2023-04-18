@@ -1,8 +1,9 @@
-.UserRequest {
+.UserRequests {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    min-height: 90vh;
+    width: 90%;
+    height: 90vh;
 }
 
 .controls {
@@ -39,14 +40,14 @@
 .green {background: rgba(34, 123, 2, 0.92);}
 
 th {
-    font-size: 18px;
-    padding: 5px;
+    font-size: 16px;
+    padding: 2px;
 }
 
 td {
     text-align: center;
-    padding: 20px 20px;
-    font-size: 17px;
+    padding: 5px 5px;
+    font-size: 15px;
 }
 
 .actions {
@@ -65,4 +66,20 @@ td {
     align-items: center;
     justify-content: center;
     width: 80%;
+}
+
+.buttons{
+    display: flex;
+}
+
+.equips {
+    font-size: 13px;
+}
+
+.username {
+    white-space: nowrap;
+}
+
+.description {
+    white-space: nowrap;
 }
