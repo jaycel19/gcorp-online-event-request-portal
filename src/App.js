@@ -16,7 +16,7 @@ import { useAuthContext } from "./context/AuthContext";
 
 
 function App() {
-  const { isLogged, isAdminLogged } = useAuthContext();
+  const { loggedUser, isAdminLogged } = useAuthContext();
 
   return (
     <div className="App">
@@ -35,7 +35,7 @@ function App() {
           ]}
 
         />}
-        {isLogged.login &&
+        {loggedUser.login &&
         <SideNav 
           navList={[
             {
@@ -53,7 +53,7 @@ function App() {
           ]}
 
         />}
-        {!isLogged.login && !isAdminLogged.login &&
+        {!loggedUser.login && !isAdminLogged.login &&
         <SideNav
           navList={[
             {
@@ -75,17 +75,17 @@ function App() {
               <Route path="/manage-request-form" element={isAdminLogged?.login ? <ManageUserRequestForm /> : <Login />} />
             </Routes>
         </div>}
-        {isLogged?.login &&
+        {loggedUser?.login &&
         <div className="main-con">
-          {isLogged.login && <Header />}
+          {loggedUser.login && <Header />}
             <Routes>
-              <Route path="/" element={isLogged?.login ? <DashBoard /> : <Login />} />
-              <Route path="/request-form" element={isLogged?.login ? <RequestForm /> : <Login />} />
-              <Route path="/admin-login" element={isLogged?.login ?  <DashBoard /> : <AdminLogin />} />
-              <Route path="/user-login" element={isLogged?.login ? <DashBoard /> : <Login />  } />
+              <Route path="/" element={loggedUser?.login ? <DashBoard /> : <Login />} />
+              <Route path="/request-form" element={loggedUser?.login ? <RequestForm /> : <Login />} />
+              <Route path="/admin-login" element={loggedUser?.login ?  <DashBoard /> : <AdminLogin />} />
+              <Route path="/user-login" element={loggedUser?.login ? <DashBoard /> : <Login />  } />
             </Routes>
         </div>}
-        {!isLogged.login && !isAdminLogged.login &&
+        {!loggedUser.login && !isAdminLogged.login &&
         <div className="main-con">
           {isAdminLogged?.login && <AdminHeader />}
             <Routes>

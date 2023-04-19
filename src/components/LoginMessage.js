@@ -3,12 +3,12 @@ import LoginSuccessLogo from '../images/login_check.png';
 import '../css/LoginMessage.css';
 import { useNavigate } from 'react-router-dom';
 
-const LoginMessage = ({msg, success, img, showModal, setShowModal, setIsLogged, loggedIn}) => {
+const LoginMessage = ({msg, success, img, showModal, setShowModal, setUserLogged, loggedIn}) => {
 
   const navigate = useNavigate();
 
   const handleButton = () => {
-    setIsLogged(loggedIn);
+    setUserLogged(loggedIn);
     setShowModal(false);
     navigate('/', {replace: true});
   }

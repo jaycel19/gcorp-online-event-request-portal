@@ -40,7 +40,7 @@ const AdminLogin = () => {
                                   img={true} msg="LOGIN" 
                                   success="SUCCESSFULLY" 
                                   loggedIn={adminLoggedIn} 
-                                  setIsLogged={setIsAdminLogged} 
+                                  setUserLogged={setIsAdminLogged} 
                                   /> 
         : 
                                 <LoginMessage 
@@ -50,7 +50,7 @@ const AdminLogin = () => {
                                     msg="INVALID CREDENTIALS" 
                                     success="Please try again"
                                     loggedIn={adminLoggedIn} 
-                                    setIsLogged={setIsAdminLogged} />
+                                    setUserLogged={setIsAdminLogged} />
         }
     </div>
   )

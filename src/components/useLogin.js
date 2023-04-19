@@ -11,6 +11,7 @@ const useLogin = () => {
     },
     {
       onSuccess: (data) => {
+        localStorage.setItem('userData', JSON.stringify(data));
         setLoggedIn(data);
       },
       onError: (error) => {
