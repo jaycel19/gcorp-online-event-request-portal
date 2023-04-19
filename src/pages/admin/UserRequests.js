@@ -6,6 +6,8 @@ import UserRequest from '../../components/UserRequest';
 const UserRequests = () => {
     const [data, setData] = useState([]);
 
+    const [rerenderCounter, setRerenderCounter] = useState(false);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,7 +35,7 @@ const UserRequests = () => {
         };
 
         fetchData();
-    }, []);
+    }, [rerenderCounter]);
     console.log(data);
     return (
         <div className="UserRequests">
@@ -61,7 +63,7 @@ const UserRequests = () => {
                         <th>Actions</th>
                     </tr>
                     {data?.map((data, key) => (
-                        <UserRequest data={data} key={key} />
+                        <UserRequest data={data} key={key} setRerenderCounter={setRerenderCounter} rerenderCounter={rerenderCounter} />
                     ))}
                 </table>
             </div>
