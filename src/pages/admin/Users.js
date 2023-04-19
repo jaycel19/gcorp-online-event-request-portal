@@ -5,6 +5,7 @@ import User from '../../components/User';
 
 const Users = () => {
     const [users, setUsers] = useState({});
+    const [userRerender, setUserRerender] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -17,7 +18,7 @@ const Users = () => {
         };
 
         fetchData();
-    }, []);
+    }, [userRerender]);
     console.log(users);
     return (
         <div className="Users">
@@ -41,6 +42,8 @@ const Users = () => {
                         return (
                             <User
                                 data={user}
+                                userRerender={userRerender}
+                                setUserRerender={setUserRerender}
                             />
                         )
                     })}
