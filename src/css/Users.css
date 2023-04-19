@@ -1,0 +1,70 @@
+.Users {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    height: 90vh;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls > .search {
+    display: flex;
+    align-items: center;
+}
+
+.controls > .search > input {
+    padding: 10px;
+    margin-left: 5px;
+}
+
+
+th {
+    font-size: 20px;
+    padding: 10px;
+}
+
+td {
+    text-align: center;
+    padding: 10px 10px;
+    font-size: 18px;
+}
+
+.actions {
+    border: none;
+    background-color: #fff;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+}
+
+.pagination > .pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+}
+
+.buttons{
+    display: flex;
+}
+
+.equips {
+    font-size: 13px;
+}
+
+.username {
+    white-space: nowrap;
+}
+
+.description {
+    white-space: nowrap;
+}

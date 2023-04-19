@@ -1,5 +1,4 @@
 import React from 'react';
-import gcorpLogo from '../images/gcorp.png';
 import '../css/AdminHeader.css';
 import { useAuthContext } from '../context/AuthContext';
 
@@ -10,7 +9,6 @@ const AdminHeader = () => {
         <div className="AdminHeader">
             <div className="upper">
                 <div className="left">
-                    <img src={gcorpLogo} alt="gcorp" />
                     <div className="title">
                         <h1>ONLINE EVENT REQUEST</h1>
                         <h1>SYSTEM</h1>
