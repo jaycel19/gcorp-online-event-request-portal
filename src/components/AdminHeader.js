@@ -15,8 +15,8 @@ const AdminHeader = ({setSideNavOpen}) => {
                 <div className="openNav">
                     <HamburgerIcon 
                         setSideNavOpen={setSideNavOpen}
-                        height={24}
-                        width={24}
+                        height={30}
+                        width={30}
                     />
                 </div>
                 <div className="left">

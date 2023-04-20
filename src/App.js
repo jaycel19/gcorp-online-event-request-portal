@@ -44,7 +44,7 @@ function App() {
           ]}
 
         />}
-      {loggedUser.login &&
+      {loggedUser?.login &&
         <SideNav
           sideNavOpen={sideNavOpen}
           setSideNavOpen={setSideNavOpen}
@@ -64,7 +64,7 @@ function App() {
           ]}
 
         />}
-      {!loggedUser.login && !isAdminLogged.login &&
+      {!loggedUser?.login && !isAdminLogged?.login &&
         <SideNav
           navList={[
             {
@@ -98,7 +98,7 @@ function App() {
               <Route path="/user-login" element={loggedUser?.login ? <DashBoard /> : <Login />} />
             </Routes>
           }
-          {!loggedUser.login && !isAdminLogged.login &&
+          {!loggedUser?.login && !isAdminLogged?.login &&
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/admin-login" element={<AdminLogin />} />
