@@ -4,9 +4,12 @@ import '../../css/RequestForm.css';
 import useInsertRequest from '../../components/useInsertRequest';
 import axios from 'axios';
 import EmptyAlert from '../../components/EmptyAlert';
+import { useAuthContext } from '../../context/AuthContext';
 
 const RequestForm = () => {
+    const {loggedUser} = useAuthContext();
     const [requestData, setRequestData] = useState({
+        user_id: loggedUser.id,
         facility: '',
         title_event: '',
         user_name: '',

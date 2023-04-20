@@ -1,0 +1,58 @@
+.SweetAlert {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+.SweetAlert>.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    /* Could be more or less, depending on screen size */
+}
+
+.SweetAlert>.modal-content>.buttons {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.SweetAlert>.modal-content>.buttons>button {
+    margin: 10px;
+    border: none;
+    padding: 15px 25px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    background: rgba(21, 78, 1, 0.92);
+    border-radius: 11px;
+}
+
+.SweetAlert>.modal-content>img {
+    width: 20%;
+}
+
+.SweetAlert>.modal-content>p {
+    font-size: 20px;
+}

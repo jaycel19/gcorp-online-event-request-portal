@@ -5,15 +5,15 @@
     margin-top: 20px;
 }
 
-.AdminLogin > .left {
+.AdminLogin>.left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 37%;
+    width: 50%;
     padding: 20px;
 }
 
-.AdminLogin > .left > input {
+.AdminLogin>.left>input {
     width: 90%;
     padding: 20px;
     background: #FBFBFB;
@@ -22,29 +22,34 @@
     border-radius: 10px;
 }
 
-.AdminLogin > .left > button {
+.AdminLogin>.left>button {
     background: rgba(21, 78, 1, 0.92);
     border-radius: 11px;
-    border:none;
+    border: none;
     color: #fff;
     font-size: 16px;
     padding: 20px 30px;
 }
 
-.AdminLogin > .left > * {
+.AdminLogin>.left>* {
     margin: 10px 0px;
 }
 
-.AdminLogin > .left > img{
+
+.AdminLogin>.left>img {
     width: 400px;
 }
 
-.AdminLogin > .right > img{
+.AdminLogin>.right {
+    width: 50%;
+}
+
+.AdminLogin>.right>img {
     width: 100%;
     height: 100%;
 }
 
-.AdminLogin > .left > h3 {
+.AdminLogin>.left>h3 {
     margin-top: 20px;
     margin-bottom: 0px;
 }

@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../css/AdminHeader.css';
 import { useAuthContext } from '../context/AuthContext';
+import SweetAlert from './SweetAlert';
 
 
 const AdminHeader = () => {
     const {logoutAdmin, isAdminLogged} = useAuthContext();
+    const [showSweetAlert, setShowSweetAlert] = useState();
+
     return (
         <div className="AdminHeader">
             <div className="upper">
@@ -16,9 +19,15 @@ const AdminHeader = () => {
                 </div>
                 <div className="right">
                     <h3>Welcome, {isAdminLogged.name}</h3>
-                    <button onClick={logoutAdmin}>→</button>
+                    <button onClick={()=> setShowSweetAlert(true)}>Logout</button>
                 </div>
             </div>
+            <SweetAlert 
+                msg="Are you sure you want to leave GCORP?"
+                setShowSweetAlert={setShowSweetAlert}
+                showSweetAlert={showSweetAlert}
+                eventFunction={logoutAdmin}
+            />
         </div>
     )
 }
