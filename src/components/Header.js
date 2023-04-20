@@ -2,14 +2,22 @@ import React, { useState } from 'react';
 import "../css/Header.css";
 import { useAuthContext } from '../context/AuthContext';
 import SweetAlert from './SweetAlert';
+import HamburgerIcon from './HamburgerIcon';
 
-const Header = () => {
+const Header = ({setSideNavOpen}) => {
     const {loggedUser, logout} = useAuthContext();
     const [showSweetAlert, setShowSweetAlert] = useState(false);
 
   return (
     <div className="Header">
         <div className="upper">
+            <div className="openNav">
+                <HamburgerIcon 
+                    setSideNavOpen={setSideNavOpen}
+                    height={24}
+                    width={24}
+                />
+            </div>
             <div className="right">
                 <h3>Welcome, {loggedUser.name}</h3>
                 <button onClick={()=> setShowSweetAlert(true)}>Logout</button>

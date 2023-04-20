@@ -14,15 +14,20 @@ import AdminHeader from "./components/AdminHeader";
 import SideNav from "./components/SideNav";
 import { useAuthContext } from "./context/AuthContext";
 import Users from "./pages/admin/Users";
+import { useState } from "react";
 
 
 function App() {
   const { loggedUser, isAdminLogged } = useAuthContext();
+  const [sideNavOpen, setSideNavOpen] = useState(false);
 
   return (
     <div className="App">
+      <div className="side-con">
       {isAdminLogged?.login &&
         <SideNav
+          setSideNavOpen={setSideNavOpen}
+          sideNavOpen={sideNavOpen}
           navList={[
             {
               name: 'Dashboard',
@@ -41,6 +46,8 @@ function App() {
         />}
       {loggedUser.login &&
         <SideNav
+          sideNavOpen={sideNavOpen}
+          setSideNavOpen={setSideNavOpen}
           navList={[
             {
               name: 'Dashboard',
@@ -71,35 +78,35 @@ function App() {
           ]}
         />
       }
-      {isAdminLogged?.login &&
-        <div className="main-con">
-          {isAdminLogged?.login && <AdminHeader />}
-          <Routes>
-            <Route path="/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />
-            <Route path="/manage-request-form" element={isAdminLogged?.login ? <ManageUserRequestForm /> : <Login />} />
-            <Route path="/manage-users" element={isAdminLogged?.login ? <Users /> : <Login />} />
-          </Routes>
-        </div>}
-      {loggedUser?.login &&
-        <div className="main-con">
-          {loggedUser.login && <Header />}
-          <Routes>
-            <Route path="/" element={loggedUser?.login ? <DashBoard /> : <Login />} />
-            <Route path="/request-form" element={loggedUser?.login ? <RequestForm /> : <Login />} />
-            <Route path="/admin-login" element={loggedUser?.login ? <DashBoard /> : <AdminLogin />} />
-            <Route path="/user-login" element={loggedUser?.login ? <DashBoard /> : <Login />} />
-          </Routes>
-        </div>}
-      {!loggedUser.login && !isAdminLogged.login &&
-        <div className="main-con">
-          {isAdminLogged?.login && <AdminHeader />}
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/admin-login" element={<AdminLogin />} />
-            <Route path="/user-login" element={<Login />} />
-          </Routes>
+      </div>
+      <div className="main-con">
+        {loggedUser?.login && <Header setSideNavOpen={setSideNavOpen} />}
+        {isAdminLogged?.login && <AdminHeader setSideNavOpen={setSideNavOpen} />}
+        <div className="container">
+          {isAdminLogged?.login &&
+            <Routes>
+              <Route path="/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />
+              <Route path="/manage-request-form" element={isAdminLogged?.login ? <ManageUserRequestForm /> : <Login />} />
+              <Route path="/manage-users" element={isAdminLogged?.login ? <Users /> : <Login />} />
+            </Routes>
+          }
+          {loggedUser?.login &&
+            <Routes>
+              <Route path="/" element={loggedUser?.login ? <DashBoard /> : <Login />} />
+              <Route path="/request-form" element={loggedUser?.login ? <RequestForm /> : <Login />} />
+              <Route path="/admin-login" element={loggedUser?.login ? <DashBoard /> : <AdminLogin />} />
+              <Route path="/user-login" element={loggedUser?.login ? <DashBoard /> : <Login />} />
+            </Routes>
+          }
+          {!loggedUser.login && !isAdminLogged.login &&
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="/admin-login" element={<AdminLogin />} />
+              <Route path="/user-login" element={<Login />} />
+            </Routes>
+          }
         </div>
-      }
+      </div>
     </div>
   );
 }

@@ -2,15 +2,23 @@ import React, { useState } from 'react';
 import '../css/AdminHeader.css';
 import { useAuthContext } from '../context/AuthContext';
 import SweetAlert from './SweetAlert';
+import HamburgerIcon from './HamburgerIcon';
 
 
-const AdminHeader = () => {
+const AdminHeader = ({setSideNavOpen}) => {
     const {logoutAdmin, isAdminLogged} = useAuthContext();
     const [showSweetAlert, setShowSweetAlert] = useState();
 
     return (
         <div className="AdminHeader">
             <div className="upper">
+                <div className="openNav">
+                    <HamburgerIcon 
+                        setSideNavOpen={setSideNavOpen}
+                        height={24}
+                        width={24}
+                    />
+                </div>
                 <div className="left">
                     <div className="title">
                         <h1>ONLINE EVENT REQUEST</h1>
