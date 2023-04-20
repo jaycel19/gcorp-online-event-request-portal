@@ -10,10 +10,9 @@
     flex-direction: column;
     align-items: center;
     width: 50%;
-    padding: 20px;
 }
 
-.AdminLogin>.left>input {
+.AdminLogin>.left  input {
     width: 90%;
     padding: 20px;
     background: #FBFBFB;
@@ -22,7 +21,11 @@
     border-radius: 10px;
 }
 
-.AdminLogin>.left>button {
+.in {
+    width: 90%;
+}
+
+.AdminLogin>.left button {
     background: rgba(21, 78, 1, 0.92);
     border-radius: 11px;
     border: none;

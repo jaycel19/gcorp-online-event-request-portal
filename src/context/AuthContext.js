@@ -1,15 +1,16 @@
 import { createContext, useContext, useState, } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
 
+
     const navigate = useNavigate();
 
     const getStoredUserData = () => {
         const storedData = localStorage.getItem('userData');
-        if(storedData) {
+        if (storedData) {
             return JSON.parse(storedData);
         }
 
@@ -18,19 +19,10 @@ export const AuthContextProvider = ({ children }) => {
         }
 
     }
-
-    const logout = () => {
-        setUserLogged({
-            login: false
-        })
-        navigate('/', {replace: true});
-        localStorage.removeItem('userData');
-    }
-
 
     const getStoredAdminData = () => {
         const storedData = localStorage.getItem('adminData');
-        if(storedData) {
+        if (storedData) {
             return JSON.parse(storedData);
         }
 
@@ -38,13 +30,6 @@ export const AuthContextProvider = ({ children }) => {
             login: false
         }
 
-    }
-
-    const logoutAdmin = () => {
-        setIsAdminLogged({
-            login: false
-        })
-        localStorage.removeItem('adminData');
     }
 
     const [loggedUser, setUserLogged] = useState(getStoredUserData());
@@ -57,15 +42,41 @@ export const AuthContextProvider = ({ children }) => {
         login: false
     });
 
-    return(
-        <AuthContext.Provider value={{ 
+    const logout = () => {
+        setUserLogged({
+            login: false
+        })
+        setLoggedIn({
+            login: false
+        })
+        navigate('/', { replace: true });
+        localStorage.removeItem('userData');
+    }
+
+
+
+
+    const logoutAdmin = () => {
+        setIsAdminLogged({
+            login: false
+        })
+        setAdminLoggedIn({
+            login: false
+        })
+        localStorage.removeItem('adminData');
+    }
+
+
+
+    return (
+        <AuthContext.Provider value={{
             loggedUser,
             loggedIn,
-            setUserLogged, 
-            setLoggedIn, 
-            isAdminLogged, 
-            adminLoggedIn, 
-            setIsAdminLogged, 
+            setUserLogged,
+            setLoggedIn,
+            isAdminLogged,
+            adminLoggedIn,
+            setIsAdminLogged,
             setAdminLoggedIn,
             logout,
             logoutAdmin
