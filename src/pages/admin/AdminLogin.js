@@ -56,6 +56,8 @@ const AdminLogin = () => {
     <div className="AdminLogin">
       <div className="left">
         <img src={gcorpLogo} alt="gcorp" />
+        <h1>Welcome Administrator</h1>
+        <h2>Login your credentials</h2>
         <div className="in">
           <input type="text" className="username-input" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>

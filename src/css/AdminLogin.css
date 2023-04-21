@@ -1,8 +1,7 @@
 .AdminLogin {
     display: flex;
     max-width: 80%;
-    min-height: 100v;
-    margin-top: 20px;
+    height: 100vh;
 }
 
 .AdminLogin>.left {
@@ -22,7 +21,7 @@
 }
 
 .in {
-    width: 90%;
+    width: 70%;
 }
 
 .AdminLogin>.left button {
@@ -40,7 +39,7 @@
 
 
 .AdminLogin>.left>img {
-    width: 400px;
+    width: 300px;
 }
 
 .AdminLogin>.right {
