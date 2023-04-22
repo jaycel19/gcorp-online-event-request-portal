@@ -4,6 +4,7 @@ import axios from 'axios';
 import UserRequest from '../../components/UserRequest';
 
 const UserRequests = () => {
+    const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([]);
 
     const [rerenderCounter, setRerenderCounter] = useState(false);
@@ -36,13 +37,20 @@ const UserRequests = () => {
 
         fetchData();
     }, [rerenderCounter]);
-    console.log(data);
+
+    const filteredData = data.filter((item) => {
+        // Check if the search term exists in any of the object properties
+        return Object.values(item).some((value) =>
+            value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    });
+
     return (
         <div className="UserRequests">
             <div className="controls">
                 <div className="search">
                     <p>SEARCH</p>
-                    <input type="text" />
+                    <input type="text" onChange={(e) => setSearchTerm(e.target.value)} />
                 </div>
                 <div className="exportButton">
                     <button className="red">EXPORT PDF</button>
@@ -62,7 +70,7 @@ const UserRequests = () => {
                         <th>Equipments/Materials needed</th>
                         <th>Actions</th>
                     </tr>
-                    {data?.map((data, key) => (
+                    {filteredData?.map((data, key) => (
                         <UserRequest data={data} key={key} setRerenderCounter={setRerenderCounter} rerenderCounter={rerenderCounter} />
                     ))}
                 </table>

@@ -18,7 +18,7 @@ const DashBoard = () => {
     }, 1000); // update every second
     const getStatus = async () => {
       try {
-        const response = await Axios.get(`http://localhost:80/gcorp/api/request/request_from_user.php?id=${loggedUser.id}`);
+        const response = await Axios.get(`https://gcorp-event-request.000webhostapp.com/api/request/request_from_user.php?id=${loggedUser.id}`);
         setStatus(response.data);
         setStatusIsLoading(false);
       } catch (error) {

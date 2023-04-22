@@ -177,7 +177,6 @@ const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
                     whiteboard={data.material[data.equipment_materials_id].whiteboard}
                     tables={data.material[data.equipment_materials_id].tables}
                 />
-                {console.log(data.status)}
                 <td style={{ display: data?.status === 'pending' ? 'flex' : 'none' }}>
                     <button style={{
                         backgroundColor: 'green',

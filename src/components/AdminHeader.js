@@ -37,10 +37,7 @@ const AdminHeader = ({ setSideNavOpen }) => {
                     />
                 </div>
                 <div className="left">
-                    <div className="title">
-                        <h1>ONLINE EVENT REQUEST</h1>
-                        <h1>SYSTEM</h1>
-                    </div>
+                    
                 </div>
                 <div className="right">
                     <h3>Welcome, {isAdminLogged.name}</h3>

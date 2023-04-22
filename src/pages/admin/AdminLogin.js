@@ -23,7 +23,7 @@ const AdminLogin = () => {
 
   const loginMutation = useMutation(
     async (loginData) => {
-      const { data } = await axios.post('http://localhost:80/gcorp/api/admin/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
+      const { data } = await axios.post('http://localhost/gcorp/api/admin/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
       return data;
     },
     {
