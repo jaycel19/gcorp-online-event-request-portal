@@ -2,55 +2,70 @@ import React, { useState } from 'react';
 import gcorpLogo from '../../images/gcorp.png';
 import adminLoginBackground from '../../images/adminLoginBg.png';
 import '../../css/AdminLogin.css';
-import useAdminLogin from '../../components/useAdminLogin';
-import LoginMessage from '../../components/LoginMessage';
 import { useAuthContext } from '../../context/AuthContext';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+
+const MySwal = withReactContent(Swal);
 
 const AdminLogin = () => {
-  const { adminLogin, isLoading, error } = useAdminLogin();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const { adminLoggedIn, setIsAdminLogged, isAdminLogged } = useAuthContext();
+  const { setIsAdminLogged } = useAuthContext();
   const [showPassword, setShowPassword] = useState();
+
+  const loginMutation = useMutation(
+    async (loginData) => {
+      const { data } = await axios.post('http://localhost:80/gcorp/api/admin/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        localStorage.setItem('adminData', JSON.stringify(data));
+        setIsAdminLogged(data);
+        if (data?.login === true) {
+          setIsAdminLogged(data);
+          MySwal.fire({
+            icon: 'success',
+            title: 'Login Successful',
+            text: 'You have successfully logged in!',
+          });
+        } else {
+          MySwal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid credentials, please try again!',
+          });
+        }
+      },
+      onError: (error) => {
+        // handle login error
+        MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.message,
+        });
+      },
+    }
+  );
 
   const handleLogin = async (event) => {
     event.preventDefault();
     if (!username || !password) {
-      setShowModal({
-        show: true,
-        msg: 'empty'
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please enter your username and password!',
       });
-      return;
+    } else {
+      loginMutation.mutate({ username, password });
     }
-
-    try {
-      const user = await adminLogin({ username, password });
-      setIsAdminLogged(user);
-      if (isAdminLogged.login) {
-        setShowModal({
-          show: true,
-          msg: 'success'
-        });
-      } else {
-        setShowModal({
-          show: true,
-          msg: 'invalid'
-        })
-      }
-
-    } catch (error) {
-      setIsAdminLogged({
-        login: false
-      });
-      setShowModal({
-        show: true,
-        msg: 'invalid'
-      });
-    }
-  }
+  };
 
   return (
     <div className="AdminLogin">
@@ -76,33 +91,19 @@ const AdminLogin = () => {
             <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
           </button>
         </div>
-        <button type="submit" onClick={handleLogin} disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'LOGIN'}
+        <button type="submit" onClick={handleLogin}>
+          LOGIN
         </button>
-        {error && <p>{error.message}</p>}
+        <div>
+          <Link style={{
+            color: '#000'
+          }} to="/">Login as user</Link>
+        </div>
         <h3>Developed By: Algoriteam {"(BSIT 2023)"}</h3>
       </div>
       <div className="right">
         <img src={adminLoginBackground} alt="bglogo" />
       </div>
-      {adminLoggedIn.login ? <LoginMessage
-        showModal={showModal}
-        setShowModal={setShowModal}
-        img={true} msg="LOGIN"
-        success="SUCCESSFULLY"
-        loggedIn={adminLoggedIn}
-        setUserLogged={setIsAdminLogged}
-      />
-        :
-        <LoginMessage
-          showModal={showModal}
-          setShowModal={setShowModal}
-          img={false}
-          msg="INVALID CREDENTIALS"
-          success="Please try again"
-          loggedIn={adminLoggedIn}
-          setUserLogged={setIsAdminLogged} />
-      }
     </div>
   )
 }

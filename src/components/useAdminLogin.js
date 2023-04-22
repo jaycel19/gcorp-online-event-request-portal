@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useAuthContext } from '../context/AuthContext';
 
 const useAdminLogin = () => {
-    const { setAdminLoggedIn } = useAuthContext();
+    const { setAdminLoggedIn, adminLoggedIn } = useAuthContext();
 
     const adminLoginMutation = useMutation(
         async (adminLoginData) => {
@@ -14,6 +14,7 @@ const useAdminLogin = () => {
             onSuccess: (data) => {
                 localStorage.setItem('adminData', JSON.stringify(data));
                 setAdminLoggedIn(data);
+                console.log(adminLoggedIn)
             },
             onError: (error) => {
                 // handle login error

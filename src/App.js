@@ -20,7 +20,7 @@ import { useState } from "react";
 function App() {
   const { loggedUser, isAdminLogged } = useAuthContext();
   const [sideNavOpen, setSideNavOpen] = useState(false);
-
+  console.log(loggedUser);
   return (
     <div className="App">
       <div className="side-con">

@@ -1,38 +1,37 @@
 import LoginUnsuccessLogo from '../images/logo_x.png';
 import LoginSuccessLogo from '../images/login_check.png';
 import '../css/LoginMessage.css';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
-const LoginMessage = ({ success, img, showModal, setShowModal, setUserLogged, loggedIn }) => {
-
+const LoginMessage = ({ showModal, setShowModal, setUserLogged, loggedIn }) => {
+  let img;
+  let success = ""
   let msg = "";
-  if (showModal.msg === 'empty') {
-    msg = "EMPTY FIELDS!";
-  } else if (showModal.msg === 'success') {
+
+  if (loggedIn?.login === true) {
     msg = "LOGIN";
-  } else if (showModal.msg === 'invalid') {
-    msg = "INVALID CREDENTIALS";
+    img = true;
+    success = "Successfully logged in";
+  } else if (loggedIn?.login === false) {
+    img = false;
+    msg = "INVALID";
+    success = "Invalid credentials please try again.";
+  } else if (!loggedIn) {
+    msg = "EMPTY FIELDS";
   }
 
   const handleButton = () => {
-    if (showModal.msg === 'empty') {
-      setUserLogged({
-        login: false
-      })
-    } else if (showModal.msg === 'success') {
+    if (loggedIn?.login === false) {
+      setShowModal(false);
+    } else if (loggedIn?.login === true) {
       setUserLogged(loggedIn);
-    } else if (showModal.msg === 'invalid') {
-      setUserLogged({
-        login: false
-      })
+    } else if (!loggedIn) {
+      setShowModal(false);
     }
-    setShowModal({
-      show: false,
-      msg: ''
-    });
   }
-
   return (
-    <div className="LoginMessage" style={{ display: `${showModal.show ? "flex" : "none"}` }}>
+    <div className="LoginMessage" style={{ display: `${showModal ? "flex" : "none"}` }}>
       <div className="modal-content">
         <img src={img ? LoginSuccessLogo : LoginUnsuccessLogo} alt={img} />
         <h2>{msg}</h2>

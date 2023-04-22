@@ -1,56 +1,71 @@
 import React, { useState } from 'react';
-import useLogin from '../components/useLogin';
 import LoginMessage from './LoginMessage';
 import { useAuthContext } from '../context/AuthContext';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import axios from 'axios';
+import { useMutation } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
+
+const MySwal = withReactContent(Swal);
 
 const LoginForm = () => {
-  const { login, isLoading, error } = useLogin();
   const [domainEmail, setDomainEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [showModal, setShowModal] = useState({
-    show: false,
-    msg: ''
-  });
-  const { loggedIn, setUserLogged, userLogged } = useAuthContext();
+  const [showModal, setShowModal] = useState(false);
+  const { loggedIn, setUserLogged, setLoggedIn } = useAuthContext();
+
+
+  const loginMutation = useMutation(
+    async (loginData) => {
+      const { data } = await axios.post('http://localhost:80/gcorp/api/user/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
+      return data;
+    },
+    {
+      onSuccess: (data) => {
+        localStorage.setItem('userData', JSON.stringify(data));
+        setLoggedIn(data);
+        if (data?.login === true) {
+          setUserLogged(data);
+          MySwal.fire({
+            icon: 'success',
+            title: 'Login Successful',
+            text: 'You have successfully logged in!',
+          });
+        } else {
+          MySwal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Invalid credentials, please try again!',
+          });
+        }
+      },
+      onError: (error) => {
+        // handle login error
+        MySwal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: error.message,
+        });
+      },
+    }
+  );
 
   const handleLogin = async (event) => {
     event.preventDefault();
     if (!domainEmail || !password) {
-      setShowModal({
-        show: true,
-        msg: 'empty'
+      MySwal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please enter your domain account and password!',
       });
-      return;
+    } else {
+      loginMutation.mutate({ domainEmail, password });
     }
-
-    try {
-      const user = await login({ domainEmail, password });
-      setUserLogged(user);
-      if (userLogged.login) {
-        setShowModal({
-          show: true,
-          msg: 'success'
-        });
-      } else {
-        setShowModal({
-          show: true,
-          msg: 'invalid'
-        })
-      }
-
-    } catch (error) {
-      setUserLogged({
-        login: false
-      });
-      setShowModal({
-        show: true,
-        msg: 'invalid'
-      });
-    }
-  }
+  };
 
   return (
     <div className="LoginForm">
@@ -74,15 +89,24 @@ const LoginForm = () => {
             <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
           </button>
         </div>
-        <button type="submit" onClick={handleLogin} disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'LOGIN'}
+        <button type="submit" onClick={handleLogin}>
+          LOGIN
         </button>
-        {error && <p>{error.message}</p>}
+        <div>
+          <Link style={{
+            color: '#000'
+          }} to="admin-login">Login as admin</Link>
+        </div>
       </div>
       <div className="footer">
         <h2>Developed By: AlgoriTeam {"(BSIT 2023)"}</h2>
       </div>
-      {loggedIn?.login ? <LoginMessage showModal={showModal} setShowModal={setShowModal} img={true} success="SUCCESSFULLY" loggedIn={loggedIn} setUserLogged={setUserLogged} /> : <LoginMessage showModal={showModal} setShowModal={setShowModal} img={false} success="Please try again" setUserLogged={setUserLogged} />}
+      <LoginMessage
+        setLoggedIn={setLoggedIn}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        loggedIn={loggedIn}
+        setUserLogged={setUserLogged} />
     </div>
   )
 }
