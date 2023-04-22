@@ -10,8 +10,12 @@ const DashBoard = () => {
   const [status, setStatus] = useState({});
   const [statusIsLoading, setStatusIsLoading] = useState(true);
   const [statusIsError, setStatusIsError] = useState(false);
+  const [dateTime, setDateTime] = useState(new Date());
 
   useEffect(() => {
+    const intervalId = setInterval(() => {
+      setDateTime(new Date());
+    }, 1000); // update every second
     const getStatus = async () => {
       try {
         const response = await Axios.get(`http://localhost:80/gcorp/api/request/request_from_user.php?id=${loggedUser.id}`);
@@ -22,9 +26,19 @@ const DashBoard = () => {
       }
     };
     getStatus();
+    return () => clearInterval(intervalId); // clea
   }, [loggedUser.id]);
 
-  console.log(status?.status);
+  const formattedDate = dateTime.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+  const formattedTime = dateTime.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+
 
   return (
     <div className="DashBoard">
@@ -35,8 +49,8 @@ const DashBoard = () => {
       <div className="content">
         <p>Hello! {loggedUser.name}</p>
         <div className="time">
-          <p>You logged in your account at April 05, 2023,</p>
-          <p>09:37pm</p>
+          <p>You logged in your account at {formattedDate},</p>
+          <p>{formattedTime}</p>
         </div>
         <p>Status Request: {status[loggedUser.id]?.status}</p>
       </div>

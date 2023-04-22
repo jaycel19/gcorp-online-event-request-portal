@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import UserUpdate from './UserUpdate';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const User = ({ data, userRerender, setUserRerender }) => {
     const [showUpdate, setShowUpdate] = useState(false);
@@ -31,9 +32,26 @@ const User = ({ data, userRerender, setUserRerender }) => {
     const handleDelete = () => {
         const id = {
             id: data.id
-        }
-        deleteUser(id);
-    }
+        };
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this user!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteUser(id);
+                Swal.fire(
+                    'Deleted!',
+                    'Your user has been deleted.',
+                    'success'
+                );
+            }
+        });
+    };
 
     console.log(deleteSuccess);
     return (

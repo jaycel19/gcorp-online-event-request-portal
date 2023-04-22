@@ -1,0 +1,53 @@
+.AdminDashboard {}
+
+.container {
+    width: 90%;
+    display: flex;
+}
+
+.grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 510px 510px;
+}
+
+.grid>h1 {
+    width: 100%;
+}
+
+.grid>.cancelled-request {
+    background-color: red;
+    color: white;
+
+}
+
+.grid>.event-requested {
+    background-color: blue;
+    color: white;
+}
+
+.grid>.pending-request {
+    background: #fcba03;
+    color: white;
+}
+
+.grid>.approved-request {
+    background-color: green;
+    color: white;
+}
+
+
+.grid>div {
+    display: flex;
+    width: 500px;
+    height: 300px;
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+.AdminDashBoard>.right>.pie-chart-container,
+.AdminDashBoard>.right>.bar-chart-container {
+    width: 5%;
+}

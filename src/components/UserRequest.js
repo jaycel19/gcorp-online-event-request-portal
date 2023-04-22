@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import RequestUpdate from './RequestUpdate';
 import RequestView from './RequestView';
 import axios from 'axios';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Swal from 'sweetalert2';
+
 
 const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
     const [showUpdate, setShowUpdate] = useState(false);
@@ -92,18 +96,35 @@ const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
         setViewSingle(true);
     }
 
+
+
     const handleDelete = () => {
         const id = {
             id: data.id
-        }
+        };
         const matId = {
             id: data.equipment_materials_id
-        }
+        };
 
-        deleteRequest(id)
-        deleteMaterial(matId)
-
-    }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You will not be able to recover this request!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteRequest(id);
+                deleteMaterial(matId);
+                Swal.fire(
+                    'Deleted!',
+                    'Your request has been deleted.',
+                    'success'
+                );
+            }
+        });
+    };
     return (
         <>
             <tr>
@@ -136,10 +157,7 @@ const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
                         </svg>
                     </button>
                 </td>
-                <td>
-                    <button onClick={handleApprove}>A</button>
-                    <button onClick={handleReject}>R</button>
-                </td>
+
                 <RequestUpdate
                     data={data}
                     showUpdate={showUpdate}
@@ -159,6 +177,23 @@ const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
                     whiteboard={data.material[data.equipment_materials_id].whiteboard}
                     tables={data.material[data.equipment_materials_id].tables}
                 />
+                {console.log(data.status)}
+                <td style={{ display: data?.status === 'pending' ? 'flex' : 'none' }}>
+                    <button style={{
+                        backgroundColor: 'green',
+                        margin: '10px',
+                        color: '#fff',
+                        padding: '5px 10px',
+                        border: 'none'
+                    }} onClick={handleApprove}><FontAwesomeIcon icon={faCheck} /> {/* check icon */}</button>
+                    <button style={{
+                        backgroundColor: 'red',
+                        margin: '10px',
+                        color: '#fff',
+                        padding: '5px 10px',
+                        border: 'none'
+                    }} onClick={handleReject}><FontAwesomeIcon icon={faTimes} /> {/* x icon */}</button>
+                </td>
             </tr>
         </>
     )

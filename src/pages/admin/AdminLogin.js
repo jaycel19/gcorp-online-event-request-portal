@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MySwal = withReactContent(Swal);
 
@@ -18,6 +18,8 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const { setIsAdminLogged } = useAuthContext();
   const [showPassword, setShowPassword] = useState();
+
+  const navigate = useNavigate();
 
   const loginMutation = useMutation(
     async (loginData) => {
@@ -30,6 +32,7 @@ const AdminLogin = () => {
         setIsAdminLogged(data);
         if (data?.login === true) {
           setIsAdminLogged(data);
+          navigate('', {replace: true})
           MySwal.fire({
             icon: 'success',
             title: 'Login Successful',

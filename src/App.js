@@ -15,6 +15,7 @@ import SideNav from "./components/SideNav";
 import { useAuthContext } from "./context/AuthContext";
 import Users from "./pages/admin/Users";
 import { useState } from "react";
+import EventRequestInfo from "./pages/user/EventRequestInfo";
 
 
 function App() {
@@ -87,6 +88,7 @@ function App() {
             <Routes>
               <Route path="/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />
               <Route path="/manage-request-form" element={isAdminLogged?.login ? <ManageUserRequestForm /> : <Login />} />
+              <Route path="/admin-login" element={isAdminLogged?.login ? <AdminDashboard /> : <AdminLogin />} />
               <Route path="/manage-users" element={isAdminLogged?.login ? <Users /> : <Login />} />
             </Routes>
           }
@@ -95,7 +97,7 @@ function App() {
               <Route path="/" element={loggedUser?.login ? <DashBoard /> : <Login />} />
               <Route path="/request-form" element={loggedUser?.login ? <RequestForm /> : <Login />} />
               <Route path="/admin-login" element={loggedUser?.login ? <DashBoard /> : <AdminLogin />} />
-              <Route path="/user-login" element={loggedUser?.login ? <DashBoard /> : <Login />} />
+              <Route path="/event-info" element={loggedUser?.login ? <EventRequestInfo /> : <Login />} />
             </Routes>
           }
           {!loggedUser?.login && !isAdminLogged?.login &&

@@ -1,22 +1,151 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Chart from 'chart.js/auto';
+import '../../css/AdminDashboard.css';
+import axios from 'axios';
 
 const AdminDashboard = () => {
+  const pieChartRef = useRef(null);
+  const barChartRef = useRef(null);
+  const [requests, setRequests] = useState({});
+  const [total, setTotal] = useState({
+    cancelled: 0,
+    requested: 0,
+    pending: 0,
+    approved: 0
+  })
+
+  useEffect(() => {
+    let isMounted = true;
+
+    // fetch data from the endpoint
+    axios.get('http://localhost/gcorp/api/request/requests.php')
+      .then(response => {
+        // filter the requests by status
+        const filteredRequests = Object.values(response.data).filter(request => {
+          const status = request.status;
+          return status === "approve" || status === "cancelled" || status === "pending";
+        });
+
+        // count the requests by status
+        const counts = filteredRequests.reduce((acc, request) => {
+          const status = request.status;
+          acc[status] = (acc[status] || 0) + 1;
+          return acc;
+        }, {});
+
+        // initialize pie chart data
+        const pieChartData = {
+          labels: ['Cancelled', 'Requested', 'Pending', 'Approved'],
+          datasets: [{
+            label: 'Requests Count',
+            data: [counts.cancelled || 0, Object.values(response.data).length, counts.pending || 0, counts.approve || 0],
+            backgroundColor: ['red', 'blue', '#fcba03', 'green']
+          }]
+        };
+
+        // initialize pie chart options
+        const pieChartOptions = {
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        };
+
+        // initialize bar chart data
+        const barChartData = {
+          labels: ['Cancelled', 'Requested', 'Pending', 'Approved'],
+          datasets: [{
+            label: 'Requests Count',
+            data: [counts.cancelled || 0, Object.values(response.data).length, counts.pending || 0, counts.approve || 0],
+            backgroundColor: ['red', 'blue', '#fcba03', 'green']
+          }]
+        };
+
+        // initialize bar chart options
+        const barChartOptions = {
+          indexAxis: 'y',
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        };
+
+        if (isMounted) {
+          // update the state with the filtered requests
+          setRequests(filteredRequests);
+          // update the state with the total counts
+          setTotal({
+            cancelled: counts.cancelled || 0,
+            requested: Object.values(response.data).length,
+            pending: counts.pending || 0,
+            approved: counts.approve || 0
+          });
+
+          // create pie chart instance
+          const pieChart = new Chart(pieChartRef.current, {
+            type: 'pie',
+            data: pieChartData,
+            options: pieChartOptions
+          });
+
+          // create bar chart instance
+          const barChart = new Chart(barChartRef.current, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+          });
+
+          // cleanup pie chart and bar chart instances
+          return () => {
+            pieChart.destroy();
+            barChart.destroy();
+          };
+        }
+      })
+      .catch(error => {
+        console.error('Failed to fetch data:', error);
+      });
+
+    // cleanup
+    return () => {
+      isMounted = false;
+    };
+  }, []);
   return (
     <div className="AdminDashboard">
-        <div className="cancelled-request">
-
+      <h1>Requests Count</h1>
+      <div className="container">
+        <div className='grid'>
+          <div className="cancelled-request">
+            TOTAL CANCELLED: {total.cancelled}
+          </div>
+          <div className="event-requested">
+            TOTAL REQUESTS: {total.requested}
+          </div>
+          <div className="pending-request">
+            TOTAL PENDING: {total.pending}
+          </div>
+          <div className="approved-request">
+            TOTAL APPROVED: {total.approved}
+          </div>
         </div>
-        <div className="event-requested">
-
+        <div className="right">
+          <div className="pie-chart-container">
+            <div style={{ height: '300px', width: '300px' }}>
+              <canvas ref={pieChartRef}></canvas>
+            </div>
+          </div>
+          <div className="bar-chart-container">
+            <div style={{ height: '300px', width: '300px' }}>
+              <canvas ref={barChartRef}></canvas>
+            </div>
+          </div>
         </div>
-        <div className="pending-request">
-
-        </div>
-        <div className="approved-request">
-
-        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;
