@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../css/UserUpdate.css';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRerender }) => {
     const [userUpdated, setUserUpdated] = useState({});
@@ -27,8 +28,19 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
     }
 
     const handleSubmit = () => {
-        updateUser(userData);
-        setShowUpdate(false);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to update this user?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateUser(userData);
+                setShowUpdate(false);
+            }
+        });
     }
 
     const handleNameChange = (event) => {

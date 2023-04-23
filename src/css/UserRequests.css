@@ -6,6 +6,13 @@
     height: 90vh;
 }
 
+.UserRequests > .dataTable {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .controls {
     display: flex;
     align-items: center;
@@ -47,7 +54,7 @@ th {
 td {
     text-align: center;
     padding: 5px 5px;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .actions {

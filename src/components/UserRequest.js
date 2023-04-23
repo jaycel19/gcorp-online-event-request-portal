@@ -78,17 +78,40 @@ const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
     }
 
     const handleApprove = () => {
-        updateStatus({
-            id: data.id,
-            status: "approve"
+        Swal.fire({
+            title: 'Are you sure you want to approve this request?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateStatus({
+                    id: data.id,
+                    status: "approve"
+                });
+                setRerenderCounter(!rerenderCounter);
+            }
         });
     }
 
     const handleReject = () => {
-        updateStatus({
-            id: data.id,
-            status: "reject"
-        })
+        Swal.fire({
+            title: 'Are you sure you want to reject this request?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateStatus({
+                    id: data.id,
+                    status: "cancelled"
+                })
+                
+                setRerenderCounter(!rerenderCounter);
+            }
+        });
     }
 
     const handleViewRequest = () => {
@@ -183,14 +206,16 @@ const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
                         margin: '10px',
                         color: '#fff',
                         padding: '5px 10px',
-                        border: 'none'
+                        border: 'none',
+                        cursor: 'pointer'
                     }} onClick={handleApprove}><FontAwesomeIcon icon={faCheck} /> {/* check icon */}</button>
                     <button style={{
                         backgroundColor: 'red',
                         margin: '10px',
                         color: '#fff',
                         padding: '5px 10px',
-                        border: 'none'
+                        border: 'none',
+                        cursor: 'pointer'
                     }} onClick={handleReject}><FontAwesomeIcon icon={faTimes} /> {/* x icon */}</button>
                 </td>
             </tr>

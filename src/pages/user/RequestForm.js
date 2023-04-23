@@ -160,7 +160,7 @@ const RequestForm = () => {
                     <span>P.E ROOM</span>
                     <input type="checkbox" name="facility" value="OTHER" onChange={handleCheckboxChange} />
                     <span>OTHER: </span>
-                    <input className="other" style={{ backgroundColor: "#fff", borderBottom: "1px solid #000", padding: "5px" }} type="text" name="facility" value={requestData.facility} onChange={handleInputChange} />
+                    <input className="" style={{ backgroundColor: "#fff", borderBottom: "1px solid #000", padding: "5px", width: '100%', maxWidth: '15%' }} type="text" name="facility" value={requestData.facility} onChange={handleInputChange} />
                 </div>
                 <div className="eventInfo">
                     <div className="info">

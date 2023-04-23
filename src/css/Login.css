@@ -13,6 +13,45 @@
     background-color: #fff;
 }
 
+@media (max-width: 800px) {
+    .Login {
+        margin-top: 100px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .LoginLogos {
+        width: 100%;
+    }
+
+    .LoginForm {
+        width: 100% !important;
+    }
+
+    .LoginForm > .logos > img {
+        width: 40% !important;
+    }
+
+    .LoginLogos > h1 {
+        font-size: 17px !important;
+    }
+
+    .LoginLogos > h2 {
+        font-size: 17px !important;
+    }
+
+    .LoginForm .header > h1 {
+        font-size: 17px !important;
+    }
+    .LoginForm .header > p {
+        font-size: 14px !important;
+    }
+
+    .LoginForm .footer > h2 {
+        font-size: 17px;
+    }
+}
+
 .LoginLogos > h1{
     font-style: normal;
     font-size: 47px;

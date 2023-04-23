@@ -28,4 +28,11 @@ body {
 
 .App > .side-con {
     display: flex;
+    z-index: 10;
+}
+
+@media (max-width: 1280px) {
+    .App>.main-con> .containter{
+        width: 100% !important;
+    }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../css/RequestUpdate.css';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, rerenderCounter }) => {
 
@@ -97,13 +98,25 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
         }
     }
 
-    
 
     const handleSubmit = () => {
-        updateRequest(requestData);
-        updateMaterial(materialData);
-        setShowUpdate(false);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you want to update this request?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                updateRequest(requestData);
+                updateMaterial(materialData);
+                setShowUpdate(false);
+            }
+        });
     }
+
+
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -130,7 +143,20 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
     return (
         <div className="RequestUpdate" style={{ display: `${showUpdate ? 'flex' : 'none'}` }}>
             <div className="modal-content-update">
-                <button onClick={() => setShowUpdate(false)}>X</button>
+                <div style={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'flex-end'
+                }}>
+                    <button style={{
+                        border: 'none',
+                        backgroundColor: '#fff',
+                        fontWeight: '1000',
+                        fontSize: '16px',
+                        cursor: 'pointer'
+                    }} onClick={() => setShowUpdate(false)}>X</button>
+                </div>
+
                 <div className="title">
                     <h2>REQUEST FORM FOR USE OF GC FACILITIES UPDATE</h2>
                 </div>
