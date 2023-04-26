@@ -1,9 +1,14 @@
 import React from 'react';
+import '../../css/EventRequestInfo.css';
 
 const EventRequestInfo = () => {
     return (
-        <div style={{
-            width: '80%'
+        <div className="EventRequestInfo" style={{
+            width: '80%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            margin: 'auto !important'
         }}>
             <h2>A. Pre-Event Walk-through</h2>
             <ol>

@@ -26,70 +26,74 @@ function App() {
   return (
     <div className="App">
       <div className="side-con">
-      {isAdminLogged?.login &&
-        <SideNav
-          setSideNavOpen={setSideNavOpen}
-          sideNavOpen={sideNavOpen}
-          navList={[
-            {
-              name: 'Dashboard',
-              path: '/',
-              icon: faDatabase
-            },
-            {
-              name: 'Manage Request Forms',
-              path: 'manage-request-form',
-              icon: faFileLines
-            },
-            {
-              name: 'Manage Users',
-              path: 'manage-users',
-              icon: faGear
-            }
-          ]}
+        {isAdminLogged?.login &&
+          <SideNav
+            setSideNavOpen={setSideNavOpen}
+            sideNavOpen={sideNavOpen}
+            sideTitle="ADMIN PORTAL"
+            navList={[
+              {
+                name: 'Dashboard',
+                path: '/',
+                icon: faDatabase
+              },
+              {
+                name: 'Manage Request Forms',
+                path: 'manage-request-form',
+                icon: faFileLines
+              },
+              {
+                name: 'Manage Users',
+                path: 'manage-users',
+                icon: faGear
+              }
+            ]}
 
-        />}
-      {loggedUser?.login &&
-        <SideNav
-          sideNavOpen={sideNavOpen}
-          setSideNavOpen={setSideNavOpen}
-          navList={[
-            {
-              name: 'Dashboard',
-              path: '/',
-              icon: faHouse
-            },
-            {
-              name: 'Request Events',
-              path: 'request-form',
-              icon: faFileCirclePlus
-            },
-            {
-              name: 'Event Request Information',
-              path: 'event-info',
-              icon: faCircleInfo
-            } 
-          ]}
-        />}
-      {!loggedUser?.login && !isAdminLogged?.login &&
-        <SideNav
-          navList={[
-            {
-              name: 'User',
-              path: 'user-login'
-            },
-            {
-              name: 'Admin',
-              path: 'admin-login'
-            }
-          ]}
-        />
-      }
+          />}
+        {loggedUser?.login &&
+          <SideNav
+            sideNavOpen={sideNavOpen}
+            setSideNavOpen={setSideNavOpen}
+            sideTitle="USER PORTAL"
+            navList={[
+              {
+                name: 'Dashboard',
+                path: '/',
+                icon: faHouse
+              },
+              {
+                name: 'Request Events',
+                path: 'request-form',
+                icon: faFileCirclePlus
+              },
+              {
+                name: 'Event Request Information',
+                path: 'event-info',
+                icon: faCircleInfo
+              }
+            ]}
+          />}
+        {!loggedUser?.login && !isAdminLogged?.login &&
+          <SideNav
+            navList={[
+              {
+                name: 'User',
+                path: 'user-login'
+              },
+              {
+                name: 'Admin',
+                path: 'admin-login'
+              }
+            ]}
+          />
+        }
       </div>
       <div className="main-con">
         {loggedUser?.login && <Header setSideNavOpen={setSideNavOpen} />}
         {isAdminLogged?.login && <AdminHeader setSideNavOpen={setSideNavOpen} />}
-        <div className="container">
+        <div className="container" style={{
+          marginTop: !isAdminLogged?.login || !loggedUser?.login && '200px'
+        }}>
           {isAdminLogged?.login &&
             <Routes>
               <Route path="/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />

@@ -4,7 +4,7 @@ import '../css/SideNav.css';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const SideNav = ({navList, setSideNavOpen, sideNavOpen}) => {
+const SideNav = ({navList, setSideNavOpen, sideNavOpen, sideTitle}) => {
   return (
     <div className="SideNav" style={{display: sideNavOpen ? "flex" : "none"}}>
       <div className="close-side" onClick={()=> setSideNavOpen(false)}>
@@ -12,7 +12,7 @@ const SideNav = ({navList, setSideNavOpen, sideNavOpen}) => {
       </div>
       <div className="logo">
         <img src={ gcorpLogo } alt="gcorp" />
-        <h1>USER PORTAL</h1>
+        <h1>{sideTitle}</h1>
       </div>
       <div className="nav">
         {navList.map(({name, path, icon})=> (

@@ -1,0 +1,9 @@
+.EventRequestInfo > h2 {
+    font-size: 40px;
+}
+
+.EventRequestInfo > ol> li> ul> li, .EventRequestInfo > ol > li {
+    font-size: 25px;
+    word-spacing: 12px;
+    line-height: 50px;
+}
