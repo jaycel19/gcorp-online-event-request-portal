@@ -2,17 +2,53 @@ import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
 import '../../css/AdminDashboard.css';
 import axios from 'axios';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 const AdminDashboard = () => {
+  const localizer = momentLocalizer(moment);
   const pieChartRef = useRef(null);
   const barChartRef = useRef(null);
   const [requests, setRequests] = useState({});
+  const [selectedEvent, setSelectedEvent] = useState(null);
   const [total, setTotal] = useState({
     cancelled: 0,
     requested: 0,
     pending: 0,
     approved: 0
   })
+
+
+  console.log(Array.isArray(requests));
+  console.log(moment)
+
+  const handleEventSelect = event => {
+    setSelectedEvent(event);
+  }
+
+  const handleClosePopover = () => {
+    setSelectedEvent(null);
+  }
+
+  const renderEventPopover = () => {
+    if (selectedEvent) {
+      const { title, start, end, resource } = selectedEvent;
+      return (
+        <div style={{ backgroundColor: 'white', padding: 10 }}>
+          <div>
+            <h4>{title}</h4>
+            <p>Start: {moment(start).format('MMMM Do YYYY, h:mm:ss a')}</p>
+            <p>End: {moment(end).format('MMMM Do YYYY, h:mm:ss a')}</p>
+            <p>Facility: {resource}</p>
+            <button onClick={handleClosePopover}>Close</button>
+          </div>
+        </div>
+      )
+    } else {
+      return null;
+    }
+  }
 
   useEffect(() => {
     let isMounted = true;
@@ -32,6 +68,7 @@ const AdminDashboard = () => {
           acc[status] = (acc[status] || 0) + 1;
           return acc;
         }, {});
+
 
         // initialize pie chart data
         const pieChartData = {
@@ -113,6 +150,25 @@ const AdminDashboard = () => {
       isMounted = false;
     };
   }, []);
+
+
+  const getCalendarEvents = () => {
+    if (requests.length > 0) {
+      return requests.map(request => {
+        const { facility, title_event, duration_from, duration_to } = request;
+        return {
+          title: title_event,
+          start: moment.utc(duration_from).toDate(),
+          end: moment.utc(duration_to).toDate(),
+          resource: facility
+        }
+      });
+    } else {
+      return [];
+    }
+  }
+
+
   return (
     <div className="AdminDashboard">
       <h1>Requests Count</h1>
@@ -129,6 +185,18 @@ const AdminDashboard = () => {
           </div>
           <div className="approved-request">
             TOTAL APPROVED: {total.approved}
+          </div>
+          <div className="calendar">
+            <Calendar
+              events={getCalendarEvents(requests)}
+              localizer={localizer}
+              startAccessor="start"
+              endAccessor="end"
+              views={['month']}
+              style={{ height: 800, width: 1000 }}
+              onSelectEvent={handleEventSelect}
+            />
+            {renderEventPopover()}
           </div>
         </div>
         <div className="right">

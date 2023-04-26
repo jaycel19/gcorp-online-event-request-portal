@@ -11,6 +11,14 @@
     grid-template-columns: 510px 510px;
 }
 
+.grid > .calendar {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 100%;
+    width: 100%;
+    margin-bottom: 500px;
+}
+
 .grid>h1 {
     width: 100%;
 }
@@ -18,22 +26,29 @@
 .grid>.cancelled-request {
     background-color: red;
     color: white;
-
+    width: 400px;
+    height: 200px;
 }
 
 .grid>.event-requested {
     background-color: blue;
     color: white;
+    width: 400px;
+    height: 200px;
 }
 
 .grid>.pending-request {
     background: #fcba03;
     color: white;
+    width: 400px;
+    height: 200px;
 }
 
 .grid>.approved-request {
     background-color: green;
     color: white;
+    width: 400px;
+    height: 200px;
 }
 
 
