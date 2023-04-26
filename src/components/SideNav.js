@@ -2,6 +2,7 @@ import React from 'react';
 import gcorpLogo from '../images/gcorp.png';
 import '../css/SideNav.css';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SideNav = ({navList, setSideNavOpen, sideNavOpen}) => {
   return (
@@ -14,8 +15,8 @@ const SideNav = ({navList, setSideNavOpen, sideNavOpen}) => {
         <h1>USER PORTAL</h1>
       </div>
       <div className="nav">
-        {navList.map(({name, path})=> (
-          <Link style={{textDecoration: "none"}} to={path}>{name}</Link>
+        {navList.map(({name, path, icon})=> (
+          <Link style={{textDecoration: "none"}} to={path}><FontAwesomeIcon icon={icon} /> {name}</Link>
         ))}
       </div>
     </div>

@@ -16,6 +16,7 @@ import { useAuthContext } from "./context/AuthContext";
 import Users from "./pages/admin/Users";
 import { useState } from "react";
 import EventRequestInfo from "./pages/user/EventRequestInfo";
+import { faCircleInfo, faDatabase, faFileCirclePlus, faFileLines, faGear, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 
 function App() {
@@ -32,15 +33,18 @@ function App() {
           navList={[
             {
               name: 'Dashboard',
-              path: '/'
+              path: '/',
+              icon: faDatabase
             },
             {
               name: 'Manage Request Forms',
-              path: 'manage-request-form'
+              path: 'manage-request-form',
+              icon: faFileLines
             },
             {
               name: 'Manage Users',
-              path: 'manage-users'
+              path: 'manage-users',
+              icon: faGear
             }
           ]}
 
@@ -52,18 +56,20 @@ function App() {
           navList={[
             {
               name: 'Dashboard',
-              path: '/'
+              path: '/',
+              icon: faHouse
             },
             {
-              name: 'Request Form',
-              path: 'request-form'
+              name: 'Request Events',
+              path: 'request-form',
+              icon: faFileCirclePlus
             },
             {
               name: 'Event Request Information',
-              path: 'event-info'
-            }
+              path: 'event-info',
+              icon: faCircleInfo
+            } 
           ]}
-
         />}
       {!loggedUser?.login && !isAdminLogged?.login &&
         <SideNav

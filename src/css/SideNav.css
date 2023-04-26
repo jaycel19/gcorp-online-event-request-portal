@@ -53,6 +53,11 @@
     padding: 5%;
 }
 
+.SideNav>.nav>a>svg{
+    padding-right:10px;
+    font-size: 19px;
+}
+
 .SideNav>.nav>a:hover {
     background-color: rgba(14, 54, 1, 0.92);
 }
