@@ -13,6 +13,11 @@
     justify-content: center;
 }
 
+table, th, td{
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
 .controls {
     display: flex;
     align-items: center;

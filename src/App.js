@@ -102,7 +102,7 @@ function App() {
       <div className="main-con">
         {loggedUser?.login && <Header setSideNavOpen={setSideNavOpen} />}
         {isAdminLogged?.login && <AdminHeader setSideNavOpen={setSideNavOpen} />}
-        <div className="container" style={{ marginTop: isAdminLogged.login  && '200px', marginTop: loggedUser.login && '200px' }}>
+        <div className="container" style={{ marginTop: isAdminLogged.login  && '200px', paddingTop: loggedUser.login && '200px' }}>
           {isAdminLogged?.login &&
             <Routes>
               <Route path="/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />

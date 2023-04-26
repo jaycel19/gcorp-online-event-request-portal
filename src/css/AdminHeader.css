@@ -4,6 +4,7 @@
     width: 100%;
     position: fixed;
     height: 200px;
+    z-index: 1;
 }
 
 .AdminHeader > .upper{

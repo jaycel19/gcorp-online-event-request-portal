@@ -60,7 +60,6 @@ const User = ({ data, userRerender, setUserRerender }) => {
             <td>{data.name}</td>
             <td>{data.department}</td>
             <td>{data.domainEmail}</td>
-            <td>{data.password}</td>
             <td className="buttons">
                 <button className="actions edit" onClick={() => setShowUpdate(true)}>
                     <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -135,7 +135,16 @@ const UserRequests = () => {
             }}>
                 <table>
                     <thead>
-                        <tr></tr>
+                        <tr>
+                            <th>Unique&nbsp;Id</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Contact&nbsp;Number</th>
+                            <th>Event&nbsp;Type</th>
+                            <th>Duration</th>
+                            <th>Event&nbsp;Description</th>
+                            <th>Equipments/Materials</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {searchTerm === "" ? currentEntries?.map((data, key) => (

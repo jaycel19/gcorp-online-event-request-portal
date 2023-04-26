@@ -83,8 +83,8 @@ const Users = () => {
     const exportPDF = () => {
         const doc = new jsPDF();
         doc.autoTable({
-            head: [['ID', 'User Name', 'Department', 'Domain Email', 'Password']],
-            body: filteredData.map((entry) => [entry.id, entry.name, entry.department, entry.domainEmail, entry.password])
+            head: [['ID', 'User Name', 'Department', 'Domain Email']],
+            body: filteredData.map((entry) => [entry.id, entry.name, entry.department, entry.domainEmail])
         });
         doc.save('user-requests.pdf');
     };
@@ -122,7 +122,6 @@ const Users = () => {
                             <th>Name</th>
                             <th>Department</th>
                             <th>Domain Email</th>
-                            <th>Password</th>
                         </tr>
                     </thead>
                     <tbody>
