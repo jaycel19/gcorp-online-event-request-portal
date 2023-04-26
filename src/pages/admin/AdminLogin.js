@@ -97,11 +97,6 @@ const AdminLogin = () => {
         <button type="submit" onClick={handleLogin}>
           LOGIN
         </button>
-        <div>
-          <Link style={{
-            color: '#000'
-          }} to="/">Login as user</Link>
-        </div>
         <h3>Developed By: Algoriteam {"(BSIT 2023)"}</h3>
       </div>
       <div className="right">

@@ -14,7 +14,7 @@ import AdminHeader from "./components/AdminHeader";
 import SideNav from "./components/SideNav";
 import { useAuthContext } from "./context/AuthContext";
 import Users from "./pages/admin/Users";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EventRequestInfo from "./pages/user/EventRequestInfo";
 import { faCircleInfo, faDatabase, faFileCirclePlus, faFileLines, faGear, faHouse } from "@fortawesome/free-solid-svg-icons";
 
@@ -22,7 +22,18 @@ import { faCircleInfo, faDatabase, faFileCirclePlus, faFileLines, faGear, faHous
 function App() {
   const { loggedUser, isAdminLogged } = useAuthContext();
   const [sideNavOpen, setSideNavOpen] = useState(false);
-  console.log(loggedUser);
+  const [title, setTitle] = useState('GCORP');
+  useEffect(() => {
+    if (isAdminLogged.login === true) {
+      setTitle('GCORP-ADMIN');
+
+      document.title = title;
+    } else if (loggedUser.login === true) {
+      setTitle('GCORP-USER');
+
+      document.title = title;
+    }
+  }, [])
   return (
     <div className="App">
       <div className="side-con">
@@ -91,9 +102,7 @@ function App() {
       <div className="main-con">
         {loggedUser?.login && <Header setSideNavOpen={setSideNavOpen} />}
         {isAdminLogged?.login && <AdminHeader setSideNavOpen={setSideNavOpen} />}
-        <div className="container" style={{
-          marginTop: !isAdminLogged?.login || !loggedUser?.login && '200px'
-        }}>
+        <div className="container" style={{ marginTop: isAdminLogged.login  && '200px', marginTop: loggedUser.login && '200px' }}>
           {isAdminLogged?.login &&
             <Routes>
               <Route path="/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />

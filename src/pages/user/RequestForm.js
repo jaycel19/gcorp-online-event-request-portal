@@ -242,65 +242,49 @@ const RequestForm = () => {
                     <h3>EQUIPMENT/MATERIALS NEEDED:</h3>
                 </div>
                 <div className="equipQuan">
-                    <div className="quan">
-                        <h3>QUANTITY</h3>
-                    </div>
                     <div className="checkQuan">
                         <div className="everyItem">
                             <div className="nthItems">
                                 <input type="checkbox" name="monoblock_single" onChange={handleMaterialCheckboxChange} />
                                 <p>Single Monoblock Chair</p>
                             </div>
-                            <input type="number" name="monoblock_single" value={materialData.monoblock_single} onChange={handleMaterialInputChange} disabled={true} />
+                            <input type="number" max="150" min="0" name="monoblock_single" step="1" value={materialData.monoblock_single} onChange={handleMaterialInputChange} disabled={true} inputMode="numeric" pattern="[0-9]*" />
                         </div>
                         <div className="everyItem">
                             <div className="nthItems">
                                 <input type="checkbox" name="armchairs" onChange={handleMaterialCheckboxChange} />
                                 <p>Armchairs</p>
                             </div>
-                            <input type="number" name="armchairs" value={materialData.armchairs} onChange={handleMaterialInputChange} disabled={true} />
+                            <input type="number" max="150" min="0" name="armchairs" value={materialData.armchairs} onChange={handleMaterialInputChange} disabled={true} inputMode="numeric" pattern="[0-9]*" />
                         </div>
                         <div className="everyItem">
                             <div className="nthItems">
                                 <input type="checkbox" name="tables" onChange={handleMaterialCheckboxChange} />
                                 <p>Tables</p>
                             </div>
-                            <input type="number" name="tables" value={materialData.tables} onChange={handleMaterialInputChange} disabled={true} />
+                            <input type="number" max="6" min="0" name="tables" value={materialData.tables} onChange={handleMaterialInputChange} disabled={true} inputMode="numeric" pattern="[0-9]*" />
                         </div>
                         <div className="everyItem">
                             <div className="nthItems">
                                 <input type="checkbox" name="microphones" onChange={handleMaterialCheckboxChange} />
                                 <p>Microphones</p>
                             </div>
-                            <input type="number" max="2" name="microphones" value={materialData.microphones} onChange={handleMaterialInputChange} disabled={true} />
+                            <input type="number" max="2" min="0" name="microphones" value={materialData.microphones} onChange={handleMaterialInputChange} disabled={true} inputMode="numeric" pattern="[0-9]*" />
                         </div>
                         <div className="everyItem">
                             <div className="nthItems">
                                 <input type="checkbox" name="speakers" onChange={handleMaterialCheckboxChange} />
                                 <p>Speakers</p>
                             </div>
-                            <input type="number" name="speakers" value={materialData.speakers} onChange={handleMaterialInputChange} disabled={true} />
+                            <input type="number" max="2" min="0" name="speakers" value={materialData.speakers} onChange={handleMaterialInputChange} disabled={true} inputMode="numeric" pattern="[0-9]*" />
                         </div>
                         <div className="everyItem">
                             <div className="nthItems">
                                 <input type="checkbox" name="whiteboard" onChange={handleMaterialCheckboxChange} />
                                 <p>Whiteboard</p>
                             </div>
-                            <input type="number" name="whiteboard" value={materialData.whiteboard} onChange={handleMaterialInputChange} disabled={true} />
+                            <input type="number" max="1" min="0" name="whiteboard" value={materialData.whiteboard} onChange={handleMaterialInputChange} disabled={true} inputMode="numeric" pattern="[0-9]*" />
                         </div>
-                        {/*
-                    <div className="everyItem">
-                        <div className="nthItems">
-                            <input type="checkbox" name="other" />
-                            <p className="specify">
-                                <span>Others </span>
-                                <span>pls.Specify </span>
-                                <input name="" style={{borderBottom: "1px solid #000", backgroundColor: "#fff", width: "100px"}} type="text" />
-                            </p>
-                        </div>
-                        <input type="text" />
-                    </div>
-                    */}
                     </div>
                 </div>
             </div>

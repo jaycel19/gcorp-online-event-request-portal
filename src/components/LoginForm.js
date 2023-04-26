@@ -92,11 +92,6 @@ const LoginForm = () => {
         <button type="submit" onClick={handleLogin}>
           LOGIN
         </button>
-        <div>
-          <Link style={{
-            color: '#000'
-          }} to="admin-login">Login as admin</Link>
-        </div>
       </div>
       <div className="footer">
         <h2>Developed By: AlgoriTeam {"(BSIT 2023)"}</h2>

@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../../css/Users.css';
 import axios from 'axios';
 import User from '../../components/User';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { utils, writeFile } from 'xlsx';
 
 const Users = () => {
     const [users, setUsers] = useState({});
@@ -75,12 +78,37 @@ const Users = () => {
         );
     };
 
+    const pdfRef = useRef();
+
+    const exportPDF = () => {
+        const doc = new jsPDF();
+        doc.autoTable({
+            head: [['ID', 'User Name', 'Department', 'Domain Email', 'Password']],
+            body: filteredData.map((entry) => [entry.id, entry.name, entry.department, entry.domainEmail, entry.password])
+        });
+        doc.save('user-requests.pdf');
+    };
+
+    const exportToExcel = (data) => {
+        const worksheet = utils.json_to_sheet(data);
+        const workbook = utils.book_new();
+        utils.book_append_sheet(workbook, worksheet, "Requests");
+
+        writeFile(workbook, 'requests.xlsx');
+    }
+
     return (
         <div className="Users">
             <div className="controls">
                 <div className="search">
                     <p>SEARCH</p>
                     <input type="text" value={searchTerm} onChange={handleSearch} />
+                </div>
+                <div className="exportButton">
+                    <button className="red" style={{
+                        cursor: 'pointer'
+                    }} onClick={exportPDF}>EXPORT ALL PDF</button>
+                    <button className="green" onClick={() => exportToExcel(filteredData)}>EXPORT ALL EXCEL</button>
                 </div>
             </div>
             <div className="dataTable" style={{

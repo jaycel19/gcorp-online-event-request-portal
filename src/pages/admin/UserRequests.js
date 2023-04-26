@@ -4,13 +4,23 @@ import axios from 'axios';
 import UserRequest from '../../components/UserRequest';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { utils, writeFile } from 'xlsx';
 
 const UserRequests = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([]);
-
     const [rerenderCounter, setRerenderCounter] = useState(false);
-    console.log(data)
+
+    const options = {year: 'numeric', month: 'long', day: 'numeric'};
+    const exportToExcel = (data) => {
+        const worksheet = utils.json_to_sheet(data);
+        const workbook = utils.book_new();
+        utils.book_append_sheet(workbook, worksheet, "Requests");
+
+        writeFile(workbook, 'requests.xlsx');
+    }
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,15 +41,19 @@ const UserRequests = () => {
                     };
                 }));
                 // Update the state variable with the updated data
-                setData(updatedData);
+                const converted = updatedData.map(obj => ({
+                    ...obj,
+                    duration_from: new Date(obj.duration_from).toLocaleString('en-US', options),
+                    duration_to: new Date(obj.duration_to).toLocaleString('en-US', options)
+                }));
+                setData(converted);
             } catch (error) {
                 console.error(error);
             }
         };
-
         fetchData();
     }, [rerenderCounter]);
-
+    console.log(data);
     const [currentPage, setCurrentPage] = useState(0);
     const entriesPerPage = 3;
 
@@ -112,7 +126,7 @@ const UserRequests = () => {
                     <button className="red" style={{
                         cursor: 'pointer'
                     }} onClick={exportPDF}>EXPORT ALL PDF</button>
-                    <button className="green"></button>
+                    <button className="green" onClick={() => exportToExcel(data)}>EXPORT ALL EXCEL</button>
                 </div>
             </div>
             <div className="dataTable" style={{
