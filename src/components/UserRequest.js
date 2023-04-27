@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Swal from 'sweetalert2';
 
 
-const UserRequest = ({ data, key, setRerenderCounter, rerenderCounter }) => {
+const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
     const [showUpdate, setShowUpdate] = useState(false);
 
     const [singleRequest, setSingleRequest] = useState({});

@@ -11,7 +11,19 @@ const UserRequests = () => {
     const [data, setData] = useState([]);
     const [rerenderCounter, setRerenderCounter] = useState(false);
 
-    const options = {year: 'numeric', month: 'long', day: 'numeric'};
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+
+    const timeOptions = {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    }
+
+
     const exportToExcel = (data) => {
         const worksheet = utils.json_to_sheet(data);
         const workbook = utils.book_new();
@@ -44,9 +56,13 @@ const UserRequests = () => {
                 const converted = updatedData.map(obj => ({
                     ...obj,
                     duration_from: new Date(obj.duration_from).toLocaleString('en-US', options),
-                    duration_to: new Date(obj.duration_to).toLocaleString('en-US', options)
+                    duration_to: new Date(obj.duration_to).toLocaleString('en-US', options),
+                    duration_from_time: new Date(obj.duration_from + ' ' + obj.duration_from_time).toLocaleTimeString('en-US', timeOptions),
+                    duration_to_time: new Date(obj.duration_to + ' ' + obj.duration_to_time).toLocaleTimeString('en-US', timeOptions),
                 }));
                 setData(converted);
+                console.log(data);
+                console.log(updatedData);
             } catch (error) {
                 console.error(error);
             }

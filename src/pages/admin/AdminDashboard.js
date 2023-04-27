@@ -154,12 +154,15 @@ const AdminDashboard = () => {
 
   const getCalendarEvents = () => {
     if (requests.length > 0) {
+      const options = { hour: 'numeric', minute: 'numeric', hour12: true };
       return requests.map(request => {
-        const { facility, title_event, duration_from, duration_to } = request;
+        const { facility, title_event, duration_from, duration_to, duration_from_time, duration_to_time } = request;
+        const fromDate = new Date(duration_from + ' ' + duration_from_time);
+        const toDate = new Date(duration_to + ' ' + duration_to_time);
         return {
           title: title_event,
-          start: moment.utc(duration_from).toDate(),
-          end: moment.utc(duration_to).toDate(),
+          start: moment.utc(fromDate).toDate(),
+          end: moment.utc(toDate).toDate(),
           resource: facility
         }
       });

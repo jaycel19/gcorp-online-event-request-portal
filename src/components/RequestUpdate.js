@@ -1,33 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/RequestUpdate.css';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
 const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, rerenderCounter }) => {
-
-    const [requestData, setRequestData] = useState({
-        id: data.id,
-        facility: data.facility,
-        title_event: data.title_event,
-        user_name: data.user_name,
-        department: data.department,
-        contact_number: data.contact_number,
-        type_of_event: data.type_of_event,
-        duration_from: data.duration_from,
-        duration_from_time: data.duration_from_time,
-        duration_to: data.duration_to,
-        duration_to_time: data.duration_to_time,
-        description_of_activity: data.description_of_activity,
-        equipment_materials_id: data.equipment_materials_id,
-        open_to_the_public: data.open_to_the_public,
-        expected_num_attend_gc: data.expected_num_attend_gc,
-        expected_num_attend_out: data.expected_num_attend_out,
-        cater: data.cater,
-        cater_open_public: data.cater_open_public,
-        additional_info: data.additional_info,
-    }
-    );
-
+    const [requestData, setRequestData] = useState({});
+    useEffect(() => {
+        const getSingleRequest = async () => {
+            try {
+                const response = await axios.get(`http://localhost/gcorp/api/request/single.php?id=${data.id}`);
+                setRequestData(response.data[data.id]);
+                return response.data;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        getSingleRequest()
+    }, [])
     const [materialData, setMaterialData] = useState({
         id: data.equipment_materials_id,
         monoblock_single: data.material[data.equipment_materials_id].monoblock_single,
@@ -55,10 +44,10 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                 department: data.department,
                 contact_number: data.contact_number,
                 type_of_event: data.type_of_event,
-                duration_from: data.duration_from,
-                duration_from_time: data.duration_from_time,
-                duration_to: data.duration_to,
-                duration_to_time: data.duration_to_time,
+                duration_from: newData.duration_from,
+                duration_from_time: newData.duration_from_time,
+                duration_to: newData.duration_to,
+                duration_to_time: newData.duration_to_time,
                 description_of_activity: data.description_of_activity,
                 equipment_materials_id: data.equipment_materials_id,
                 open_to_the_public: data.open_to_the_public,
