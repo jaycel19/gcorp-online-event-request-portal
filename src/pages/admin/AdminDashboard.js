@@ -12,6 +12,7 @@ const AdminDashboard = () => {
   const barChartRef = useRef(null);
   const [requests, setRequests] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [events, setEvents] = useState([]);
   const [total, setTotal] = useState({
     cancelled: 0,
     requested: 0,
@@ -20,13 +21,10 @@ const AdminDashboard = () => {
   })
 
 
-  console.log(Array.isArray(requests));
-  console.log(moment)
 
   const handleEventSelect = event => {
     setSelectedEvent(event);
   }
-
   const handleClosePopover = () => {
     setSelectedEvent(null);
   }
@@ -61,7 +59,11 @@ const AdminDashboard = () => {
           const status = request.status;
           return status === "approve" || status === "cancelled" || status === "pending";
         });
+        const calendarEvents = Object.values(response.data).filter(events => {
+          return events.status !== "cancelled"
+        });
 
+        setEvents(calendarEvents);
         // count the requests by status
         const counts = filteredRequests.reduce((acc, request) => {
           const status = request.status;
@@ -151,11 +153,11 @@ const AdminDashboard = () => {
     };
   }, []);
 
-
+  console.log(events);
   const getCalendarEvents = () => {
-    if (requests.length > 0) {
+    if (events.length > 0) {
       const options = { hour: 'numeric', minute: 'numeric', hour12: true };
-      return requests.map(request => {
+      return events.map(request => {
         const { facility, title_event, duration_from, duration_to, duration_from_time, duration_to_time } = request;
         const fromDate = new Date(duration_from + ' ' + duration_from_time);
         const toDate = new Date(duration_to + ' ' + duration_to_time);

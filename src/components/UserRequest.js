@@ -32,6 +32,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                 },
                 data: id
             })
+            setRerenderCounter(!rerenderCounter);
             setDeleteSuccess((prev) => {
                 return {
                     ...prev,
@@ -52,6 +53,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                 },
                 data: id
             })
+            setRerenderCounter(!rerenderCounter);
             setDeleteSuccess((prev) => {
                 return {
                     ...prev,
@@ -71,6 +73,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                     'Content-Type': 'application/json'
                 }
             })
+            setRerenderCounter(!rerenderCounter);
             console.log(response.data);
         } catch (error) {
             console.error(error);
@@ -90,7 +93,6 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                     id: data.id,
                     status: "approved"
                 });
-                setRerenderCounter(!rerenderCounter);
             }
         });
     }
@@ -109,7 +111,6 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                     status: "cancelled"
                 })
 
-                setRerenderCounter(!rerenderCounter);
             }
         });
     }
