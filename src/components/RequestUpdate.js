@@ -17,7 +17,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
             }
         }
         getSingleRequest()
-    }, [])
+    }, [rerenderCounter])
     const [materialData, setMaterialData] = useState({
         id: data.equipment_materials_id,
         monoblock_single: data.material[data.equipment_materials_id].monoblock_single,
@@ -37,9 +37,6 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                 }
             });
             setRerenderCounter(!rerenderCounter);
-            setRequestData({
-                requestData
-            })
             setIsLoading(false)
             return response.data;
         } catch (error) {

@@ -83,7 +83,7 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
                 <h1>Update User</h1>
                 <select value={userData.department} onChange={handleDepartmentChange}>
                     <option value="CBA">CBA</option>
-                    <option value="CSS">CSS</option>
+                    <option value="CCS">CCS</option>
                     <option value="CEAS">CEAS</option>
                     <option value="CHTM">CHTM</option>
                     <option value="CAHS">CAHS</option>
