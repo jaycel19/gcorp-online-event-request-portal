@@ -3,6 +3,12 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 100px;
+    width: 90%;
+    border: 2px solid rgba(21, 78, 1);
+    border-left: 10px solid rgba(21, 78, 1);
+    border-radius: 10px;
+    padding: 30px;
+
 }
 
 .RequestForm>.first,
@@ -281,7 +287,7 @@ input[type=text] {
 
 @media (max-width: 1280px) {
     .RequestForm {
-        width: 100% !important;
+        width: 85% !important;
         padding-left: 15px;
     }
 

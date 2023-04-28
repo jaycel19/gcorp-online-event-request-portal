@@ -47,12 +47,14 @@ const DashBoard = () => {
         <h1>GCORP</h1>
       </div>
       <div className="content">
-        <p>Hello! {loggedUser.name}</p>
-        <div className="time">
-          <p>You logged in your account at {formattedDate},</p>
-          <p>{formattedTime}</p>
+        <div className='content-sub'>
+          <p>Hello! {loggedUser.name}</p>
+          <div className="time">
+            <p>You logged in your account at {formattedDate},</p>
+            <p>{formattedTime}</p>
+          </div>
+          <p>Status Request: {status[loggedUser.id]?.status}</p>
         </div>
-        <p>Status Request: {status[loggedUser.id]?.status}</p>
       </div>
     </div>
   )
