@@ -16,11 +16,13 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { loggedIn, setUserLogged, setLoggedIn } = useAuthContext();
 
 
   const loginMutation = useMutation(
     async (loginData) => {
+      setIsLoading(true);
       const { data } = await axios.post('http://localhost/gcorp/api/user/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
       return data;
     },
@@ -30,12 +32,14 @@ const LoginForm = () => {
         setLoggedIn(data);
         if (data?.login === true) {
           setUserLogged(data);
+          setIsLoading(false);
           MySwal.fire({
             icon: 'success',
             title: 'Login Successful',
             text: 'You have successfully logged in!',
           });
         } else {
+          setIsLoading(false);
           MySwal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -89,8 +93,8 @@ const LoginForm = () => {
             <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
           </button>
         </div>
-        <button type="submit" onClick={handleLogin}>
-          LOGIN
+        <button type="submit" onClick={handleLogin} disabled={isLoading}>
+          {isLoading ? "LOADING..." : "LOGIN"}
         </button>
       </div>
       <div className="footer">

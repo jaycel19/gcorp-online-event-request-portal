@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRerender }) => {
     const [userUpdated, setUserUpdated] = useState({});
+    const [isLoading, setIsLoading] =  useState(false);
     const [userData, setUserData] = useState({
         id: data.id,
         name: data.name,
@@ -14,6 +15,7 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
     })
 
     const updateUser = async (userData) => {
+        setIsLoading(true)
         try {
             const response = await axios.put('http://localhost/gcorp/api/user/update.php', userData, {
                 headers: {
@@ -22,6 +24,7 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
             });
             setUserUpdated(response.data);
             setUserRerender(!userRerender);
+            setIsLoading(false);
         } catch (error) {
             console.error(error);
         }
@@ -64,6 +67,19 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
     return (
         <div className="UserUpdate" style={{ display: `${showUpdate ? 'flex' : 'none'}` }}>
             <div className="modal-content">
+                <div style={{
+                    display: 'flex',
+                    width: '100%',
+                    marginBottom: '100px',
+                    justifyContent: 'flex-end'
+                }}>
+                    <button style={{
+                        backgroundColor: '#fff',
+                        border: 'none',
+                        fontWeight: '1000',
+                        fontSize: '17px'
+                    }}>x</button>
+                </div>
                 <h1>Update User</h1>
                 <select value={userData.department} onChange={handleDepartmentChange}>
                     <option value="CBA">CBA</option>
@@ -75,7 +91,7 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
                 <input type="text" placeholder="Name" value={userData.name} onChange={handleNameChange} />
                 <input type="email" placeholder="Domain Email" value={userData.domainEmail} onChange={handleDomainEmailChange} />
                 <input type="password" placeholder="Password" value={userData.password} onChange={handlePasswordChange} />
-                <button onClick={handleSubmit}>Submit User</button>
+                <button onClick={handleSubmit} disabled={isLoading}>{isLoading ? 'LOADING...' : 'Submit user'}</button>
             </div>
         </div>
     )

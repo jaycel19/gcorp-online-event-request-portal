@@ -10,6 +10,7 @@ const UserRequests = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [data, setData] = useState([]);
     const [rerenderCounter, setRerenderCounter] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const options = {
         year: 'numeric',
@@ -37,6 +38,7 @@ const UserRequests = () => {
         const fetchData = async () => {
             try {
                 // Fetch data from the requests endpoint
+                setIsLoading(true)
                 const response = await axios.get('http://localhost/gcorp/api/request/requests.php');
                 const requestData = Object.keys(response.data).map(key => {
                     return response.data[key];
@@ -61,8 +63,7 @@ const UserRequests = () => {
                     duration_to_time: new Date(obj.duration_to + ' ' + obj.duration_to_time).toLocaleTimeString('en-US', timeOptions),
                 }));
                 setData(converted);
-                console.log(data);
-                console.log(updatedData);
+                setIsLoading(false);
             } catch (error) {
                 console.error(error);
             }
@@ -161,6 +162,14 @@ const UserRequests = () => {
                             <th>Equipments/Materials</th>
                         </tr>
                     </thead>
+                    {isLoading ? <div style={{
+                        display: 'flex',
+                        width: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <h1>LOADING...</h1>
+                    </div> : 
                     <tbody>
                         {searchTerm === "" ? currentEntries?.map((data, key) => (
                             <UserRequest
@@ -181,6 +190,7 @@ const UserRequests = () => {
                             ))
                         }
                     </tbody>
+                    }
                 </table>
             </div>
             {searchTerm === "" ?

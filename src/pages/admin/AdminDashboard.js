@@ -57,7 +57,7 @@ const AdminDashboard = () => {
         // filter the requests by status
         const filteredRequests = Object.values(response.data).filter(request => {
           const status = request.status;
-          return status === "approve" || status === "cancelled" || status === "pending";
+          return status === "approved" || status === "cancelled" || status === "pending";
         });
         const calendarEvents = Object.values(response.data).filter(events => {
           return events.status !== "cancelled"
@@ -77,7 +77,7 @@ const AdminDashboard = () => {
           labels: ['Cancelled', 'Requested', 'Pending', 'Approved'],
           datasets: [{
             label: 'Requests Count',
-            data: [counts.cancelled || 0, Object.values(response.data).length, counts.pending || 0, counts.approve || 0],
+            data: [counts.cancelled || 0, Object.values(response.data).length, counts.pending || 0, counts.approved || 0],
             backgroundColor: ['red', 'blue', '#fcba03', 'green']
           }]
         };
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
           labels: ['Cancelled', 'Requested', 'Pending', 'Approved'],
           datasets: [{
             label: 'Requests Count',
-            data: [counts.cancelled || 0, Object.values(response.data).length, counts.pending || 0, counts.approve || 0],
+            data: [counts.cancelled || 0, Object.values(response.data).length, counts.pending || 0, counts.approved || 0],
             backgroundColor: ['red', 'blue', '#fcba03', 'green']
           }]
         };
@@ -119,7 +119,7 @@ const AdminDashboard = () => {
             cancelled: counts.cancelled || 0,
             requested: Object.values(response.data).length,
             pending: counts.pending || 0,
-            approved: counts.approve || 0
+            approved: counts.approved || 0
           });
 
           // create pie chart instance

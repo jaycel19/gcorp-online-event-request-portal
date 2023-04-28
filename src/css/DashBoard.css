@@ -1,8 +1,7 @@
 .DashBoard {
     display: flex;
     flex-direction: column;
-    width: 80%;
-    height: 50vh;
+    width: 70%;
     border: 2px solid rgb(26, 96, 2);
     border-left: 5px solid rgb(26, 96, 2);
     border-radius: 10px;

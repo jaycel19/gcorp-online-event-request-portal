@@ -66,10 +66,12 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.removeItem('adminData');
     }
 
-
+    const [isLoading, setIsloading] = useState(false);
 
     return (
         <AuthContext.Provider value={{
+            isLoading,
+            setIsloading,
             loggedUser,
             loggedIn,
             setUserLogged,

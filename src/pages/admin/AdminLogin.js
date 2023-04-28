@@ -17,12 +17,14 @@ const AdminLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { setIsAdminLogged } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState();
 
   const navigate = useNavigate();
 
   const loginMutation = useMutation(
     async (loginData) => {
+      setIsLoading(true);
       const { data } = await axios.post('http://localhost/gcorp/api/admin/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
       return data;
     },
@@ -32,13 +34,15 @@ const AdminLogin = () => {
         setIsAdminLogged(data);
         if (data?.login === true) {
           setIsAdminLogged(data);
-          navigate('', {replace: true})
+          setIsLoading(false);
+          navigate('', { replace: true })
           MySwal.fire({
             icon: 'success',
             title: 'Login Successful',
             text: 'You have successfully logged in!',
           });
         } else {
+          setIsLoading(false)
           MySwal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -94,8 +98,8 @@ const AdminLogin = () => {
             <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
           </button>
         </div>
-        <button type="submit" onClick={handleLogin}>
-          LOGIN
+        <button type="submit" onClick={handleLogin} disabled={isLoading}>
+          {isLoading ? 'LOADING...' : 'LOGIN'}
         </button>
         <h3>Developed By: Algoriteam {"(BSIT 2023)"}</h3>
       </div>

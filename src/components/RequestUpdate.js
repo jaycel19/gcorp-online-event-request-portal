@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 
 const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, rerenderCounter }) => {
     const [requestData, setRequestData] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         const getSingleRequest = async () => {
             try {
@@ -28,6 +29,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
     })
 
     const updateRequest = async (requestData) => {
+        setIsLoading(true)
         try {
             const response = await axios.put('http://localhost/gcorp/api/request/update.php', requestData, {
                 headers: {
@@ -38,6 +40,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
             setRequestData({
                 requestData
             })
+            setIsLoading(false)
             return response.data;
         } catch (error) {
             console.error(error);
@@ -45,6 +48,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
     }
 
     const updateMaterial = async (materialData) => {
+        setIsLoading(true)
         try {
             const response = await axios.put('http://localhost/gcorp/api/material/update.php', materialData, {
                 headers: {
@@ -62,6 +66,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                 whiteboard: data.material[data.equipment_materials_id].whiteboard,
                 tables: data.material[data.equipment_materials_id].tables,
             })
+            setIsLoading(false)
             return response.data;
         } catch (error) {
             console.error(error);
@@ -355,7 +360,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
 
                             </textarea>
                             <div className="subBtn">
-                                <button type="submit" onClick={handleSubmit}>SUBMIT REQUEST <br />FORM</button>
+                                <button type="submit" onClick={handleSubmit} disabled={isLoading}>{isLoading ? 'LOADING...' : 'SUBMIT REQUEST'+<br />+'FORM' }</button>
                             </div>
                         </div>
                     </div>
