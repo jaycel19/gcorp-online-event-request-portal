@@ -164,7 +164,14 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                         </div>
                         <div className="info">
                             <p>TYPE OF EVENT:</p>
-                            <input type="text" name="type_of_event" value={requestData.type_of_event} onChange={handleInputChange} />
+                            <select value={requestData.type_of_event} name="type_of_event" onChange={handleInputChange}>
+                                <option value="Conference">Conference</option>
+                                <option value="Training">Training</option>
+                                <option value="Seminar">Seminar</option>
+                                <option value="Forum">Forum</option>
+                                <option value="Colloquium">Colloquium</option>
+                                <option value="Orientation">Orientation</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -357,7 +364,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
 
                             </textarea>
                             <div className="subBtn">
-                                <button type="submit" onClick={handleSubmit} disabled={isLoading}>{isLoading ? 'LOADING...' : 'SUBMIT REQUEST'+<br />+'FORM' }</button>
+                                <button type="submit" onClick={handleSubmit} disabled={isLoading}>{isLoading ? 'LOADING...' : 'SUBMIT REQUEST FORM'}</button>
                             </div>
                         </div>
                     </div>
