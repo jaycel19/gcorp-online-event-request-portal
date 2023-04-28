@@ -78,7 +78,7 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
                         border: 'none',
                         fontWeight: '1000',
                         fontSize: '17px'
-                    }}>x</button>
+                    }} onClick={()=>setShowUpdate(false)}>x</button>
                 </div>
                 <h1>Update User</h1>
                 <select value={userData.department} onChange={handleDepartmentChange}>
