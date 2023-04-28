@@ -34,28 +34,9 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response.data + "data")
             setRerenderCounter(!rerenderCounter);
             setRequestData({
-                id: data.id,
-                facility: data.facility,
-                title_event: data.title_event,
-                user_name: data.user_name,
-                department: data.department,
-                contact_number: data.contact_number,
-                type_of_event: data.type_of_event,
-                duration_from: newData.duration_from,
-                duration_from_time: newData.duration_from_time,
-                duration_to: newData.duration_to,
-                duration_to_time: newData.duration_to_time,
-                description_of_activity: data.description_of_activity,
-                equipment_materials_id: data.equipment_materials_id,
-                open_to_the_public: data.open_to_the_public,
-                expected_num_attend_gc: data.expected_num_attend_gc,
-                expected_num_attend_out: data.expected_num_attend_out,
-                cater: data.cater,
-                cater_open_public: data.cater_open_public,
-                additional_info: data.additional_info,
+                requestData
             })
             return response.data;
         } catch (error) {

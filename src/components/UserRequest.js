@@ -88,7 +88,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
             if (result.isConfirmed) {
                 updateStatus({
                     id: data.id,
-                    status: "approve"
+                    status: "approved"
                 });
                 setRerenderCounter(!rerenderCounter);
             }
@@ -108,7 +108,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                     id: data.id,
                     status: "cancelled"
                 })
-                
+
                 setRerenderCounter(!rerenderCounter);
             }
         });
@@ -200,14 +200,15 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                     whiteboard={data.material[data.equipment_materials_id].whiteboard}
                     tables={data.material[data.equipment_materials_id].tables}
                 />
-                <td style={{ display: data?.status === 'pending' ? 'flex' : 'none' }}>
+                <td style={{ display: 'flex' }}>
                     <button style={{
                         backgroundColor: 'green',
                         margin: '10px',
                         color: '#fff',
                         padding: '5px 10px',
                         border: 'none',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        display: data?.status === 'pending' ? 'flex' : 'none'
                     }} onClick={handleApprove}><FontAwesomeIcon icon={faCheck} /> {/* check icon */}</button>
                     <button style={{
                         backgroundColor: 'red',
@@ -215,8 +216,10 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         color: '#fff',
                         padding: '5px 10px',
                         border: 'none',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        display: data?.status === 'pending' ? 'flex' : 'none'
                     }} onClick={handleReject}><FontAwesomeIcon icon={faTimes} /> {/* x icon */}</button>
+                    <p style={{ display: data?.status != 'pending' ? 'block' : 'none' }}>{data?.status}</p>
                 </td>
             </tr>
         </>

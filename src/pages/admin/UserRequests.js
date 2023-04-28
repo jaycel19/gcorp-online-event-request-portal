@@ -69,7 +69,6 @@ const UserRequests = () => {
         };
         fetchData();
     }, [rerenderCounter]);
-    console.log(data);
     const [currentPage, setCurrentPage] = useState(0);
     const entriesPerPage = 3;
 
@@ -147,7 +146,7 @@ const UserRequests = () => {
             </div>
             <div className="dataTable" style={{
                 height: searchTerm ? '500px' : '',
-                overflow: 'auto'
+                overflow: searchTerm ? 'auto' : ''
             }}>
                 <table>
                     <thead>

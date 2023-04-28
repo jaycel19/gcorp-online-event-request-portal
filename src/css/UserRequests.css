@@ -6,6 +6,15 @@
     height: 90vh;
 }
 
+@media(max-width: 1370px){
+    th {
+        font-size: 16px !important;
+    }
+    td{
+        font-size: 14px !important;
+    }
+}
+
 .UserRequests > .dataTable {
     width: 100%;
     display: flex;
