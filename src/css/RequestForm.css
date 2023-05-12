@@ -336,12 +336,58 @@ input[type=text] {
         font-size: 12px !important;
         cursor: pointer;
     }
+    .titleHead> p{
+        font-size: 13px !important;
+    }
+    .facilityList>span{
+        font-size: 10px;
+    }
+    .duration>.header>p{
+        font-size: 13px !important;
+    }
+    .singleDate > input {
+        width: 45% !important;
+        font-size: 10px;
+    }
+    .singleDate>p{
+        font-size: 10px;
+    }
+    .RequestForm{
+        padding: 10px;
+    }
+    .descriptionAct>p{
+        font-size: 13px;
+    }
+    .equipTitle> h3{
+        font-size: 13px !important;
+    }
+    .caterItem>p, .caterFood>p>span{
+        font-size: 15px;
+        margin-right: 60px;
+    }
+    .from>h3, .to>h3{
+        font-size: 13px !important;
+    }
+    .info > input {
+        width: 30% !important;
+    }
+    .info>p{
+        font-size: 10px;
+    }
+    .info>select{
+        width: 40% !important;
+        font-size: 10px;
+    }
+    .info> select> option{
+        font-size: 10px;
+    }
+    .everyItem > input {
+        width: 10% !important;
+    }
 
 }
 
-.everyItem > input {
-    width: 5% !important;
-}
+
 
 @media (max-width: 800px) {}
 

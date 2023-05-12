@@ -40,7 +40,6 @@ const RequestForm = () => {
         whiteboard: 0,
         tables: 0,
     })
-
     const [toSubmit, setToSubmit] = useState(false);
     const [isEmpty, setIsEmpty] = useState(false);
     const useInsertRequestMutation = useInsertRequest();
@@ -79,9 +78,8 @@ const RequestForm = () => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('http://localhost/gcorp/api/material/insert.php', materialData);
+            const response = await axios.post('https://capstone23.com/gcorp/gcorp-backend/api/material/insert.php', materialData);
             const matResData = response.data;
-            console.log(matResData);
             const matId = parseInt(matResData.material_id);
 
             if (response.data) {
@@ -142,8 +140,6 @@ const RequestForm = () => {
         const inputField = document.getElementsByName(checkboxName)[1];
         inputField.disabled = !e.target.checked;
     }
-    console.log(requestData);
-    console.log(materialData);
     return (
         <div className="RequestForm">
             <div className="title">

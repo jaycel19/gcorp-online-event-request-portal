@@ -45,17 +45,17 @@ function App() {
             navList={[
               {
                 name: 'Dashboard',
-                path: '/',
+                path: '/gcorp/',
                 icon: faDatabase
               },
               {
                 name: 'Manage Request Forms',
-                path: 'manage-request-form',
+                path: '/gcorp/manage-request-form',
                 icon: faFileLines
               },
               {
                 name: 'Manage Users',
-                path: 'manage-users',
+                path: '/gcorp/manage-users',
                 icon: faGear
               }
             ]}
@@ -69,61 +69,52 @@ function App() {
             navList={[
               {
                 name: 'Dashboard',
-                path: '/',
+                path: '/gcorp/',
                 icon: faHouse
               },
               {
                 name: 'Request Events',
-                path: 'request-form',
+                path: '/gcorp/request-form',
                 icon: faFileCirclePlus
               },
               {
                 name: 'Event Request Information',
-                path: 'event-info',
+                path: '/gcorp/event-info',
                 icon: faCircleInfo
               }
             ]}
           />}
-        {!loggedUser?.login && !isAdminLogged?.login &&
-          <SideNav
-            navList={[
-              {
-                name: 'User',
-                path: 'user-login'
-              },
-              {
-                name: 'Admin',
-                path: 'admin-login'
-              }
-            ]}
-          />
-        }
       </div>
-      <div className="main-con">
+      <div className="main-con"
+        style={{
+          width: isAdminLogged.login || loggedUser.login ? '80%': '100%',
+          marginLeft: isAdminLogged.login || loggedUser.login ? '20%': '0'
+        }}
+      >
         {loggedUser?.login && <Header setSideNavOpen={setSideNavOpen} />}
         {isAdminLogged?.login && <AdminHeader setSideNavOpen={setSideNavOpen} />}
         <div className="container" style={{ marginTop: isAdminLogged.login  && '200px', paddingTop: loggedUser.login && '200px' }}>
           {isAdminLogged?.login &&
             <Routes>
-              <Route path="/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />
-              <Route path="/manage-request-form" element={isAdminLogged?.login ? <ManageUserRequestForm /> : <Login />} />
-              <Route path="/admin-login" element={isAdminLogged?.login ? <AdminDashboard /> : <AdminLogin />} />
-              <Route path="/manage-users" element={isAdminLogged?.login ? <Users /> : <Login />} />
+              <Route path="/gcorp/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />
+              <Route path="/gcorp/manage-request-form" element={isAdminLogged?.login ? <ManageUserRequestForm /> : <Login />} />
+              <Route path="/gcorp/admin-login" element={isAdminLogged?.login ? <AdminDashboard /> : <AdminLogin />} />
+              <Route path="/gcorp/manage-users" element={isAdminLogged?.login ? <Users /> : <Login />} />
             </Routes>
           }
           {loggedUser?.login &&
             <Routes>
-              <Route path="/" element={loggedUser?.login ? <DashBoard /> : <Login />} />
-              <Route path="/request-form" element={loggedUser?.login ? <RequestForm /> : <Login />} />
-              <Route path="/admin-login" element={loggedUser?.login ? <DashBoard /> : <AdminLogin />} />
-              <Route path="/event-info" element={loggedUser?.login ? <EventRequestInfo /> : <Login />} />
+              <Route path="/gcorp/" element={loggedUser?.login ? <DashBoard /> : <Login />} />
+              <Route path="/gcorp/request-form" element={loggedUser?.login ? <RequestForm /> : <Login />} />
+              <Route path="/gcorp/admin-login" element={loggedUser?.login ? <DashBoard /> : <AdminLogin />} />
+              <Route path="/gcorp/event-info" element={loggedUser?.login ? <EventRequestInfo /> : <Login />} />
             </Routes>
           }
           {!loggedUser?.login && !isAdminLogged?.login &&
             <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/admin-login" element={<AdminLogin />} />
-              <Route path="/user-login" element={<Login />} />
+              <Route path="/gcorp/" element={<Login />} />
+              <Route path="/gcorp/admin-login" element={<AdminLogin />} />
+              <Route path="/gcorp/user-login" element={<Login />} />
             </Routes>
           }
         </div>

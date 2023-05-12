@@ -1,9 +1,15 @@
 .Header {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
     position: fixed;
     height: 200px;
+}
+
+@media (max-width: 800px){
+    .Header {
+        width: 100%;
+    }
 }
 
 .Header > .upper{

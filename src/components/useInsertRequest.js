@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 
 const useInsertRequest = () => {
   const insertRequest = async (requestData) => {
-    const response = await axios.post('http://localhost/gcorp/api/request/insert.php', requestData);
+    const response = await axios.post('https://capstone23.com/gcorp/gcorp-backend/api/request/insert.php', requestData);
     return response.data;
   };
 

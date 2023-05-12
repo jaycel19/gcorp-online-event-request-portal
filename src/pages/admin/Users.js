@@ -15,7 +15,7 @@ const Users = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost/gcorp/api/user/users.php');
+                const response = await axios.get('https://capstone23.com/gcorp/gcorp-backend/api/user/users.php');
                 const data = response.data;
                 setUsers(data);
                 setFilteredData(Object.values(data));
@@ -108,7 +108,9 @@ const Users = () => {
                     <button className="red" style={{
                         cursor: 'pointer'
                     }} onClick={exportPDF}>EXPORT ALL PDF</button>
-                    <button className="green" onClick={() => exportToExcel(filteredData)}>EXPORT ALL EXCEL</button>
+                    <button className="green" onClick={() => exportToExcel(filteredData)} style={{
+                        cursor: 'pointer'
+                    }}>EXPORT ALL EXCEL</button>
                 </div>
             </div>
             <div className="dataTable" style={{
@@ -122,6 +124,7 @@ const Users = () => {
                             <th>Name</th>
                             <th>Department</th>
                             <th>Domain Email</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

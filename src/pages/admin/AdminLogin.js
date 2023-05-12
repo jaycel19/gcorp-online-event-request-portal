@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import gcorpLogo from '../../images/gcorp.png';
-import adminLoginBackground from '../../images/adminLoginBg.png';
+import gcLogo from '../../images/gclogo.png';
 import '../../css/AdminLogin.css';
 import { useAuthContext } from '../../context/AuthContext';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -25,7 +24,7 @@ const AdminLogin = () => {
   const loginMutation = useMutation(
     async (loginData) => {
       setIsLoading(true);
-      const { data } = await axios.post('http://localhost/gcorp/api/admin/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
+      const { data } = await axios.post('https://capstone23.com/gcorp/gcorp-backend/api/admin/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
       return data;
     },
     {
@@ -76,10 +75,15 @@ const AdminLogin = () => {
 
   return (
     <div className="AdminLogin">
+      <div className="adminImages">
+        <div className='img'>
+        <img src={gcLogo} alt="gc logo" />
+        </div>
+        <h2 style={{marginTop: '20px'}}>GORDON COLLEGE REQUEST EVENT</h2>
+        <h2 style={{marginBottom: '20px', fontWeight: '500'}}>ADMIN PORTAL</h2>
+      </div>
       <div className="left">
-        <img src={gcorpLogo} alt="gcorp" />
-        <h1>Welcome Administrator</h1>
-        <h2>Login your credentials</h2>
+        <p>Login your credentials</p>
         <div className="in">
           <input type="text" className="username-input" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
@@ -102,9 +106,6 @@ const AdminLogin = () => {
           {isLoading ? 'LOADING...' : 'LOGIN'}
         </button>
         <h3>Developed By: Algoriteam {"(BSIT 2023)"}</h3>
-      </div>
-      <div className="right">
-        <img src={adminLoginBackground} alt="bglogo" />
       </div>
     </div>
   )

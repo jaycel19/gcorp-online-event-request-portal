@@ -18,9 +18,10 @@ const DashBoard = () => {
     }, 1000); // update every second
     const getStatus = async () => {
       try {
-        const response = await Axios.get(`http://localhost:80/gcorp/api/request/request_from_user.php?id=${loggedUser.id}`);
+        const response = await Axios.get(`https://capstone23.com/gcorp/gcorp-backend/api/request/request_from_user.php?id=${loggedUser.id}`);
         setStatus(response.data);
         setStatusIsLoading(false);
+        return response.data
       } catch (error) {
         setStatusIsError(true);
       }
@@ -53,7 +54,7 @@ const DashBoard = () => {
             <p>You logged in your account at {formattedDate},</p>
             <p>{formattedTime}</p>
           </div>
-          <p>Status Request: {status[loggedUser.id]?.status}</p>
+          <p>Status Request: {statusIsLoading ? 'Loading...' : status[loggedUser.id]?.status}</p>
         </div>
       </div>
     </div>

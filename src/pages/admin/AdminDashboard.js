@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-
+import Modal from 'react-modal';
 const AdminDashboard = () => {
   const localizer = momentLocalizer(moment);
   const pieChartRef = useRef(null);
@@ -33,8 +33,8 @@ const AdminDashboard = () => {
     if (selectedEvent) {
       const { title, start, end, resource } = selectedEvent;
       return (
-        <div style={{ backgroundColor: 'white', padding: 10 }}>
-          <div>
+        <div className="eventModal" style={{ zIndex:'10', padding: 10 }}>
+          <div className="modal-content">
             <h4>{title}</h4>
             <p>Start: {moment(start).format('MMMM Do YYYY, h:mm:ss a')}</p>
             <p>End: {moment(end).format('MMMM Do YYYY, h:mm:ss a')}</p>
@@ -52,7 +52,7 @@ const AdminDashboard = () => {
     let isMounted = true;
 
     // fetch data from the endpoint
-    axios.get('http://localhost/gcorp/api/request/requests.php')
+    axios.get('https://capstone23.com/gcorp/gcorp-backend/api/request/requests.php')
       .then(response => {
         // filter the requests by status
         const filteredRequests = Object.values(response.data).filter(request => {

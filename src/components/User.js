@@ -10,7 +10,7 @@ const User = ({ data, userRerender, setUserRerender }) => {
 
     const deleteUser = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost/gcorp/api/user/destroy.php`, {
+            const response = await axios.delete(`https://capstone23.com/gcorp/gcorp-backend/api/user/destroy.php`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },

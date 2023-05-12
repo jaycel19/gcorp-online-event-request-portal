@@ -1,7 +1,7 @@
 import React from 'react';
-import LoginLogos from '../../components/LoginLogos';
 import LoginForm from '../../components/LoginForm';
 import '../../css/Login.css';
+import LoginLogos from '../../components/LoginLogos';
 
 
 const Login = () => {
@@ -12,7 +12,6 @@ const Login = () => {
     <div className="Login">
         <LoginLogos />
         <LoginForm />
-        
     </div>
   )
 }

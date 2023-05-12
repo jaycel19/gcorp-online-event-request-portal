@@ -16,7 +16,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
 
     const getSingleRequest = async (id, data) => {
         try {
-            const response = await axios.get(`http://localhost/gcorp/api/request/single.php?id=${id}`);
+            const response = await axios.get(`https://capstone23.com/gcorp/gcorp-backend/api/request/single.php?id=${id}`);
             setSingleRequest(response.data[data.id]);
             return response.data;
         } catch (error) {
@@ -26,7 +26,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
 
     const deleteRequest = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost/gcorp/api/request/destroy.php`, {
+            const response = await axios.delete(`https://capstone23.com/gcorp/gcorp-backend/api/request/destroy.php`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -44,10 +44,9 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
             console.error(error);
         }
     }
-
     const deleteMaterial = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost/gcorp/api/material/destroy.php`, {
+            const response = await axios.delete(`https://capstone23.com/gcorp/gcorp-backend/api/material/destroy.php`, {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -68,13 +67,12 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
 
     const updateStatus = async (data) => {
         try {
-            const response = await axios.put('http://localhost/gcorp/api/request/update_status.php', data, {
+            const response = await axios.put('https://capstone23.com/gcorp/gcorp-backend/api/request/update_status.php', data, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
             setRerenderCounter(!rerenderCounter);
-            console.log(response.data);
         } catch (error) {
             console.error(error);
         }
@@ -181,7 +179,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         </svg>
                     </button>
                 </td>
-
+                
                 <RequestUpdate
                     data={data}
                     showUpdate={showUpdate}
@@ -220,7 +218,9 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         cursor: 'pointer',
                         display: data?.status === 'pending' ? 'flex' : 'none'
                     }} onClick={handleReject}><FontAwesomeIcon icon={faTimes} /> {/* x icon */}</button>
-                    <p style={{ display: data?.status != 'pending' ? 'block' : 'none' }}>{data?.status}</p>
+                    <p style={{ display: data?.status != 'pending' ? 'block' : 'none' }}><span style={{
+                        fontWeight: '800'
+                    }}>STATUS:</span> {data?.status}</p>
                 </td>
             </tr>
         </>

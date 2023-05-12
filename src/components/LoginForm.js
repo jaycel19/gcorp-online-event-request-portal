@@ -7,7 +7,6 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
 
 const MySwal = withReactContent(Swal);
 
@@ -23,7 +22,7 @@ const LoginForm = () => {
   const loginMutation = useMutation(
     async (loginData) => {
       setIsLoading(true);
-      const { data } = await axios.post('http://localhost/gcorp/api/user/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
+      const { data } = await axios.post('https://capstone23.com/gcorp/gcorp-backend/api/user/login.php', loginData, { headers: { 'Content-Type': 'application/json' } });
       return data;
     },
     {
@@ -74,7 +73,6 @@ const LoginForm = () => {
   return (
     <div className="LoginForm">
       <div className="header">
-        <h1>Welcome User</h1>
         <p>Login your Credentials.</p>
       </div>
       <div className="form">
@@ -96,10 +94,14 @@ const LoginForm = () => {
         <button type="submit" onClick={handleLogin} disabled={isLoading}>
           {isLoading ? "LOADING..." : "LOGIN"}
         </button>
+        
       </div>
       <div className="footer">
         <h2>Developed By: AlgoriTeam {"(BSIT 2023)"}</h2>
       </div>
+      <div className="disclaim">
+          <p>By clicking the login button, you recognize the authority of Gordon College to process your personal and sensitive information, pursuant to the <a href="https://gordoncollegeccs.edu.ph/datapolicy/">Gordon College General Privacy Notice</a> and applicable laws.</p>
+        </div>
       <LoginMessage
         setLoggedIn={setLoggedIn}
         showModal={showModal}

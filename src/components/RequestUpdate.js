@@ -9,7 +9,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
     useEffect(() => {
         const getSingleRequest = async () => {
             try {
-                const response = await axios.get(`http://localhost/gcorp/api/request/single.php?id=${data.id}`);
+                const response = await axios.get(`https://capstone23.com/gcorp/gcorp-backend/api/request/single.php?id=${data.id}`);
                 setRequestData(response.data[data.id]);
                 return response.data;
             } catch (error) {
@@ -31,7 +31,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
     const updateRequest = async (requestData) => {
         setIsLoading(true)
         try {
-            const response = await axios.put('http://localhost/gcorp/api/request/update.php', requestData, {
+            const response = await axios.put('https://capstone23.com/gcorp/gcorp-backend/api/request/update.php', requestData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -47,12 +47,11 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
     const updateMaterial = async (materialData) => {
         setIsLoading(true)
         try {
-            const response = await axios.put('http://localhost/gcorp/api/material/update.php', materialData, {
+            const response = await axios.put('https://capstone23.com/gcorp/gcorp-backend/api/material/update.php', materialData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response.data + "data");
             setRerenderCounter(!rerenderCounter);
             setMaterialData({
                 id: data.equipment_materials_id,
@@ -113,8 +112,11 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
     }
 
     return (
-        <div className="RequestUpdate" style={{ display: `${showUpdate ? 'flex' : 'none'}` }}>
-            <div className="modal-content-update">
+        <div className="RequestUpdate" style={{ display: `${showUpdate ? 'flex' : 'none'}`, zIndex: '10' }}>
+            <div className="modal-content-update" style={{
+                borderLeft: '10px solid green',
+                borderRadius: '10px'
+            }}>
                 <div style={{
                     width: '100%',
                     display: 'flex',

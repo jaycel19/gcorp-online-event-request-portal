@@ -49,7 +49,7 @@ export const AuthContextProvider = ({ children }) => {
         setLoggedIn({
             login: false
         })
-        navigate('/', { replace: true });
+        navigate('/gcorp/', { replace: true });
         localStorage.removeItem('userData');
     }
 
@@ -63,6 +63,7 @@ export const AuthContextProvider = ({ children }) => {
         setAdminLoggedIn({
             login: false
         })
+        navigate('/gcorp/admin-login', {replace: true})
         localStorage.removeItem('adminData');
     }
 

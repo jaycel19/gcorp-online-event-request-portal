@@ -24,6 +24,7 @@
 /* Modal Content/Box */
 .modal-content-update {
     display: flex;
+    border-left: 10px solid green ;
     flex-direction: column;
     justify-content: center;
     align-items: center;

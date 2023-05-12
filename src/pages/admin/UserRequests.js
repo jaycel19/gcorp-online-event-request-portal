@@ -39,13 +39,13 @@ const UserRequests = () => {
             try {
                 // Fetch data from the requests endpoint
                 setIsLoading(true)
-                const response = await axios.get('http://localhost/gcorp/api/request/requests.php');
+                const response = await axios.get('https://capstone23.com/gcorp/gcorp-backend/api/request/requests.php');
                 const requestData = Object.keys(response.data).map(key => {
                     return response.data[key];
                 });
                 // Fetch materials for each equipment/material item in the requests data
                 const updatedData = await Promise.all(requestData.map(async (request) => {
-                    const materialResponse = await axios.get(`http://localhost/gcorp/api/material/single.php?id=${request.equipment_materials_id}`);
+                    const materialResponse = await axios.get(`https://capstone23.com/gcorp/gcorp-backend/api/material/single.php?id=${request.equipment_materials_id}`);
                     const material = materialResponse.data;
                     console.log(material);
                     // Add the material to the request object
@@ -146,11 +146,13 @@ const UserRequests = () => {
                 </div>
             </div>
             <div className="dataTable" style={{
-                height: searchTerm ? '500px' : '',
+                height: searchTerm ? '' : '',
                 overflow: searchTerm ? 'auto' : ''
             }}>
-                <table>
-                    <thead>
+                <table style={{
+                    marginTop: searchTerm ? '' : ''
+                }}>
+                    <thead style={{backgroundColor: 'gray'}}>
                         <tr>
                             <th>Unique&nbsp;Id</th>
                             <th>Name</th>
@@ -160,6 +162,7 @@ const UserRequests = () => {
                             <th>Duration</th>
                             <th>Event&nbsp;Description</th>
                             <th>Equipments/Materials</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     {isLoading ? <div style={{

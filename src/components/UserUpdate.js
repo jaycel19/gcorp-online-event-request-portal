@@ -17,7 +17,7 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
     const updateUser = async (userData) => {
         setIsLoading(true)
         try {
-            const response = await axios.put('http://localhost/gcorp/api/user/update.php', userData, {
+            const response = await axios.put('https://capstone23.com/gcorp/gcorp-backend/api/user/update.php', userData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -66,21 +66,41 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
 
     return (
         <div className="UserUpdate" style={{ display: `${showUpdate ? 'flex' : 'none'}` }}>
-            <div className="modal-content">
+            <div className="modal-content" style={{
+                borderLeft: '10px solid green',
+                borderRadius: '10px',
+                height: '80%'
+            }}>
+
                 <div style={{
                     display: 'flex',
                     width: '100%',
-                    marginBottom: '100px',
-                    justifyContent: 'flex-end'
+                    justifyContent: 'flex-end',
+                    alignItems: 'flex-start'
                 }}>
                     <button style={{
                         backgroundColor: '#fff',
                         border: 'none',
                         fontWeight: '1000',
-                        fontSize: '17px'
+                        fontSize: '17px',
+                        cursor: 'pointer',
+                        color: '#000',
+                        marginTop: '0px'
                     }} onClick={()=>setShowUpdate(false)}>x</button>
                 </div>
-                <h1>Update User</h1>
+
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '80%',
+                    height: '80%',
+                    borderRadius: '5px',
+                    boxShadow: '1px 1px 5px #000',
+                }}>
+                
+                <h1>UPDATE USER</h1>
                 <select value={userData.department} onChange={handleDepartmentChange}>
                     <option value="CBA">CBA</option>
                     <option value="CCS">CCS</option>
@@ -92,6 +112,7 @@ const UserUpdate = ({ showUpdate, setShowUpdate, data, userRerender, setUserRere
                 <input type="email" placeholder="Domain Email" value={userData.domainEmail} onChange={handleDomainEmailChange} />
                 <input type="password" placeholder="Password" value={userData.password} onChange={handlePasswordChange} />
                 <button onClick={handleSubmit} disabled={isLoading}>{isLoading ? 'LOADING...' : 'Submit user'}</button>
+                </div>
             </div>
         </div>
     )
