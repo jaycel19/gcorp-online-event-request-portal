@@ -11,6 +11,16 @@
 }
 
 
+@media (max-width: 1600px) {
+    .LoginForm {
+        width: 30% !important;
+        height: 60% !important;
+    }
+    .LoginForm > .footer{
+        font-size: 14px !important;
+    }
+}
+
 
 @media (max-width: 800px) {
     .Login {

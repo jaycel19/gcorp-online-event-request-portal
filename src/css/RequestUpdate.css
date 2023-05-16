@@ -239,9 +239,9 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .RequestUpdate>.modal-content-update>.fourth>.otherSpec>.attendGc>textarea {
-    min-height: 100px;
-    min-width: 400px;
-    max-width: 400px;
+    min-height: 20px;
+    min-width: 100px;
+    max-width: 100px;
     margin-top: 20px;
 }
 

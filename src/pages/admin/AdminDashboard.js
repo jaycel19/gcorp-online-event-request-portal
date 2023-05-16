@@ -198,7 +198,7 @@ const AdminDashboard = () => {
               startAccessor="start"
               endAccessor="end"
               views={['month']}
-              style={{ height: 800, width: 1000 }}
+              style={{ height: 800, width: 900 }}
               onSelectEvent={handleEventSelect}
             />
             {renderEventPopover()}

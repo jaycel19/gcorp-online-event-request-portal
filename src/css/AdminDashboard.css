@@ -42,6 +42,53 @@
     display: flex;
 }
 
+@media (max-width: 1600px) {
+    .AdminDashBoard{
+    }
+
+    .grid{
+        grid-template-columns: 350px 350px !important;
+    }
+
+    .grid>.cancelled-request {
+    background-color: red;
+    color: white;
+    width: 300px !important;
+    height: 100px !important;
+}
+
+.grid>.event-requested {
+    background-color: blue;
+    color: white;
+    width: 300px !important;
+    height: 100px !important;
+}
+
+.grid>.pending-request {
+    background: #fcba03;
+    color: white;
+    width: 300px !important;
+    height: 100px !important;
+}
+
+.grid>.approved-request {
+    background-color: green;
+    color: white;
+    width: 300px !important;
+    height: 100px !important;
+}
+
+.bar-chart-container > div {
+    width: 200px !important;
+    height: 200px !important;
+}
+.pie-chart-container > div {
+    width: 200px !important;
+    height: 200px !important;
+}
+
+}
+
 .grid {
     width: 100%;
     display: grid;

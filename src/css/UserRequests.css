@@ -6,12 +6,15 @@
     height: 90vh;
 }
 
-@media(max-width: 1370px){
+@media(max-width: 1380px){
     th {
-        font-size: 14px !important;
+        font-size: 11px !important;
     }
     td{
-        font-size: 14px !important;
+        font-size: 11px !important;
+    }
+    .UserRequests {
+        width: 100% !important;
     }
 }
 
