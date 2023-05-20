@@ -1,0 +1,179 @@
+.Signup {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    height: 100vh;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background:linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), url('../images/adminLoginBg.png');
+}
+
+
+@media (max-width: 1600px) {
+    .Signup > .form {
+        width: 30% !important;
+        height: 60% !important;
+    }
+    .Signup > .form > .footer{
+        font-size: 14px !important;
+    }
+}
+
+
+@media (max-width: 800px) {
+    .Signup {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: fix;
+    }
+
+    .Signup > .form {
+        width: 90% !important;
+        height: 60vh !important;
+    }
+
+    .Signup > .logos > img {
+        width: 40% !important;
+    }
+
+    .Signup > .form .header > h1 {
+        font-size: 17px !important;
+    }
+    .Signup > .form .header > p {
+        font-size: 14px !important;
+    }
+
+    .Signup > .form .footer > h2 {
+        font-size: 17px;
+    }
+    .Signup > .logos > h2 {
+        font-size: 12px !important;
+    }
+}
+
+.Signup > .logos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.Signup > .logos > img {
+    width: 10%;
+}
+
+.Signup > .logos {
+    width: 100%;
+}
+
+.Signup > .logos > h2 {
+    font-size: 18px;
+    margin: 0px 0px;
+    color: #fff;
+}
+
+
+
+.Signup > .form {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    background: #D9D9D9;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.Signup > .form > .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Signup > .form > .header > p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    /* identical to box height, or 83% */
+    color: #4D4D4D;
+}
+
+.Signup > .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Signup > .form > input {
+    margin: 15px;
+    height: 25px;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.Signup > .form input {
+    margin: 15px;
+    height: 25px;
+    width: 250px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
+
+.Signup > .form button {
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+    width: 100px;
+    border: none;
+    background: rgba(21, 78, 1, 0.92);
+    border-radius: 11px;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.Signup > .form > .Signup > .form p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    cursor: pointer;
+}
+
+.disclaim > p{
+    margin: 0px;
+    padding: 0px;
+    font-size: 13px !important;
+}
+
+.disclaim {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Signup > .form > .footer {
+    font-family: 'Saira SemiCondensed';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}

@@ -199,7 +199,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                     whiteboard={data.material[data.equipment_materials_id].whiteboard}
                     tables={data.material[data.equipment_materials_id].tables}
                 />
-                <td style={{ display: 'flex' }}>
+                <td style={{ display: 'flex', alignItems: 'center' }}>
                     <button style={{
                         backgroundColor: 'green',
                         margin: '10px',
@@ -207,7 +207,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         padding: '5px 10px',
                         border: 'none',
                         cursor: 'pointer',
-                        display: data?.status === 'pending' ? 'flex' : 'none'
+                        display: data?.status === 'cancelled' || data?.status === 'pending'  ? 'flex' : 'none'
                     }} onClick={handleApprove}><FontAwesomeIcon icon={faCheck} /> {/* check icon */}</button>
                     <button style={{
                         backgroundColor: 'red',
@@ -216,9 +216,10 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         padding: '5px 10px',
                         border: 'none',
                         cursor: 'pointer',
-                        display: data?.status === 'pending' ? 'flex' : 'none'
+                        height: '22px',
+                        display: data?.status === 'approved' || data?.status === 'pending' ? 'flex' : 'none'
                     }} onClick={handleReject}><FontAwesomeIcon icon={faTimes} /> {/* x icon */}</button>
-                    <p style={{ display: data?.status != 'pending' ? 'block' : 'none' }}><span style={{
+                    <p style={{ display: data?.status != 'pending' ? 'block' : 'none'}}><span style={{
                         fontWeight: '800'
                     }}>STATUS:</span> {data?.status}</p>
                 </td>

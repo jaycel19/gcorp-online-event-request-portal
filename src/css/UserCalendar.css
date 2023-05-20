@@ -1,0 +1,24 @@
+.rbc-calendar{
+    width: 900px;
+    height: 900px;
+}
+
+@media(max-width: 800px) {
+    .rbc-calendar{
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media(max-width: 400px) {
+    .rbc-calendar{
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media(max-width: 800px) {
+    .customEvent {
+        font-size: 10px;
+    }
+}

@@ -3,7 +3,7 @@ import '../css/RequestView.css';
 
 const RequestView = ({ data, viewSingle, setViewSingle, id, monoblock_single, armchairs, speakers, tables, whiteboard, microphones }) => {
 
-
+console.log(data.cater_open_public)
     return (
         <div className="RequestView" style={{display: `${viewSingle ? 'flex' : 'none'}`, zIndex: '10'}}>
             <div className="modal-content">
@@ -87,7 +87,7 @@ const RequestView = ({ data, viewSingle, setViewSingle, id, monoblock_single, ar
       </tr>
       <tr>
         <td>Open to the Public?</td>
-        <td>{data.open_to_the_public ? "YES" : "NO" }</td>
+        <td>{data.open_to_the_public == "1" ? "YES" : "NO" }</td>
       </tr>
       <tr>
         <td>Expected Number of Attendees from Gordon College:</td>
@@ -99,11 +99,11 @@ const RequestView = ({ data, viewSingle, setViewSingle, id, monoblock_single, ar
       </tr>
       <tr>
         <td>With Food Catering?</td>
-        <td>{data.cater ? "YES" : "NO"}</td>
+        <td>{data.cater == "1" ? "YES" : "NO"}</td>
       </tr>
       <tr>
         <td>Open to the Public?</td>
-        <td>{data.cater_open_public ? "YES" : "NO"}</td>
+        <td>{data.cater_open_public == "1" ? "YES" : "NO"}</td>
       </tr>
       <tr>
         <td>Additional Information:</td>

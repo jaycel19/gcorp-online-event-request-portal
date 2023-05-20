@@ -16,7 +16,9 @@ import { useAuthContext } from "./context/AuthContext";
 import Users from "./pages/admin/Users";
 import { useEffect, useState } from "react";
 import EventRequestInfo from "./pages/user/EventRequestInfo";
-import { faCircleInfo, faDatabase, faFileCirclePlus, faFileLines, faGear, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faCircleInfo, faDatabase, faFileCirclePlus, faFileLines, faGear, faHouse } from "@fortawesome/free-solid-svg-icons";
+import Signup from "./pages/user/Signup";
+import UserCalendar from "./pages/user/UserCalendar";
 
 
 function App() {
@@ -73,6 +75,11 @@ function App() {
                 icon: faHouse
               },
               {
+                name: 'Calendar',
+                path: '/gcorp/calendar',
+                icon: faCalendar
+              },
+              {
                 name: 'Request Events',
                 path: '/gcorp/request-form',
                 icon: faFileCirclePlus
@@ -108,11 +115,13 @@ function App() {
               <Route path="/gcorp/request-form" element={loggedUser?.login ? <RequestForm /> : <Login />} />
               <Route path="/gcorp/admin-login" element={loggedUser?.login ? <DashBoard /> : <AdminLogin />} />
               <Route path="/gcorp/event-info" element={loggedUser?.login ? <EventRequestInfo /> : <Login />} />
+              <Route path="/gcorp/calendar" element={loggedUser?.login ? <UserCalendar /> : <Login />} />
             </Routes>
           }
           {!loggedUser?.login && !isAdminLogged?.login &&
             <Routes>
               <Route path="/gcorp/" element={<Login />} />
+              <Route path="/gcorp/signup" element={<Signup />} />
               <Route path="/gcorp/admin-login" element={<AdminLogin />} />
               <Route path="/gcorp/user-login" element={<Login />} />
             </Routes>

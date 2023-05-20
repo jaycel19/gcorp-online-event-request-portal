@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, rerenderCounter }) => {
     const [requestData, setRequestData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    console.log(requestData)
     useEffect(() => {
         const getSingleRequest = async () => {
             try {
@@ -104,6 +105,8 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
             setRequestData((prevData) => ({ ...prevData, [name]: newValue }));
         }
     }
+
+    console.log(requestData.open_to_the_public)
 
     const handleMaterialInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -295,11 +298,11 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                         <p>Open to the public?</p>
                         <div className="opItem">
                             <p>Yes</p>
-                            <input type="checkbox" name="open_to_the_public" value={true} onChange={handleCheckboxChange} />
+                            <input type="checkbox" name="open_to_the_public" value={1} onChange={handleCheckboxChange} />
                         </div>
                         <div className="opItem">
                             <p>No</p>
-                            <input type="checkbox" name="open_to_the_public" value={false} onChnage={handleCheckboxChange} />
+                            <input type="checkbox" name="open_to_the_public" value={0} onChnage={handleCheckboxChange} />
                         </div>
                     </div>
                     <div className="otherSpec">
@@ -330,11 +333,11 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                             <div className="right">
                                 <div className="foodItem">
                                     <p>Yes</p>
-                                    <input type="checkbox" name="cater" value={true} onChange={handleCheckboxChange} />
+                                    <input type="checkbox" name="cater" value={1} onChange={handleCheckboxChange} />
                                 </div>
                                 <div className="foodItem">
                                     <p>No</p>
-                                    <input type="checkbox" name="cater" value={false} onChange={handleCheckboxChange} />
+                                    <input type="checkbox" name="cater" value={0} onChange={handleCheckboxChange} />
                                 </div>
                             </div>
                         </div>
@@ -347,14 +350,7 @@ const RequestUpdate = ({ data, setShowUpdate, showUpdate, setRerenderCounter, re
                                 </span>
                             </p>
                             <div className="cateRight">
-                                <div className="foodItem">
-                                    <p>Yes</p>
-                                    <input type="checkbox" name="cater_open_public" value={true} onChange={handleCheckboxChange} />
-                                </div>
-                                <div className="foodItem">
-                                    <p>No</p>
-                                    <input type="checkbox" name="cater_open_public" value={false} onChange={handleCheckboxChange} />
-                                </div>
+                            
                             </div>
                         </div>
                     </div>
