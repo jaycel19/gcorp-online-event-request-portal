@@ -198,15 +198,23 @@ const PDFGenerator = ({ html, data }) => {
       fileName="request_info.pdf"
     >
       {({ blob, url, loading, error }) =>
-        loading ? "Generating PDF..." : <button style={{
-          backgroundColor: 'green',
-          color: '#fff',
-          borderRadius: '5px',
-          border: 'none',
-          padding: '10px',
-          marginLeft:  '10px',
-          cursor: 'pointer'
-        }}>Download PDF</button>
+        loading ? (
+          "Generating PDF..."
+        ) : (
+          <button
+            style={{
+              cursor: data?.id ? "pointer" : "not-allowed",
+              backgroundColor: data?.id ? "green" : "lightgreen",
+              color: "#fff",
+              borderRadius: "5px",
+              border: "none",
+              padding: "10px",
+              marginLeft: "10px",
+            }}
+          >
+            Download PDF
+          </button>
+        )
       }
     </PDFDownloadLink>
   );
@@ -224,12 +232,14 @@ const DashBoard = () => {
   const [showUpdate, setShowUpdate] = useState(false);
   const [statusFetched, setStatusFetched] = useState(false); // Flag variable
 
+  console.log(loggedUser.id);
   useEffect(() => {
     const getStatus = async () => {
       try {
         const response = await Axios.get(
           `https://capstone23.com/gcorp/gcorp-backend/api/request/request_from_user.php?id=${loggedUser.id}`
         );
+        console.log(response.data);
         setStatus(response.data);
         setStatusIsLoading(false);
         setStatusFetched(true); // Set flag to true
@@ -238,7 +248,7 @@ const DashBoard = () => {
       }
     };
     getStatus();
-  }, [loggedUser.id]);
+  }, []);
 
   const formattedDate = dateTime.toLocaleDateString("en-US", {
     month: "long",
@@ -272,7 +282,6 @@ const DashBoard = () => {
         // Fetch data from the single request endpoint
         const singleRequestUrl = `https://capstone23.com/gcorp/gcorp-backend/api/request/single.php?id=${requestId}`;
         const singleRequestResponse = await axios.get(singleRequestUrl);
-        console.log(singleRequestResponse.data);
         const requestData = Object.values(singleRequestResponse.data);
         const request = requestData[0];
 
@@ -320,8 +329,6 @@ const DashBoard = () => {
       fetchData();
     }
   }, [status, statusFetched, loggedUser.id]);
-
-  console.log(data);
   return (
     <div className="DashBoard">
       <div className="header">
@@ -345,14 +352,15 @@ const DashBoard = () => {
             <button
               onClick={() => setShowUpdate(!showUpdate)}
               style={{
-                backgroundColor: "green",
+                cursor: data?.id ? "pointer" : "not-allowed",
+                backgroundColor: data?.id ? "green" : "lightgreen",
                 color: "#fff",
                 borderRadius: "5px",
                 padding: "10px 10px",
                 border: "none",
                 fontWeight: "550",
-                cursor: "pointer",
               }}
+              disabled={data?.id ? false : true}
             >
               EDIT REQUEST
             </button>
@@ -378,13 +386,14 @@ const DashBoard = () => {
                   onClick={() => setExpandRequest(!expandRequest)}
                   style={{
                     marginLeft: "10px",
-                    backgroundColor: "green",
                     borderRadius: "5px",
                     border: "none",
                     color: "#fff",
                     padding: "10px",
-                    cursor: "pointer",
+                    cursor: data?.id ? "pointer" : "not-allowed",
+                    backgroundColor: data?.id ? "green" : "lightgreen",
                   }}
+                  disabled={data?.id ? false : true}
                 >
                   EXPAND
                 </button>
@@ -545,10 +554,10 @@ const DashBoard = () => {
             </div>
           )}
         </div>
-        
       </div>
       <UserRequestUpdate
         data={data}
+        setData={setData}
         setShowUpdate={setShowUpdate}
         showUpdate={showUpdate}
         setRerenderCounter={setRerenderCounter}

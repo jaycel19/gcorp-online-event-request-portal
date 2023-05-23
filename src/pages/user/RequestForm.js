@@ -12,7 +12,7 @@ const RequestForm = () => {
     user_id: loggedUser.id,
     facility: "",
     title_event: "",
-    user_name: "",
+    user_name: loggedUser.name,
     department: "",
     contact_number: "",
     type_of_event: "",

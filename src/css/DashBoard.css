@@ -1,51 +1,56 @@
 .DashBoard {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
-    border: 2px solid rgb(26, 96, 2);
-    border-left: 5px solid rgb(26, 96, 2);
-    border-radius: 10px;
-    padding: 25px;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  border: 2px solid rgb(26, 96, 2);
+  border-left: 5px solid rgb(26, 96, 2);
+  border-radius: 10px;
+  padding: 25px;
 }
 
-.DashBoard>.header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 2%;
+@media (max-width: 800px) {
+  .DashBoard {
+    width: 83%;
+  }
 }
 
-.DashBoard>.header>h1 {
-    font-size: 22px;
-    margin: 0px;
+.DashBoard > .header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 2%;
 }
 
-
-.DashBoard>.content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.DashBoard > .header > h1 {
+  font-size: 22px;
+  margin: 0px;
 }
 
-.DashBoard>.content>.content-sub {
-    width: 95%;
-    padding: 50px 20px;
-    box-shadow: 1px 1px 10px -2px #000;
+.DashBoard > .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.DashBoard>.content>.content-sub>p,
-.DashBoard>.content>.time>p {
-    font-weight: bold;
-    font-size: 20px;
+.DashBoard > .content > .content-sub {
+  width: 95%;
+  padding: 50px 20px;
+  box-shadow: 1px 1px 10px -2px #000;
 }
 
-.DashBoard>.content>.time>p {
-    margin: 0px;
+.DashBoard > .content > .content-sub > p,
+.DashBoard > .content > .time > p {
+  font-weight: bold;
+  font-size: 20px;
 }
 
-.DashBoard>.content>.time {
-    display: flex;
-    flex-direction: column;
-    margin: 7px 0px;
+.DashBoard > .content > .time > p {
+  margin: 0px;
+}
+
+.DashBoard > .content > .time {
+  display: flex;
+  flex-direction: column;
+  margin: 7px 0px;
 }

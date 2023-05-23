@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 const UserRequestUpdate = ({
   data,
+  setData,
   setShowUpdate,
   showUpdate,
   setRerenderCounter,
@@ -95,7 +96,7 @@ const UserRequestUpdate = ({
       cancelButtonText: "No",
     }).then((result) => {
       if (result.isConfirmed) {
-        updateRequest(requestData);
+        updateRequest(data);
         updateMaterial(materialData);
         setShowUpdate(false);
       }
@@ -105,7 +106,7 @@ const UserRequestUpdate = ({
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
-    setRequestData((prevData) => ({ ...prevData, [name]: newValue }));
+    setData((prevData) => ({ ...prevData, [name]: newValue }));
   };
 
   const handleCheckboxChange = (e) => {
@@ -115,10 +116,10 @@ const UserRequestUpdate = ({
       name === "cater" ||
       name === "open_to_the_public"
     ) {
-      setRequestData((prevData) => ({ ...prevData, [name]: checked }));
+      setData((prevData) => ({ ...prevData, [name]: checked }));
     } else {
       const newValue = checked === true && value;
-      setRequestData((prevData) => ({ ...prevData, [name]: newValue }));
+      setData((prevData) => ({ ...prevData, [name]: newValue }));
     }
   };
 
@@ -240,20 +241,50 @@ const UserRequestUpdate = ({
               />
             </div>
             <div className="info">
-              <p>TYPE OF EVENT:</p>
-              <select
-                value={data.type_of_event}
-                name="type_of_event"
-                onChange={handleInputChange}
-              >
-                <option value="Conference">Conference</option>
-                <option value="Training">Training</option>
-                <option value="Seminar">Seminar</option>
-                <option value="Forum">Forum</option>
-                <option value="Colloquium">Colloquium</option>
-                <option value="Orientation">Orientation</option>
-              </select>
-            </div>
+            <p>TYPE OF EVENT:</p>
+            <input
+              type="checkbox"
+              name="type_of_event"
+              value="Conference"
+              onChange={handleCheckboxChange}
+            />
+            <span>Conference</span>
+            <input
+              type="checkbox"
+              name="type_of_event"
+              value="Training"
+              onChange={handleCheckboxChange}
+            />
+            <span>Training</span>
+            <input
+              type="checkbox"
+              name="type_of_event"
+              value="Seminar"
+              onChange={handleCheckboxChange}
+            />
+            <span>Seminar</span>
+            <input
+              type="checkbox"
+              name="type_of_event"
+              value="OTHER"
+              onChange={handleCheckboxChange}
+            />
+            <span>OTHER: </span>
+            <input
+              className=""
+              style={{
+                backgroundColor: "#fff",
+                borderBottom: "1px solid #000",
+                padding: "5px",
+                width: "100%",
+                maxWidth: "15%",
+              }}
+              type="text"
+              name="type_of_event"
+              value={data.type_of_event}
+              onChange={handleInputChange}
+            />
+          </div>
           </div>
         </div>
         <div className="second">
@@ -509,17 +540,6 @@ const UserRequestUpdate = ({
             <div className="caterFood">
               <p className="public">
                 <span>Open to the public?</span>
-                <span className="many">
-                  <span>How many:</span>
-                  <input
-                    style={{
-                      backgroundColor: "#fff",
-                      borderBottom: "1px solid #000",
-                      width: "55px",
-                    }}
-                    type="text"
-                  />
-                </span>
               </p>
               <div className="cateRight">
                 <div className="foodItem">
