@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RequestFormMessage from "../../components/RequestFormMessage";
 import "../../css/RequestForm.css";
 import useInsertRequest from "../../components/useInsertRequest";
 import axios from "axios";
 import EmptyAlert from "../../components/EmptyAlert";
 import { useAuthContext } from "../../context/AuthContext";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const RequestForm = () => {
   const { loggedUser } = useAuthContext();
+  const [requestDatas, setRequestDatas] = useState({});
   const [requestData, setRequestData] = useState({
     user_id: loggedUser.id,
     facility: "",
@@ -83,6 +88,40 @@ const RequestForm = () => {
     }
   };
 
+  useEffect(() => {
+    const getRequests = async () => {
+      try {
+        const response = await axios.get(
+          `https://capstone23.com/gcorp/gcorp-backend/api/request/requests.php`
+        );
+        const requestDataIds = Object.keys(response.data);
+        const reconstructedRequestDatas = requestDataIds.map(
+          (id) => response.data[id]
+        );
+
+        setRequestDatas(reconstructedRequestDatas);
+        return response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getRequests();
+  }, []);
+
+  const isDateReserved = (date) => {
+    for (const requestData of requestDatas) {
+      if (
+        date >= requestData.duration_from &&
+        date <= requestData.duration_to
+      ) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  console.log(requestDatas);
+
   const handleSubmit = async () => {
     try {
       const response = await axios.post(
@@ -129,6 +168,51 @@ const RequestForm = () => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
     setRequestData((prevData) => ({ ...prevData, [name]: newValue }));
+
+    if (name === "duration_from" || name === "duration_to") {
+      const fromDate =
+        name === "duration_from"
+          ? new Date(value)
+          : new Date(requestData.duration_from);
+      const toDate =
+        name === "duration_to"
+          ? new Date(value)
+          : new Date(requestData.duration_to);
+
+      if (toDate < fromDate) {
+        MySwal.fire({
+          title: "Invalid Date Range",
+          text: "The 'To' date cannot be earlier than the 'From' date.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setRequestData((prevData) => ({ ...prevData, [name]: "" }));
+        });
+      }
+
+      const currentDate = new Date();
+      if (fromDate < currentDate || toDate < currentDate) {
+        MySwal.fire({
+          title: "Invalid Date",
+          text: "You cannot choose a date that is before the current date.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setRequestData((prevData) => ({ ...prevData, [name]: "" }));
+        });
+      }
+
+      if (isDateReserved(value)) {
+        MySwal.fire({
+          title: "Date Reserved",
+          text: "Please pick another date.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setRequestData((prevData) => ({ ...prevData, [name]: "" }));
+        });
+      }
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -156,6 +240,7 @@ const RequestForm = () => {
     const inputField = document.getElementsByName(checkboxName)[1];
     inputField.disabled = !e.target.checked;
   };
+
   return (
     <div className="RequestForm">
       <div className="title">
@@ -226,7 +311,7 @@ const RequestForm = () => {
           <div className="info">
             <p>DEPARTMENT:</p>
             <select
-            style={{width: '150px'}}
+              style={{ width: "150px" }}
               value={requestData.department}
               onChange={handleInputChange}
               name="department"
