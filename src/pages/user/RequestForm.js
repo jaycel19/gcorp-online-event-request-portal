@@ -84,7 +84,19 @@ const RequestForm = () => {
     ) {
       setIsEmpty(true);
     } else {
-      setToSubmit(true);
+      const hasPendingRequest = requestDatas.some(
+        (request) => request.user_id === loggedUser.id && request.status === "pending"
+      );
+      if (hasPendingRequest) {
+        Swal.fire({
+          title: "Pending Request",
+          text: "You already have a pending request.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        });
+      } else {
+        setToSubmit(true);
+      }
     }
   };
 
@@ -407,8 +419,8 @@ const RequestForm = () => {
                     name="duration_from_time"
                     onChange={handleInputChange}
                   >
-                    <option value="7:00 am">7:00 AM</option>
-                    <option value="9:00 am">9:00 AM</option>
+                    <option value="7:00 AM">7:00 AM</option>
+                    <option value="9:00 AM">9:00 AM</option>
                   </select>
                 </div>
               </div>
@@ -434,8 +446,8 @@ const RequestForm = () => {
                     name="duration_to_time"
                     onChange={handleInputChange}
                   >
-                    <option>7:00 PM</option>
-                    <option>9:00 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
                   </select>
                 </div>
               </div>

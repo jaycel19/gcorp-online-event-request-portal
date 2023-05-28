@@ -73,12 +73,12 @@ const PDFGenerator = ({ html, data }) => {
                   <Text>FROM</Text>
                   <Text>
                     {"  "}
-                    {data?.duration_from} ${data?.duration_from_time}
+                    {data?.duration_from} {data?.duration_from_time}
                   </Text>
                   <Text>TO</Text>
                   <Text>
                     {"  "}
-                    {data?.duration_to} ${data?.duration_to_time}
+                    {data?.duration_to} {data?.duration_to_time}
                   </Text>
                   <View>
                     <Text style={{ marginBottom: "15px" }}>
@@ -247,7 +247,7 @@ const DashBoard = () => {
       }
     };
     getStatus();
-  }, []);
+  }, [rerenderCounter]);
 
   const formattedDate = dateTime.toLocaleDateString("en-US", {
     month: "long",
@@ -327,7 +327,7 @@ const DashBoard = () => {
       // Execute fetchData only when status is fetched
       fetchData();
     }
-  }, [status, statusFetched, loggedUser.id]);
+  }, [status, statusFetched, loggedUser.id, rerenderCounter]);
 
   const updateStatus = async (data) => {
     try {
@@ -358,6 +358,7 @@ const DashBoard = () => {
           id: data.id,
           status: "cancelled",
         });
+        
       }
     });
   };
@@ -374,7 +375,7 @@ const DashBoard = () => {
             <p>You logged in your account at {formattedDate},</p>
             <p>{formattedTime}</p>
           </div>
-          <p>
+          <p style={{display: 'flex', alignItems: 'center'}}>
             Status Request:{" "}
             {statusIsLoading ? (
               <span>Loading...</span>
@@ -393,6 +394,7 @@ const DashBoard = () => {
                     padding: "10px 10px",
                     border: "none",
                     fontWeight: "550",
+                    marginLeft: "10px",
                     display: data?.status === "cancelled" ? "none" : "block",
                   }}
                   disabled={data?.id ? false : true}

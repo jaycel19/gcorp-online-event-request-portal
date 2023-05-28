@@ -5,39 +5,20 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from "axios";
 import { useAuthContext } from "../../context/AuthContext";
 import "../../css/UserCalendar.css";
+import Modal from "react-modal";
 
 const CustomEvent = ({ event }) => {
-  const {loggedUser} = useAuthContext();
+  const { loggedUser } = useAuthContext();
   return (
     <div className="customEvent">
-      <strong>{loggedUser.id === event.user_id ? event.title_event : "RESERVED" }</strong>
-      {loggedUser.id === event.user_id ? <p>Other event details...</p> : <p>{`${event.duration_from} to ${event.duration_to}`}</p>}
-    </div>
-  );
-};
-const Popup = ({ event, top, left, onClose }) => {
-  const {loggedUser} = useAuthContext();
-  console.log(event.user_id)
-  return (
-    <div
-      className="popup"
-      style={{
-        position: "absolute",
-        top: top,
-        left: left,
-        backgroundColor: "#fff",
-        padding: "10px",
-        border: "1px solid #ccc",
-        borderRadius: "4px",
-        zIndex: 9999,
-      }}
-    >
-      <button className="close-button" onClick={onClose}>
-        X
-      </button>
-      {loggedUser.id === event.user_id ? <p>Title: {event.title_event}</p>: <p>RESERVED</p>}
-      {loggedUser.id === event.user_id ? <p>User Name: {event.user_name}: </p> : <p>{`${event.duration_from} to ${event.duration_to}`}</p>}
-      {/* Include additional event details as needed */}
+      <strong>
+        {loggedUser.id === event.user_id ? event.title_event : "RESERVED"}
+      </strong>
+      {loggedUser.id === event.user_id ? (
+        <p>Other event details...</p>
+      ) : (
+        <p>{`${event.duration_from} to ${event.duration_to}`}</p>
+      )}
     </div>
   );
 };
@@ -48,11 +29,12 @@ const UserCalendar = () => {
   const [selectedFacility, setSelectedFacility] = useState("");
   const { loggedUser } = useAuthContext();
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const calendarRef = useRef(null);
-  console.log(events)
-  const handleClosePopup = () => {
+  console.log(events);
+  const handleCloseModal = () => {
     setSelectedEvent(null);
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -101,13 +83,11 @@ const UserCalendar = () => {
     };
   };
 
-  const handleEventSelect = (event, e) => {
+  const handleEventSelect = (event) => {
     setSelectedEvent(event);
-    const rect = calendarRef.current.getBoundingClientRect();
-    const top = e.clientY - rect.top - 10;
-    const left = e.clientX - rect.left + 10;
-    setPopupPosition({ top, left });
+    setIsModalOpen(true);
   };
+
   return (
     <div className="UserCalendar">
       <div>
@@ -136,14 +116,68 @@ const UserCalendar = () => {
             }}
           />
         </div>
-        {selectedEvent && (
-          <Popup
-            event={selectedEvent}
-            top={popupPosition.top}
-            left={popupPosition.left}
-            onClose={handleClosePopup}
-          />
-        )}
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={handleCloseModal}
+          contentLabel="Event Details"
+          style={{
+            overlay: {
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: "10",
+            },
+            content: {
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              padding: "20px",
+              backgroundColor: "#fff",
+              maxWidth: "300px",
+              width: "100%",
+              maxHeight: "150px",
+              overflow: "auto",
+            },
+          }}
+        >
+          {selectedEvent && (
+            <div style={{display: "flex", flexDirection: 'column', alignItems: 'center'}}>
+              <div style={{
+                width: "100%",
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center'
+              }}>
+                <button
+                  style={{
+                    backgroundColor: "white",
+                    fontWeight: 600,
+                    border: "none",
+                  }}
+                  className="close-button"
+                  onClick={handleCloseModal}
+                >
+                  X
+                </button>
+              </div>
+              <p>Title: {selectedEvent.title_event}</p>
+              {loggedUser.id === selectedEvent.user_id && (
+                <p>User Name: {selectedEvent.user_name}</p>
+              )}
+              <p>
+                {loggedUser.id === selectedEvent.user_id
+                  ? "Other event details..."
+                  : `${selectedEvent.duration_from} to ${selectedEvent.duration_to}`}
+              </p>
+            </div>
+          )}
+        </Modal>
       </div>
     </div>
   );
