@@ -1,67 +1,84 @@
 .Header {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    position: fixed;
-    height: 200px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  position: fixed;
+  z-index: 9;
+  height: 200px;
 }
 
-@media (max-width: 800px){
-    .Header {
-        width: 100%;
-    }
-}
-
-.Header > .upper{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    background-color: rgba(34, 123, 3, 0.92);
-}
-
-.Header > .upper > .right {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.Header > .upper > .right > h3 {
+@media (max-width: 800px) {
+  .Header {
+    width: 100%;
+  }
+  .Header > .upper > .right > h3 {
     font-style: normal;
     font-weight: 700;
-    font-size: 22px;
-}
+    font-size: 14px !important;
+  }
 
-.Header > .upper > .right button {
+  .Header > .upper > .right button {
     margin: 10px;
     border: none;
     background: rgb(34, 88, 3);
-    
+
     border-radius: 10px;
-    padding: 20px 15px;
+    padding: 15px 10px !important;
     color: #fff;
-    font-size: 16px;
+    font-size: 12px !important;
+  }
+}
+
+.Header > .upper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: rgba(34, 123, 3);
+}
+
+.Header > .upper > .right {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.Header > .upper > .right > h3 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+}
+
+.Header > .upper > .right button {
+  margin: 10px;
+  border: none;
+  background: rgb(34, 88, 3);
+
+  border-radius: 10px;
+  padding: 20px 15px;
+  color: #fff;
+  font-size: 16px;
 }
 
 .Header > .lower {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 50px;
-    width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  width: 100%;
 }
 
 .Header > .lower > .dateTime {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 70%;
-    height: 50px;
-    margin-right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 70%;
+  height: 50px;
+  margin-right: 20px;
 }
 
 .openNav {
-    display: flex;
-    width: 100%;
-    margin-left: 50px;
+  display: flex;
+  width: 100%;
+  margin-left: 50px;
 }

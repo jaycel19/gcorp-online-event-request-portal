@@ -1,11 +1,13 @@
-.AdminDashboard {}
-
+.AdminDashboard {
+  display: flex;
+  flex-direction: column;
+}
 
 .eventModal {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
@@ -13,8 +15,8 @@
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
@@ -28,125 +30,148 @@
 }
 
 .eventModal > .modal-content > button {
-    font-size: 16px;
-    background-color: green;
-    border: none;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
+  font-size: 16px;
+  background-color: green;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .container {
-    width: 90%;
-    display: flex;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 1600px) {
-    .AdminDashBoard{
-    }
+  .AdminDashBoard {
+  }
 
-    .grid{
-        grid-template-columns: 350px 350px !important;
-    }
+  .grid {
+    grid-template-columns: 350px 350px !important;
+  }
 
-    .grid>.cancelled-request {
+  .grid > .cancelled-request {
     background-color: red;
     color: white;
-    width: 300px !important;
+    width: 60px !important;
     height: 100px !important;
-}
+  }
 
-.grid>.event-requested {
+  .grid > .event-requested {
     background-color: blue;
     color: white;
-    width: 300px !important;
+    width: 60px !important;
     height: 100px !important;
-}
+  }
 
-.grid>.pending-request {
+  .grid > .pending-request {
     background: #fcba03;
     color: white;
-    width: 300px !important;
+    width: 60px !important;
     height: 100px !important;
-}
+  }
 
-.grid>.approved-request {
+  .grid > .approved-request {
     background-color: green;
     color: white;
-    width: 300px !important;
+    width: 60px !important;
     height: 100px !important;
-}
+  }
 
-.bar-chart-container > div {
-    width: 200px !important;
-    height: 200px !important;
-}
-.pie-chart-container > div {
-    width: 200px !important;
-    height: 200px !important;
-}
-
+  .bar-chart-container > div {
+  }
+  .pie-chart-container > div {
+  }
 }
 
 .grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 510px 510px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.grid > .calendar {
-    margin-top: 50px;
-    display: grid;
-    grid-template-columns: 100%;
-    width: 100%;
-    margin-bottom: 500px;
+.container > .calendar {
+  margin-top: 50px;
+  width: 100%;
+  margin-bottom: 500px;
 }
 
-.grid>h1 {
-    width: 100%;
+.grid > .left {
+  border: 1px solid green;
+  border-left: 10px solid green;
+  width: 40%;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 50%;
 }
 
-.grid>.cancelled-request {
-    background-color: red;
-    color: white;
-    width: 400px;
-    height: 200px;
+.grid > h1 {
+  width: 100%;
 }
 
-.grid>.event-requested {
-    background-color: blue;
-    color: white;
-    width: 400px;
-    height: 200px;
+.grid > .left > .cancelled-request,
+.grid > .left > .event-requested,
+.grid > .left > .approved-request,
+.grid > .left > .pending-request {
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
 }
 
-.grid>.pending-request {
-    background: #fcba03;
-    color: white;
-    width: 400px;
-    height: 200px;
-}
-
-.grid>.approved-request {
-    background-color: green;
-    color: white;
-    width: 400px;
-    height: 200px;
-}
-
-
-.grid>div {
+.grid > .right {
     display: flex;
-    width: 500px;
-    height: 300px;
-    margin: 10px;
-    justify-content: center;
+    width: 60%;
     align-items: center;
-    font-size: 20px;
 }
 
-.AdminDashBoard>.right>.pie-chart-container,
-.AdminDashBoard>.right>.bar-chart-container {
-    width: 5%;
+.grid > .left > .cancelled-request {
+  background-color: red;
+  color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.grid > .left > .event-requested {
+  background-color: blue;
+  color: white;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.grid > .left > .pending-request {
+  background: #A5402D;
+  color: white;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  display: flex;
+}
+
+.grid > .left > .approved-request {
+  background-color: green;
+  color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.AdminDashBoard > .right > .pie-chart-container,
+.AdminDashBoard > .right > .bar-chart-container {
+  width: 5%;
 }

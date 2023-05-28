@@ -128,7 +128,6 @@ const UserRequestUpdate = ({
     const newValue = type === "checkbox" ? checked : value;
     setMaterialData((prevData) => ({ ...prevData, [name]: newValue }));
   };
-
   return (
     <div
       className="RequestUpdate"
@@ -160,6 +159,7 @@ const UserRequestUpdate = ({
           >
             X
           </button>
+          
         </div>
 
         <div className="title">
@@ -201,6 +201,9 @@ const UserRequestUpdate = ({
                 padding: "5px",
               }}
               type="text"
+              value={data.facility}
+              name="facility"
+              onChange={handleInputChange}
             />
           </div>
           <div className="eventInfo">

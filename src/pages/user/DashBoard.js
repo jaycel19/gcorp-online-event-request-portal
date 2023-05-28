@@ -4,6 +4,7 @@ import axios from "axios";
 import { useAuthContext } from "../../context/AuthContext";
 import "../../css/DashBoard.css";
 import UserRequestUpdate from "../../components/UserRequestUpdate";
+import Swal from "sweetalert2";
 
 import {
   Document,
@@ -232,14 +233,12 @@ const DashBoard = () => {
   const [showUpdate, setShowUpdate] = useState(false);
   const [statusFetched, setStatusFetched] = useState(false); // Flag variable
 
-  console.log(loggedUser.id);
   useEffect(() => {
     const getStatus = async () => {
       try {
         const response = await Axios.get(
           `https://capstone23.com/gcorp/gcorp-backend/api/request/request_from_user.php?id=${loggedUser.id}`
         );
-        console.log(response.data);
         setStatus(response.data);
         setStatusIsLoading(false);
         setStatusFetched(true); // Set flag to true
@@ -329,6 +328,39 @@ const DashBoard = () => {
       fetchData();
     }
   }, [status, statusFetched, loggedUser.id]);
+
+  const updateStatus = async (data) => {
+    try {
+      const response = await axios.put(
+        "https://capstone23.com/gcorp/gcorp-backend/api/request/update_status.php",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setRerenderCounter(!rerenderCounter);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleCancelRequest = () => {
+    Swal.fire({
+      title: "Are you sure you want to reject this request?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateStatus({
+          id: data.id,
+          status: "cancelled",
+        });
+      }
+    });
+  };
   return (
     <div className="DashBoard">
       <div className="header">
@@ -349,21 +381,45 @@ const DashBoard = () => {
             ) : (
               status[loggedUser.id]?.status
             )}{" "}
-            <button
-              onClick={() => setShowUpdate(!showUpdate)}
-              style={{
-                cursor: data?.id ? "pointer" : "not-allowed",
-                backgroundColor: data?.id ? "green" : "lightgreen",
-                color: "#fff",
-                borderRadius: "5px",
-                padding: "10px 10px",
-                border: "none",
-                fontWeight: "550",
-              }}
-              disabled={data?.id ? false : true}
-            >
-              EDIT REQUEST
-            </button>
+            {data?.id && (
+              <>
+                <button
+                  onClick={() => setShowUpdate(!showUpdate)}
+                  style={{
+                    cursor: data?.id ? "pointer" : "not-allowed",
+                    backgroundColor: data?.id ? "green" : "lightgreen",
+                    color: "#fff",
+                    borderRadius: "5px",
+                    padding: "10px 10px",
+                    border: "none",
+                    fontWeight: "550",
+                    display: data?.status === "cancelled" ? "none" : "block",
+                  }}
+                  disabled={data?.id ? false : true}
+                >
+                  EDIT REQUEST
+                </button>
+
+                <button
+                  onClick={handleCancelRequest}
+                  style={{
+                    cursor:
+                      data?.status === "cancelled" ? "not-allowed" : "pointer",
+                    backgroundColor:
+                      data?.status === "cancelled" ? "#c1c1c1" : "red",
+                    color: "#fff",
+                    borderRadius: "5px",
+                    padding: "10px 10px",
+                    border: "none",
+                    fontWeight: "550",
+                    marginLeft: "10px",
+                  }}
+                  disabled={data?.status === "cancelled" ? true : false}
+                >
+                  CANCEL REQUEST
+                </button>
+              </>
+            )}
           </p>
           {isLoading ? (
             <p>Loading...</p>
@@ -371,8 +427,8 @@ const DashBoard = () => {
             <div
               className="requestInfo"
               style={{
-                display: "flex",
                 flexDirection: "column",
+                display: data?.status === "cancelled" ? "none" : "flex"
               }}
             >
               <h2

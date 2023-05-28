@@ -106,7 +106,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
             if (result.isConfirmed) {
                 updateStatus({
                     id: data.id,
-                    status: "cancelled"
+                    status: "disapproved"
                 })
 
             }
@@ -207,7 +207,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         padding: '5px 10px',
                         border: 'none',
                         cursor: 'pointer',
-                        display: data?.status === 'cancelled' || data?.status === 'pending'  ? 'flex' : 'none'
+                        display: data?.status === 'disapproved' || data?.status === 'pending'  ? 'flex' : 'none'
                     }} onClick={handleApprove}><FontAwesomeIcon icon={faCheck} /> {/* check icon */}</button>
                     <button style={{
                         backgroundColor: 'red',
