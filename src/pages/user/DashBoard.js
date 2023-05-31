@@ -258,7 +258,7 @@ const DashBoard = () => {
               className="requestInfo"
               style={{
                 flexDirection: "column",
-                display: data?.status === "cancelled" ? "none" : "flex",
+                display: data?.status === "Cancelled" ? "none" : "flex",
               }}
             >
               <h2
@@ -293,6 +293,7 @@ const DashBoard = () => {
                     padding: "10px",
                     cursor: data?.id ? "pointer" : "not-allowed",
                     backgroundColor: data?.id ? "#3f51b5" : "lightblue",
+                    disabled: data?.id ? true : false
                   }}
                 >
                   Download PDF

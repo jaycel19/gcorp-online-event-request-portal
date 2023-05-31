@@ -175,7 +175,7 @@ const RequestUpdate = ({
           : parseInt(materialData.monoblock_single);
       const attendOutFin = attendOut === "" ? 0 : attendOut;
       const attendSum = parseInt(attendOutFin) + parseInt(attendGc);
-      setIsAttendIsEqual(attendSum > monoblock);
+      setIsAttendIsEqual(attendSum === monoblock);
       console.log(monoblock);
       console.log(isAttendIsEqual);
       console.log(attendSum);
@@ -685,7 +685,7 @@ const RequestUpdate = ({
                       color: "red",
                     }}
                   >
-                    You are short in Monoblocks
+                    The monoblocks and attendees does not match
                   </span>
                 )}
                 <input

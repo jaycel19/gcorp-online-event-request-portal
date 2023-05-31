@@ -226,7 +226,7 @@ const RequestForm = () => {
           ? parseInt(newValue)
           : requestData.monoblock_single;
       const attendSum = parseInt(attendOut) + parseInt(attendGc);
-      setIsAttendIsEqual(attendSum > monoblock);
+      setIsAttendIsEqual(attendSum === monoblock);
     }
 
     if (name === "duration_from" || name === "duration_to") {
@@ -694,14 +694,14 @@ const RequestForm = () => {
                 alignItems: "flex-end",
               }}
             >
-              {isAttendIsEqual && (
+              {!isAttendIsEqual && (
                 <span
                   style={{
                     fontSize: "12px",
                     color: "red",
                   }}
                 >
-                  You are short in Monoblocks
+                  The Monoblocks and attendees does not match
                 </span>
               )}
               <input

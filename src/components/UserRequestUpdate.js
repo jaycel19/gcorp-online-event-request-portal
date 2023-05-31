@@ -141,7 +141,7 @@ const UserRequestUpdate = ({
           : parseInt(materialData.monoblock_single);
       const attendOutFin = attendOut === "" ? 0 : attendOut;
       const attendSum = parseInt(attendOutFin) + parseInt(attendGc);
-      setIsAttendIsEqual(attendSum > monoblock);
+      setIsAttendIsEqual(attendSum === monoblock);
       console.log(monoblock);
       console.log(isAttendIsEqual);
       console.log(attendSum);
@@ -618,14 +618,14 @@ const UserRequestUpdate = ({
                   alignItems: "flex-end",
                 }}
               >
-                {isAttendIsEqual && (
+                {!isAttendIsEqual && (
                   <span
                     style={{
                       fontSize: "12px",
                       color: "red",
                     }}
                   >
-                    You are short in Monoblocks
+                    The monoblocks and attendees does not match
                   </span>
                 )}
                 <input

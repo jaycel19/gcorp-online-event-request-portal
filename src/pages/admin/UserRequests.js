@@ -7,7 +7,6 @@ import "jspdf-autotable";
 import { utils, writeFile } from "xlsx";
 
 const UserRequests = () => {
-  const [selectedFilter, setSelectedFilter] = useState("name");
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
   const [rerenderCounter, setRerenderCounter] = useState(false);
@@ -26,11 +25,6 @@ const UserRequests = () => {
     hour12: true,
   };
 
-  const filterOptions = [
-    { label: "Name", value: "user_name" },
-    { label: "Facility", value: "facility" },
-    { label: "Event Title", value: "event_title" },
-  ];
 
   const exportToExcel = (data) => {
     const worksheet = utils.json_to_sheet(data);
@@ -112,8 +106,7 @@ const UserRequests = () => {
 
   const filteredData = data.filter((item) => {
     // Check if the search term exists in the selected filter property
-    const filterValue = item[selectedFilter] || "";
-    return filterValue
+    return searchTerm
       .toString()
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -196,10 +189,6 @@ const UserRequests = () => {
     doc.save("user-requests.pdf");
   };
 
-  const handleFilterChange = (e) => {
-    setSearchTerm("");
-    setSelectedFilter(e.target.value);
-  };
 
   const handleDateRequestedSort = () => {
     setIsLoading(true);
@@ -216,26 +205,40 @@ const UserRequests = () => {
     setSortOrder(sortOrder === "desc" ? "asc" : "desc");
   };
 
+  const handleStatusSort = () => {
+    setIsLoading(true);
+    const sortedData = [...data].sort((a, b) => {
+      if (sortOrder === "desc") {
+        return getStatusOrder(a.status) - getStatusOrder(b.status);
+      } else {
+        return getStatusOrder(b.status) - getStatusOrder(a.status);
+      }
+    });
+
+    setData(sortedData);
+    setIsLoading(false);
+    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
+  };
+  const getStatusOrder = (status) => {
+    switch (status) {
+      case "Approved":
+        return 0;
+      case "Pending":
+        return 1;
+      case "Disapproved":
+        return 2;
+      case "Cancelled":
+        return 3;
+      default:
+        return 4;
+    }
+  };
+
   return (
     <div className="UserRequests">
       <div className="controls">
         <div className="search">
           <p style={{ marginLeft: "10px" }}>SEARCH</p>
-          <select
-            style={{
-              width: "100px",
-              height: "30px",
-              margin: "10px",
-            }}
-            value={selectedFilter}
-            onChange={handleFilterChange}
-          >
-            {filterOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
           <input
             type="text"
             value={searchTerm}
@@ -282,7 +285,9 @@ const UserRequests = () => {
               >
                 Date&nbsp;Requested
               </th>
-              <th>Actions</th>
+              <th style={{ cursor: "pointer" }} onClick={handleStatusSort}>
+                Actions/Status
+              </th>
             </tr>
           </thead>
           {isLoading ? (
