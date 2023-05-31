@@ -364,7 +364,7 @@ const DashBoard = () => {
       if (result.isConfirmed) {
         updateStatus({
           id: data.id,
-          status: "cancelled",
+          status: "Cancelled",
         });
         
       }
@@ -403,7 +403,7 @@ const DashBoard = () => {
                     border: "none",
                     fontWeight: "550",
                     marginLeft: "10px",
-                    display: data?.status === "cancelled" ? "none" : "block",
+                    display: data?.status === "Cancelled" ? "none" : "block",
                   }}
                   disabled={data?.id ? false : true}
                 >
@@ -414,9 +414,9 @@ const DashBoard = () => {
                   onClick={handleCancelRequest}
                   style={{
                     cursor:
-                      data?.status === "cancelled" ? "not-allowed" : "pointer",
+                      data?.status === "Cancelled" ? "not-allowed" : "pointer",
                     backgroundColor:
-                      data?.status === "cancelled" ? "#c1c1c1" : "red",
+                      data?.status === "Cancelled" ? "#c1c1c1" : "red",
                     color: "#fff",
                     borderRadius: "5px",
                     padding: "10px 10px",
@@ -424,7 +424,7 @@ const DashBoard = () => {
                     fontWeight: "550",
                     marginLeft: "10px",
                   }}
-                  disabled={data?.status === "cancelled" ? true : false}
+                  disabled={data?.status === "Cancelled" ? true : false}
                 >
                   CANCEL REQUEST
                 </button>

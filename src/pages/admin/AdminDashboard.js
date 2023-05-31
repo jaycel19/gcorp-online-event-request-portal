@@ -95,13 +95,13 @@ const AdminDashboard = () => {
             {
               label: "Requests Count",
               data: [
-                counts.cancelled || 0,
+                counts.Cancelled || 0,
                 Object.values(response.data).length,
-                counts.pending || 0,
-                counts.approved || 0,
-                counts.disapproved || 0,
+                counts.Pending || 0,
+                counts.Approved || 0,
+                counts.Disapproved || 0,
               ],
-              backgroundColor: ["red", "blue", "#fcba03", "green", "yellow"],
+              backgroundColor: ["red", "blue", "#A5402D", "green", "#721121"],
             },
           ],
         };
@@ -128,13 +128,13 @@ const AdminDashboard = () => {
             {
               label: "Requests Count",
               data: [
-                counts.cancelled || 0,
+                counts.Cancelled || 0,
                 Object.values(response.data).length,
-                counts.pending || 0,
-                counts.approved || 0,
-                counts.disapproved || 0,
+                counts.Pending || 0,
+                counts.Approved || 0,
+                counts.Disapproved || 0,
               ],
-              backgroundColor: ["red", "blue", "#fcba03", "green, yellow"],
+              backgroundColor: ["red", "blue", "#A5402D", "green", "#721121"],
             },
           ],
         };
@@ -154,11 +154,11 @@ const AdminDashboard = () => {
           setRequests(filteredRequests);
           // update the state with the total counts
           setTotal({
-            cancelled: counts.cancelled || 0,
+            cancelled: counts.Cancelled || 0,
             requested: Object.values(response.data).length,
-            pending: counts.pending || 0,
-            approved: counts.approved || 0,
-            disapproved: counts.disapproved || 0,
+            pending: counts.Pending || 0,
+            approved: counts.Approved || 0,
+            disapproved: counts.Disapproved || 0,
           });
 
           // create pie chart instance
