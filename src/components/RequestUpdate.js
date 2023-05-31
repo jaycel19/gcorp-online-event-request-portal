@@ -12,7 +12,7 @@ const RequestUpdate = ({
   showUpdate,
   setRerenderCounter,
   rerenderCounter,
-  defaultRequestDate
+  defaultRequestDate,
 }) => {
   const [requestData, setRequestData] = useState({});
   const [isAttendIsEqual, setIsAttendIsEqual] = useState(false);
@@ -58,7 +58,6 @@ const RequestUpdate = ({
     };
     getRequests();
   }, [rerenderCounter]);
-
 
   const [materialData, setMaterialData] = useState({
     id: data.equipment_materials_id,
@@ -264,7 +263,7 @@ const RequestUpdate = ({
       <div
         className="modal-content-update"
         style={{
-          borderLeft: "10px solid green",
+          borderLeft: "10px solid #3f51b5",
           borderRadius: "10px",
         }}
       >
@@ -353,7 +352,7 @@ const RequestUpdate = ({
               <p>DEPARTMENT:</p>
               <select
                 className="deps"
-                style={{ width: "175px" }}
+                style={{ width: "180px" }}
                 value={requestData.department}
                 onChange={handleInputChange}
                 name="department"
@@ -490,6 +489,10 @@ const RequestUpdate = ({
           <div className="descriptionAct">
             <p>DESCRIPTION OF ACTIVITY:</p>
             <textarea
+              style={{
+                width: '25%',
+                padding: '10px'
+              }}
               name="description_of_activity"
               value={requestData.description_of_activity}
               onChange={handleInputChange}
@@ -515,6 +518,9 @@ const RequestUpdate = ({
                   <p>Single Monoblock Chair</p>
                 </div>
                 <input
+                  style={{
+                    width: "50px",
+                  }}
                   type="number"
                   name="monoblock_single"
                   value={materialData.monoblock_single}
@@ -533,6 +539,9 @@ const RequestUpdate = ({
                   <p>Armchairs</p>
                 </div>
                 <input
+                  style={{
+                    width: "50px",
+                  }}
                   type="number"
                   name="armchairs"
                   value={materialData.armchairs}
@@ -551,6 +560,9 @@ const RequestUpdate = ({
                   <p>Tables</p>
                 </div>
                 <input
+                  style={{
+                    width: "50px",
+                  }}
                   type="number"
                   name="tables"
                   value={materialData.tables}
@@ -569,6 +581,9 @@ const RequestUpdate = ({
                   <p>Microphones</p>
                 </div>
                 <input
+                  style={{
+                    width: "50px",
+                  }}
                   type="number"
                   max="2"
                   name="microphones"
@@ -588,6 +603,9 @@ const RequestUpdate = ({
                   <p>Speakers</p>
                 </div>
                 <input
+                  style={{
+                    width: "50px",
+                  }}
                   type="number"
                   name="speakers"
                   value={materialData.speakers}
@@ -606,6 +624,9 @@ const RequestUpdate = ({
                   <p>Whiteboard</p>
                 </div>
                 <input
+                  style={{
+                    width: "50px",
+                  }}
                   type="number"
                   name="whiteboard"
                   value={materialData.whiteboard}

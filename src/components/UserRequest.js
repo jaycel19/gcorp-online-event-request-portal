@@ -157,7 +157,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
     return (
         <>
             <tr>
-                <td>{data.id}</td>
+                <td>{data.uniqueId}</td>
                 <td className="username">{data.user_name}</td>
                 <td>{data.department}</td>
                 <td>{data.contact_number}</td>
@@ -165,9 +165,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                 <td>{data.duration_from}  {data.duration_from_time}, {data.duration_to} {data.duration_to_time} </td>
                 <td className="description">{data.description_of_activity.slice(0, 15)}...</td>
                 <td className="equips">
-                    <p>Monoblock Single {`(${data.material[data.equipment_materials_id].monoblock_single})`} Armchairs {`(${data.material[data.equipment_materials_id].armchairs})`}</p>
-                    <p>Microphones {`(${data.material[data.equipment_materials_id].microphones})`} Speakers {`(${data.material[data.equipment_materials_id].speakers})`}</p>
-                    <p>Whiteboard {`(${data.material[data.equipment_materials_id].whiteboard})`} Tables {`(${data.material[data.equipment_materials_id].tables})`}</p>
+                    {data.date_requested}
                 </td>
                 <td className="buttons">
                     <button className="actions edit" onClick={() => setShowUpdate(true)}>
