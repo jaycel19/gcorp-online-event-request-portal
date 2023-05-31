@@ -96,7 +96,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
             if (result.isConfirmed) {
                 updateStatus({
                     id: data.id,
-                    status: "approved"
+                    status: "Approved"
                 });
             }
         });
@@ -113,7 +113,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
             if (result.isConfirmed) {
                 updateStatus({
                     id: data.id,
-                    status: "disapproved"
+                    status: "Disapproved"
                 })
 
             }
@@ -215,7 +215,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         padding: '5px 10px',
                         border: 'none',
                         cursor: 'pointer',
-                        display: data?.status === 'disapproved' || data?.status === 'pending'  ? 'flex' : 'none'
+                        display: data?.status === 'Disapproved' || data?.status === 'Pending'  ? 'flex' : 'none'
                     }} onClick={handleApprove}><FontAwesomeIcon icon={faCheck} /> {/* check icon */}</button>
                     <button style={{
                         backgroundColor: 'red',
@@ -225,9 +225,9 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                         border: 'none',
                         cursor: 'pointer',
                         height: '22px',
-                        display: data?.status === 'approved' || data?.status === 'pending' ? 'flex' : 'none'
+                        display: data?.status === 'Approved' || data?.status === 'Pending' ? 'flex' : 'none'
                     }} onClick={handleReject}><FontAwesomeIcon icon={faTimes} /> {/* x icon */}</button>
-                    <p style={{ display: data?.status != 'pending' ? 'block' : 'none'}}><span style={{
+                    <p style={{ display: data?.status != 'Pending' ? 'block' : 'none'}}><span style={{
                         fontWeight: '800'
                     }}>STATUS:</span> {data?.status}</p>
                 </td>

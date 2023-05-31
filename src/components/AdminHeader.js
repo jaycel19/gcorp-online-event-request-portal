@@ -39,7 +39,7 @@ const AdminHeader = ({ setSideNavOpen }) => {
                     />
                 </div>
                 <div className="right">
-                    <h3>Welcome, {isAdminLogged.name}</h3>
+                    <h3>{isAdminLogged.name}</h3>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
             </div>

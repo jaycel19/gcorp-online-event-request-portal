@@ -32,8 +32,8 @@ const AdminDashboard = () => {
     if (selectedEvent) {
       const { title, start, end, resource } = selectedEvent;
       return (
-        <div className="eventModal" style={{ zIndex: "10", padding: 10 }}>
-          <div className="modal-content">
+        <div className="eventModal" style={{ zIndex: "10", padding: 10, }}>
+          <div className="modal-content" style={{width: '300px'}}>
             <h4>{title}</h4>
             <p>Start: {moment(start).format("MMMM Do YYYY, h:mm:ss a")}</p>
             <p>End: {moment(end).format("MMMM Do YYYY, h:mm:ss a")}</p>
@@ -61,16 +61,16 @@ const AdminDashboard = () => {
           (request) => {
             const status = request.status;
             return (
-              status === "approved" ||
-              status === "cancelled" ||
-              status === "pending" ||
-              status === "disapproved"
+              status === "Approved" ||
+              status === "Cancelled" ||
+              status === "Pending" ||
+              status === "Disapproved"
             );
           }
         );
         const calendarEvents = Object.values(response.data).filter((events) => {
           return (
-            events.status !== "cancelled" && events.status !== "disapproved"
+            events.status !== "Cancelled" && events.status !== "Disapproved"
           );
         });
 
@@ -154,11 +154,11 @@ const AdminDashboard = () => {
           setRequests(filteredRequests);
           // update the state with the total counts
           setTotal({
-            disapproved: counts.disapproved || 0,
             cancelled: counts.cancelled || 0,
             requested: Object.values(response.data).length,
             pending: counts.pending || 0,
             approved: counts.approved || 0,
+            disapproved: counts.disapproved || 0,
           });
 
           // create pie chart instance
