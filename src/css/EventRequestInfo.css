@@ -7,9 +7,9 @@
 .EventRequestInfo > .c > ol > li,
 .EventRequestInfo > .a > ol > li,
 .EventRequestInfo > .b > ol > li {
-  font-size: 25px;
-  word-spacing: 12px;
-  line-height: 50px;
+  font-size: 16px;
+  word-spacing: 5px;
+  line-height: 30px;
 }
 
 .EventRequestInfo {
@@ -55,7 +55,7 @@
   .EventRequestInfo > .c > ol > li,
   .EventRequestInfo > .a > ol > li,
   .EventRequestInfo > .b > ol > li {
-    font-size: 16px;
+    font-size: 12px;
     word-spacing: 10px;
     line-height: 40px;
   }
