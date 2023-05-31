@@ -222,7 +222,7 @@ const UserRequestUpdate = ({
       <div
         className="modal-content-update"
         style={{
-          borderLeft: "10px solid green",
+          borderLeft: "10px solid #3f51b5",
           borderRadius: "10px",
         }}
       >
