@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../css/RequestUpdate.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+const MySwal = withReactContent(Swal);
 
 const UserRequestUpdate = ({
   data,
@@ -10,35 +13,41 @@ const UserRequestUpdate = ({
   showUpdate,
   setRerenderCounter,
   rerenderCounter,
+  defaultRequestDate,
+  materialData,
+  setMaterialData,
 }) => {
-  const [requestData, setRequestData] = useState({});
+  const [requestDatas, setRequestDatas] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isAttendIsEqual, setIsAttendIsEqual] = useState(false);
   useEffect(() => {
-    const getSingleRequest = async () => {
+    setData((prev) => ({
+      ...prev,
+      duration_from: defaultRequestDate.duration_from,
+      duration_to: defaultRequestDate.duration_to,
+    }));
+    const getRequests = async () => {
       try {
         const response = await axios.get(
-          `https://capstone23.com/gcorp/gcorp-backend/api/request/single.php?id=${data.id}`
+          `https://capstone23.com/gcorp/gcorp-backend/api/request/requests.php`
         );
-        setRequestData(response.data[data.id]);
+        const requestDataIds = Object.keys(response.data);
+        const reconstructedRequestDatas = requestDataIds.map(
+          (id) => response.data[id]
+        );
+
+        setRequestDatas(reconstructedRequestDatas);
         return response.data;
       } catch (error) {
         console.error(error);
       }
     };
-    getSingleRequest();
+    getRequests();
   }, [rerenderCounter]);
-  const [materialData, setMaterialData] = useState({
-    id: data?.equipment_materials_id,
-    monoblock_single: data?.material?.monoblock_single,
-    armchairs: data?.material?.armchairs,
-    microphones: data?.material?.microphones,
-    speakers: data?.material?.speakers,
-    whiteboard: data?.material?.whiteboard,
-    tables: data?.material?.tables,
-  });
 
   const updateRequest = async (requestData) => {
     setIsLoading(true);
+
     try {
       const response = await axios.put(
         "https://capstone23.com/gcorp/gcorp-backend/api/request/update.php",
@@ -70,20 +79,23 @@ const UserRequestUpdate = ({
         }
       );
       setRerenderCounter(!rerenderCounter);
-      setMaterialData({
-        id: data.equipment_materials_id,
-        monoblock_single: data?.material?.monoblock_single,
-        armchairs: data?.material?.armchairs,
-        microphones: data?.material?.microphones,
-        speakers: data?.material?.speakers,
-        whiteboard: data?.material?.whiteboard,
-        tables: data?.material?.tables,
-      });
       setIsLoading(false);
       return response.data;
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const isDateReserved = (date) => {
+    for (const requestData of requestDatas) {
+      if (
+        date >= requestData.duration_from &&
+        date <= requestData.duration_to
+      ) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const handleSubmit = () => {
@@ -107,6 +119,78 @@ const UserRequestUpdate = ({
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
     setData((prevData) => ({ ...prevData, [name]: newValue }));
+    const newValueMat = type === "checkbox" ? checked : value;
+    setMaterialData((prevData) => ({ ...prevData, [name]: newValueMat }));
+
+    if (
+      name === "expected_num_attend_out" ||
+      name === "expected_num_attend_gc" ||
+      name === "monoblock_single"
+    ) {
+      const attendGc =
+        name === "expected_num_attend_gc"
+          ? parseInt(newValue)
+          : data.expected_num_attend_gc;
+      const attendOut =
+        name === "expected_num_attend_out"
+          ? parseInt(newValue)
+          : data.expected_num_attend_out;
+      const monoblock =
+        name === "monoblock_single"
+          ? parseInt(newValue)
+          : parseInt(materialData.monoblock_single);
+      const attendOutFin = attendOut === "" ? 0 : attendOut;
+      const attendSum = parseInt(attendOutFin) + parseInt(attendGc);
+      setIsAttendIsEqual(attendSum > monoblock);
+      console.log(monoblock);
+      console.log(isAttendIsEqual);
+      console.log(attendSum);
+    }
+
+    if (name === "duration_from" || name === "duration_to") {
+      const fromDate =
+        name === "duration_from"
+          ? new Date(newValue)
+          : new Date(data.duration_from);
+      const toDate =
+        name === "duration_to"
+          ? new Date(newValue)
+          : new Date(data.duration_to);
+
+      if (fromDate > toDate) {
+        MySwal.fire({
+          title: "Invalid Date Range",
+          text: "The 'To' date cannot be earlier than the 'From' date.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setData((prevData) => ({ ...prevData, [name]: "" }));
+        });
+      }
+
+      const currentDate = new Date();
+      if (fromDate < currentDate || toDate < currentDate) {
+        MySwal.fire({
+          title: "Invalid Date",
+          text: "You cannot choose a date that is before the current date.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setData((prevData) => ({ ...prevData, [name]: "" }));
+        });
+      }
+
+      if (isDateReserved(newValue)) {
+        MySwal.fire({
+          title: "Date Reserved",
+          text: "Please pick another date.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        }).then(() => {
+          setData((prevData) => ({ ...prevData, [name]: "" }));
+        });
+      }
+    }
   };
 
   const handleCheckboxChange = (e) => {
@@ -122,11 +206,13 @@ const UserRequestUpdate = ({
       setData((prevData) => ({ ...prevData, [name]: newValue }));
     }
   };
-
   const handleMaterialInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
-    setMaterialData((prevData) => ({ ...prevData, [name]: newValue }));
+  };
+  const handleMaterialCheckboxChange = (e) => {
+    const checkboxName = e.target.name;
+    const inputField = document.getElementsByName(checkboxName)[1];
+    inputField.disabled = !e.target.checked;
   };
   return (
     <div
@@ -159,7 +245,6 @@ const UserRequestUpdate = ({
           >
             X
           </button>
-          
         </div>
 
         <div className="title">
@@ -227,12 +312,19 @@ const UserRequestUpdate = ({
             </div>
             <div className="info">
               <p>DEPARTMENT:</p>
-              <input
-                type="text"
-                name="department"
+              <select
+                className="deps"
+                style={{ width: "175px" }}
                 value={data.department}
                 onChange={handleInputChange}
-              />
+                name="department"
+              >
+                <option value="CBA">CBA</option>
+                <option value="CCS">CCS</option>
+                <option value="CEAS">CEAS</option>
+                <option value="CHTM">CHTM</option>
+                <option value="CAHS">CAHS</option>
+              </select>
             </div>
             <div className="info">
               <p>CONTACT NUMBER:</p>
@@ -244,50 +336,50 @@ const UserRequestUpdate = ({
               />
             </div>
             <div className="info">
-            <p>TYPE OF EVENT:</p>
-            <input
-              type="checkbox"
-              name="type_of_event"
-              value="Conference"
-              onChange={handleCheckboxChange}
-            />
-            <span>Conference</span>
-            <input
-              type="checkbox"
-              name="type_of_event"
-              value="Training"
-              onChange={handleCheckboxChange}
-            />
-            <span>Training</span>
-            <input
-              type="checkbox"
-              name="type_of_event"
-              value="Seminar"
-              onChange={handleCheckboxChange}
-            />
-            <span>Seminar</span>
-            <input
-              type="checkbox"
-              name="type_of_event"
-              value="OTHER"
-              onChange={handleCheckboxChange}
-            />
-            <span>OTHER: </span>
-            <input
-              className=""
-              style={{
-                backgroundColor: "#fff",
-                borderBottom: "1px solid #000",
-                padding: "5px",
-                width: "100%",
-                maxWidth: "15%",
-              }}
-              type="text"
-              name="type_of_event"
-              value={data.type_of_event}
-              onChange={handleInputChange}
-            />
-          </div>
+              <p>TYPE OF EVENT:</p>
+              <input
+                type="checkbox"
+                name="type_of_event"
+                value="Conference"
+                onChange={handleCheckboxChange}
+              />
+              <span>Conference</span>
+              <input
+                type="checkbox"
+                name="type_of_event"
+                value="Training"
+                onChange={handleCheckboxChange}
+              />
+              <span>Training</span>
+              <input
+                type="checkbox"
+                name="type_of_event"
+                value="Seminar"
+                onChange={handleCheckboxChange}
+              />
+              <span>Seminar</span>
+              <input
+                type="checkbox"
+                name="type_of_event"
+                value="OTHER"
+                onChange={handleCheckboxChange}
+              />
+              <span>OTHER: </span>
+              <input
+                className=""
+                style={{
+                  backgroundColor: "#fff",
+                  borderBottom: "1px solid #000",
+                  padding: "5px",
+                  width: "100%",
+                  maxWidth: "15%",
+                }}
+                type="text"
+                name="type_of_event"
+                value={data.type_of_event}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
         </div>
         <div className="second">
@@ -317,8 +409,10 @@ const UserRequestUpdate = ({
                       name="duration_from_time"
                       onChange={handleInputChange}
                     >
-                      <option value="7:00 am">7:00 AM</option>
-                      <option value="9:00 am">9:00 AM</option>
+                      <option value="7:00 AM">7:00 AM</option>
+                      <option value="8:00 AM">8:00 AM</option>
+                      <option value="9:00 AM">9:00 AM</option>
+                      <option value="10:00 AM">10:00 AM</option>
                     </select>
                   </div>
                 </div>
@@ -340,13 +434,15 @@ const UserRequestUpdate = ({
                   <div className="singleDate">
                     <p>TIME:</p>
                     <select
-                    value={data.duration_to_time}
-                    name="duration_to_time"
-                    onChange={handleInputChange}
-                  >
-                    <option value="7:00 am">7:00 AM</option>
-                    <option value="9:00 am">9:00 AM</option>
-                  </select>
+                      value={data.duration_to_time}
+                      name="duration_to_time"
+                      onChange={handleInputChange}
+                    >
+                      <option value="7:00 PM">7:00 PM</option>
+                      <option value="8:00 PM">8:00 PM</option>
+                      <option value="9:00 PM">9:00 PM</option>
+                      <option value="10:00 PM">10:00 PM</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -372,43 +468,65 @@ const UserRequestUpdate = ({
             <div className="checkQuan">
               <div className="everyItem">
                 <div className="nthItems">
-                  <input type="checkbox" name="monoblock_single" />
+                  <input
+                    type="checkbox"
+                    name="monoblock_single"
+                    onChange={handleMaterialCheckboxChange}
+                  />
                   <p>Single Monoblock Chair</p>
                 </div>
                 <input
                   type="number"
                   name="monoblock_single"
                   value={materialData.monoblock_single}
-                  onChange={handleMaterialInputChange}
+                  onChange={handleInputChange}
+                  disabled={true}
+                  inputMode="numeric"
                 />
               </div>
               <div className="everyItem">
                 <div className="nthItems">
-                  <input type="checkbox" name="armchairs" />
+                  <input
+                    type="checkbox"
+                    name="armchairs"
+                    onChange={handleMaterialCheckboxChange}
+                  />
                   <p>Armchairs</p>
                 </div>
                 <input
                   type="number"
                   name="armchairs"
                   value={materialData.armchairs}
-                  onChange={handleMaterialInputChange}
+                  onChange={handleInputChange}
+                  disabled={true}
+                  inputMode="numeric"
                 />
               </div>
               <div className="everyItem">
                 <div className="nthItems">
-                  <input type="checkbox" name="tables" />
+                  <input
+                    type="checkbox"
+                    name="tables"
+                    onChange={handleMaterialCheckboxChange}
+                  />
                   <p>Tables</p>
                 </div>
                 <input
                   type="number"
                   name="tables"
                   value={materialData.tables}
-                  onChange={handleMaterialInputChange}
+                  onChange={handleInputChange}
+                  disabled={true}
+                  inputMode="numeric"
                 />
               </div>
               <div className="everyItem">
                 <div className="nthItems">
-                  <input type="checkbox" name="microphones" />
+                  <input
+                    type="checkbox"
+                    name="microphones"
+                    onChange={handleMaterialCheckboxChange}
+                  />
                   <p>Microphones</p>
                 </div>
                 <input
@@ -416,51 +534,46 @@ const UserRequestUpdate = ({
                   max="2"
                   name="microphones"
                   value={materialData.microphones}
-                  onChange={handleMaterialInputChange}
+                  onChange={handleInputChange}
+                  disabled={true}
+                  inputMode="numeric"
                 />
               </div>
               <div className="everyItem">
                 <div className="nthItems">
-                  <input type="checkbox" name="speakers" />
+                  <input
+                    type="checkbox"
+                    name="speakers"
+                    onChange={handleMaterialCheckboxChange}
+                  />
                   <p>Speakers</p>
                 </div>
                 <input
                   type="number"
                   name="speakers"
                   value={materialData.speakers}
-                  onChange={handleMaterialInputChange}
+                  onChange={handleInputChange}
+                  disabled={true}
+                  inputMode="numeric"
                 />
               </div>
               <div className="everyItem">
                 <div className="nthItems">
-                  <input type="checkbox" name="whiteboard" />
+                  <input
+                    type="checkbox"
+                    name="whiteboard"
+                    onChange={handleMaterialCheckboxChange}
+                  />
                   <p>Whiteboard</p>
                 </div>
                 <input
                   type="number"
                   name="whiteboard"
                   value={materialData.whiteboard}
-                  onChange={handleMaterialInputChange}
+                  onChange={handleInputChange}
+                  disabled={true}
+                  inputMode="numeric"
                 />
-              </div>
-              <div className="everyItem">
-                <div className="nthItems">
-                  <input type="checkbox" name="other" />
-                  <p className="specify">
-                    <span>Others </span>
-                    <span>pls.Specify </span>
-                    <input
-                      name=""
-                      style={{
-                        borderBottom: "1px solid #000",
-                        backgroundColor: "#fff",
-                        width: "100px",
-                      }}
-                      type="text"
-                    />
-                  </p>
-                </div>
-                <input type="text" />
               </div>
             </div>
           </div>
@@ -496,11 +609,35 @@ const UserRequestUpdate = ({
                 <p>Expected Number of Attedees</p>
                 <p>From Gordon College:</p>
               </div>
-              <textarea
-                value={data.expected_num_attend_gc}
-                name="expected_num_attend_gc"
-                onChange={handleInputChange}
-              ></textarea>
+              <div
+                style={{
+                  width: "200px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  alignItems: "flex-end",
+                }}
+              >
+                {isAttendIsEqual && (
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      color: "red",
+                    }}
+                  >
+                    You are short in Monoblocks
+                  </span>
+                )}
+                <input
+                  style={{
+                    width: "23%",
+                  }}
+                  type="number"
+                  value={data.expected_num_attend_gc}
+                  name="expected_num_attend_gc"
+                  onChange={handleInputChange}
+                />
+              </div>
             </div>
           </div>
           <div className="otherSpec">
@@ -509,11 +646,23 @@ const UserRequestUpdate = ({
                 <p>Expected Number of Attedees</p>
                 <p>Outside of Gordon College:</p>
               </div>
-              <textarea
-                name="expected_num_attend_out"
-                value={data.expected_num_attend_out}
-                onChange={handleInputChange}
-              ></textarea>
+              <div
+                style={{
+                  width: "200px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <input
+                  style={{
+                    width: "23%",
+                  }}
+                  type="number"
+                  name="expected_num_attend_out"
+                  value={data.expected_num_attend_out}
+                  onChange={handleInputChange}
+                />
+              </div>
             </div>
           </div>
           <div className="otherSpec">
@@ -534,31 +683,6 @@ const UserRequestUpdate = ({
                   <input
                     type="checkbox"
                     name="cater"
-                    value={false}
-                    onChange={handleCheckboxChange}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="caterFood">
-              <p className="public">
-                <span>Open to the public?</span>
-              </p>
-              <div className="cateRight">
-                <div className="foodItem">
-                  <p>Yes</p>
-                  <input
-                    type="checkbox"
-                    name="cater_open_public"
-                    value={true}
-                    onChange={handleCheckboxChange}
-                  />
-                </div>
-                <div className="foodItem">
-                  <p>No</p>
-                  <input
-                    type="checkbox"
-                    name="cater_open_public"
                     value={false}
                     onChange={handleCheckboxChange}
                   />

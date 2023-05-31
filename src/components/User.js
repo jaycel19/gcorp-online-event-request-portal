@@ -58,7 +58,11 @@ const User = ({ data, userRerender, setUserRerender }) => {
         <tr>
             <td>{data.id}</td>
             <td>{data.name}</td>
-            <td>{data.department}</td>
+            {data.idNo ? <td>{data.idNo}</td>:""}
+            <td>{data.contactNumber}</td>
+            {data.organization ? <td>{data.organization}</td> : ""}
+            {data.address ? <td>{data.address}</td> : ""}
+            {data.department ? <td>{data.department}</td> : ""}
             <td>{data.domainEmail}</td>
             <td className="buttons">
                 <button className="actions edit" onClick={() => setShowUpdate(true)}>

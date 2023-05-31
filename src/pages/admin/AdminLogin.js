@@ -88,10 +88,10 @@ const AdminLogin = () => {
           <input type="text" className="username-input" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div className="in" style={{ position: 'relative' }}>
-          <input style={{ backgroundColor: "#fff", width: "90%" }} type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input style={{ backgroundColor: "#fff", width: "80%" }} type={showPassword ? 'text' : 'password'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
           <button onClick={() => setShowPassword(!showPassword)} style={{
             padding: '0px',
-            marginRight: '15px',
+            marginRight: '30px',
             marginTop: '0px',
             position: 'absolute',
             right: '0',

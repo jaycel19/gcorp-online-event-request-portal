@@ -13,10 +13,17 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
     const [singleRequest, setSingleRequest] = useState({});
     const [viewSingle, setViewSingle] = useState(false);
     const [deleteSuccess, setDeleteSuccess] = useState();
-
+    const [defaultRequestDate, setDefaultRequestDate] = useState({
+        duration_from: '',
+        duration_to: ''
+    });
     const getSingleRequest = async (id, data) => {
         try {
             const response = await axios.get(`https://capstone23.com/gcorp/gcorp-backend/api/request/single.php?id=${id}`);
+            setDefaultRequestDate({
+                duration_from: response.data[data.id].duration_from,
+                duration_to: response.data[data.id].duration_to
+            })
             setSingleRequest(response.data[data.id]);
             return response.data;
         } catch (error) {
@@ -186,6 +193,7 @@ const UserRequest = ({ data, setRerenderCounter, rerenderCounter }) => {
                     setShowUpdate={setShowUpdate}
                     setRerenderCounter={setRerenderCounter}
                     rerenderCounter={rerenderCounter}
+                    defaultRequestDate={defaultRequestDate}
                 />
                 <RequestView
                     id={data.equipment_materials_id}

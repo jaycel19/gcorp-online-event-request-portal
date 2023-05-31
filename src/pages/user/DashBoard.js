@@ -205,7 +205,7 @@ const PDFGenerator = ({ html, data }) => {
           <button
             style={{
               cursor: data?.id ? "pointer" : "not-allowed",
-              backgroundColor: data?.id ? "green" : "lightgreen",
+              backgroundColor: data?.id ? "#3f51b5" : "lightblue",
               color: "#fff",
               borderRadius: "5px",
               border: "none",
@@ -232,6 +232,10 @@ const DashBoard = () => {
   const [rerenderCounter, setRerenderCounter] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
   const [statusFetched, setStatusFetched] = useState(false); // Flag variable
+  const [defaultRequestDate, setDefaultRequestDate] = useState({
+    duration_from: '',
+    duration_to: ''
+  });
 
   useEffect(() => {
     const getStatus = async () => {
@@ -272,6 +276,7 @@ const DashBoard = () => {
   };
 
   const [data, setData] = useState({});
+  const [materialData, setMaterialData] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -283,14 +288,17 @@ const DashBoard = () => {
         const singleRequestResponse = await axios.get(singleRequestUrl);
         const requestData = Object.values(singleRequestResponse.data);
         const request = requestData[0];
-
+        setDefaultRequestDate({
+          duration_from: requestData[0].duration_from,
+          duration_to: requestData[0].duration_to
+        })
         // Fetch materials for the equipment/material item in the request data
         const equipmentMaterialsId = request.equipment_materials_id;
         const materialUrl = `https://capstone23.com/gcorp/gcorp-backend/api/material/single.php?id=${equipmentMaterialsId}`;
         const materialResponse = await axios.get(materialUrl);
         const materialData = Object.values(materialResponse.data);
         const material = materialData[0];
-
+        setMaterialData(material)
         // Combine the request data with the material data
         const updatedData = {
           ...request,
@@ -449,7 +457,7 @@ const DashBoard = () => {
                     color: "#fff",
                     padding: "10px",
                     cursor: data?.id ? "pointer" : "not-allowed",
-                    backgroundColor: data?.id ? "green" : "lightgreen",
+                    backgroundColor: data?.id ? "#3f51b5" : "lightblue",
                   }}
                   disabled={data?.id ? false : true}
                 >
@@ -620,6 +628,9 @@ const DashBoard = () => {
         showUpdate={showUpdate}
         setRerenderCounter={setRerenderCounter}
         rerenderCounter={rerenderCounter}
+        defaultRequestDate={defaultRequestDate}
+        setMaterialData={setMaterialData}
+        materialData={materialData}
       />
     </div>
   );

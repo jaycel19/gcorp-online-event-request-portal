@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import RequestFormMessage from "../../components/RequestFormMessage";
 import "../../css/RequestForm.css";
 import useInsertRequest from "../../components/useInsertRequest";
 import axios from "axios";
-import EmptyAlert from "../../components/EmptyAlert";
 import { useAuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -12,14 +10,15 @@ const MySwal = withReactContent(Swal);
 
 const RequestForm = () => {
   const { loggedUser } = useAuthContext();
-  const [requestDatas, setRequestDatas] = useState({});
+  const [isAttendIsEqual, setIsAttendIsEqual] = useState(false);
+  const [requestDatas, setRequestDatas] = useState({}); 
   const [requestData, setRequestData] = useState({
     user_id: loggedUser.id,
     facility: "",
     title_event: "",
     user_name: loggedUser.name,
-    department: "",
-    contact_number: "",
+    department: loggedUser.department,
+    contact_number: loggedUser.userContact,
     type_of_event: "",
     duration_from: "",
     duration_from_time: "",
@@ -28,8 +27,8 @@ const RequestForm = () => {
     description_of_activity: "",
     equipment_materials_id: 0,
     open_to_the_public: false,
-    expected_num_attend_gc: "",
-    expected_num_attend_out: "",
+    expected_num_attend_gc: 0,
+    expected_num_attend_out: 0,
     cater: false,
     cater_open_public: false,
     additional_info: "",
@@ -45,10 +44,9 @@ const RequestForm = () => {
     tables: 0,
   });
   const [toSubmit, setToSubmit] = useState(false);
-  const [isEmpty, setIsEmpty] = useState(false);
   const useInsertRequestMutation = useInsertRequest();
-
-  const handleShowModal = () => {
+  console.log(loggedUser);
+  const handleCheckIfEmpty = () => {
     const {
       facility,
       title_event,
@@ -67,35 +65,62 @@ const RequestForm = () => {
     } = requestData;
 
     if (
-      !facility &&
-      !title_event &&
-      !user_name &&
-      !department &&
-      !contact_number &&
-      !type_of_event &&
-      !duration_from &&
-      !duration_from_time &&
-      !duration_to &&
-      !duration_to_time &&
-      !description_of_activity &&
-      !expected_num_attend_gc &&
-      !expected_num_attend_out &&
-      !additional_info
+      !facility ||
+      !title_event ||
+      !user_name ||
+      !department ||
+      !contact_number ||
+      !type_of_event ||
+      !duration_from ||
+      !duration_from_time ||
+      !duration_to ||
+      !duration_to_time ||
+      !description_of_activity ||
+      !expected_num_attend_gc 
     ) {
-      setIsEmpty(true);
+      MySwal.fire({
+        title: "Empty Fields",
+        text: "Please fill in all the fields.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+    } else if (isAttendIsEqual) {
+      MySwal.fire({
+        title: "Monoblock not enough for the attendees",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
     } else {
       const hasPendingRequest = requestDatas.some(
-        (request) => request.user_id === loggedUser.id && request.status === "pending"
+        (request) =>
+          request.user_id === loggedUser.id && request.status === "pending"
       );
       if (hasPendingRequest) {
-        Swal.fire({
+        MySwal.fire({
           title: "Pending Request",
           text: "You already have a pending request.",
           icon: "warning",
           confirmButtonText: "OK",
         });
       } else {
-        setToSubmit(true);
+        MySwal.fire({
+          title: "Confirmation",
+          text: "Are you sure you want to submit the request?",
+          icon: "question",
+          showCancelButton: true,
+          confirmButtonText: "OK",
+          cancelButtonText: "Cancel",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            MySwal.fire({
+              title: "Request Submitted",
+              text: "Kindly wait for the approval of the admin.",
+              icon: "success",
+              confirmButtonText: "OK",
+            });
+            handleSubmit();
+          }
+        });
       }
     }
   };
@@ -180,15 +205,38 @@ const RequestForm = () => {
     const { name, value, type, checked } = e.target;
     const newValue = type === "checkbox" ? checked : value;
     setRequestData((prevData) => ({ ...prevData, [name]: newValue }));
+    const newValueMat = type === "checkbox" ? checked : value;
+    setMaterialData((prevData) => ({ ...prevData, [name]: newValueMat }));
+
+    if (
+      name === "expected_num_attend_out" ||
+      name === "expected_num_attend_gc" ||
+      name === "monoblock_single"
+    ) {
+      const attendGc =
+        name === "expected_num_attend_gc"
+          ? parseInt(newValue)
+          : requestData.expected_num_attend_gc;
+      const attendOut =
+        name === "expected_num_attend_out"
+          ? parseInt(newValue)
+          : requestData.expected_num_attend_out;
+      const monoblock =
+        name === "monoblock_single"
+          ? parseInt(newValue)
+          : requestData.monoblock_single;
+      const attendSum = parseInt(attendOut) + parseInt(attendGc);
+      setIsAttendIsEqual(attendSum > monoblock);
+    }
 
     if (name === "duration_from" || name === "duration_to") {
       const fromDate =
         name === "duration_from"
-          ? new Date(value)
+          ? new Date(newValue)
           : new Date(requestData.duration_from);
       const toDate =
         name === "duration_to"
-          ? new Date(value)
+          ? new Date(newValue)
           : new Date(requestData.duration_to);
 
       if (toDate < fromDate) {
@@ -214,7 +262,7 @@ const RequestForm = () => {
         });
       }
 
-      if (isDateReserved(value)) {
+      if (isDateReserved(newValue)) {
         MySwal.fire({
           title: "Date Reserved",
           text: "Please pick another date.",
@@ -243,8 +291,6 @@ const RequestForm = () => {
 
   const handleMaterialInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
-    setMaterialData((prevData) => ({ ...prevData, [name]: newValue }));
   };
 
   const handleMaterialCheckboxChange = (e) => {
@@ -261,7 +307,7 @@ const RequestForm = () => {
       <div className="first">
         <div className="titleHead">
           <p>
-            Please indicate the specific facility to use by checking the box:
+            PLEASE INDICATE THE SPECIFIC FACILITY TO USE BY CHECKING THE BOX:
           </p>
         </div>
         <div className="facilityList">
@@ -323,7 +369,8 @@ const RequestForm = () => {
           <div className="info">
             <p>DEPARTMENT:</p>
             <select
-              style={{ width: "150px" }}
+              className="deps"
+              style={{ width: "175px" }}
               value={requestData.department}
               onChange={handleInputChange}
               name="department"
@@ -352,21 +399,21 @@ const RequestForm = () => {
               value="Conference"
               onChange={handleCheckboxChange}
             />
-            <span>Conference</span>
+            <span>CONFERENCE</span>
             <input
               type="checkbox"
               name="type_of_event"
               value="Training"
               onChange={handleCheckboxChange}
             />
-            <span>Training</span>
+            <span>TRAINING</span>
             <input
               type="checkbox"
               name="type_of_event"
               value="Seminar"
               onChange={handleCheckboxChange}
             />
-            <span>Seminar</span>
+            <span>SEMINAR</span>
             <input
               type="checkbox"
               name="type_of_event"
@@ -420,7 +467,9 @@ const RequestForm = () => {
                     onChange={handleInputChange}
                   >
                     <option value="7:00 AM">7:00 AM</option>
+                    <option value="8:00 AM">8:00 AM</option>
                     <option value="9:00 AM">9:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
                   </select>
                 </div>
               </div>
@@ -447,7 +496,9 @@ const RequestForm = () => {
                     onChange={handleInputChange}
                   >
                     <option value="7:00 PM">7:00 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
                     <option value="9:00 PM">9:00 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
                   </select>
                 </div>
               </div>
@@ -485,7 +536,7 @@ const RequestForm = () => {
                 name="monoblock_single"
                 step="1"
                 value={materialData.monoblock_single}
-                onChange={handleMaterialInputChange}
+                onChange={handleInputChange}
                 disabled={true}
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -506,7 +557,7 @@ const RequestForm = () => {
                 min="0"
                 name="armchairs"
                 value={materialData.armchairs}
-                onChange={handleMaterialInputChange}
+                onChange={handleInputChange}
                 disabled={true}
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -522,12 +573,13 @@ const RequestForm = () => {
                 <p>Tables</p>
               </div>
               <input
+                style={{ width: "50px" }}
                 type="number"
                 max="6"
                 min="0"
                 name="tables"
                 value={materialData.tables}
-                onChange={handleMaterialInputChange}
+                onChange={handleInputChange}
                 disabled={true}
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -543,12 +595,13 @@ const RequestForm = () => {
                 <p>Microphones</p>
               </div>
               <input
+                style={{ width: "50px" }}
                 type="number"
                 max="2"
                 min="0"
                 name="microphones"
                 value={materialData.microphones}
-                onChange={handleMaterialInputChange}
+                onChange={handleInputChange}
                 disabled={true}
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -564,12 +617,13 @@ const RequestForm = () => {
                 <p>Speakers</p>
               </div>
               <input
+                style={{ width: "50px" }}
                 type="number"
                 max="2"
                 min="0"
                 name="speakers"
                 value={materialData.speakers}
-                onChange={handleMaterialInputChange}
+                onChange={handleInputChange}
                 disabled={true}
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -585,12 +639,13 @@ const RequestForm = () => {
                 <p>Whiteboard</p>
               </div>
               <input
+                style={{ width: "50px" }}
                 type="number"
                 max="1"
                 min="0"
                 name="whiteboard"
                 value={materialData.whiteboard}
-                onChange={handleMaterialInputChange}
+                onChange={handleInputChange}
                 disabled={true}
                 inputMode="numeric"
                 pattern="[0-9]*"
@@ -605,7 +660,7 @@ const RequestForm = () => {
         </div>
         <div className="pubOpen">
           <p>Open to the public?</p>
-          <div className="opItem">
+          <div className="opItem" style={{ marginLeft: "21%" }}>
             <p>Yes</p>
             <input
               type="checkbox"
@@ -630,11 +685,35 @@ const RequestForm = () => {
               <p>Expected Number of Attedees</p>
               <p>From Gordon College:</p>
             </div>
-            <textarea
-              value={requestData.expected_num_attend_gc}
-              name="expected_num_attend_gc"
-              onChange={handleInputChange}
-            ></textarea>
+            <div
+              style={{
+                width: "200px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                alignItems: "flex-end",
+              }}
+            >
+              {isAttendIsEqual && (
+                <span
+                  style={{
+                    fontSize: "12px",
+                    color: "red",
+                  }}
+                >
+                  You are short in Monoblocks
+                </span>
+              )}
+              <input
+                style={{
+                  width: "23%",
+                }}
+                type="number"
+                value={requestData.expected_num_attend_gc}
+                name="expected_num_attend_gc"
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
         </div>
         <div className="otherSpec">
@@ -643,11 +722,23 @@ const RequestForm = () => {
               <p>Expected Number of Attedees</p>
               <p>Outside of Gordon College:</p>
             </div>
-            <textarea
-              name="expected_num_attend_out"
-              value={requestData.expected_num_attend_out}
-              onChange={handleInputChange}
-            ></textarea>
+            <div
+              style={{
+                width: "200px",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <input
+                style={{
+                  width: "23%",
+                }}
+                type="number"
+                name="expected_num_attend_out"
+                value={requestData.expected_num_attend_out}
+                onChange={handleInputChange}
+              />
+            </div>
           </div>
         </div>
         <div className="otherSpec">
@@ -674,36 +765,7 @@ const RequestForm = () => {
               </div>
             </div>
           </div>
-          <div className="caterFood">
-            <p className="public">
-              <span>Open to the public?</span>
-              {/*
-                            <span className="many">
-                                <span>How many:</span>
-                                <input style={{ backgroundColor: "#fff", borderBottom: "1px solid #000", width: "55px" }} type="text" />
-                            </span>*/}
-            </p>
-            <div className="cateRight">
-              <div className="foodItem">
-                <p>Yes</p>
-                <input
-                  type="checkbox"
-                  name="cater_open_public"
-                  value={true}
-                  onChange={handleCheckboxChange}
-                />
-              </div>
-              <div className="foodItem">
-                <p>No</p>
-                <input
-                  type="checkbox"
-                  name="cater_open_public"
-                  value={false}
-                  onChange={handleCheckboxChange}
-                />
-              </div>
-            </div>
-          </div>
+          <div className="caterFood"></div>
         </div>
         <div className="addInfo">
           <div className="disc">
@@ -718,7 +780,7 @@ const RequestForm = () => {
               onChange={handleInputChange}
             ></textarea>
             <div className="subBtn">
-              <button type="submit" onClick={handleShowModal}>
+              <button type="submit" onClick={handleCheckIfEmpty}>
                 SUBMIT REQUEST <br />
                 FORM
               </button>
@@ -726,14 +788,6 @@ const RequestForm = () => {
           </div>
         </div>
       </div>
-      <EmptyAlert isEmpty={isEmpty} setIsEmpty={setIsEmpty} />
-      {toSubmit && (
-        <RequestFormMessage
-          setToSubmit={setToSubmit}
-          toSubmit={toSubmit}
-          handleSubmit={handleSubmit}
-        />
-      )}
     </div>
   );
 };

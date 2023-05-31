@@ -1,7 +1,8 @@
 .SideNav {
     width: 20%;
     flex-direction: column;
-    background-color: rgba(26, 96, 2, 1);
+    background-color:#fff;
+    box-shadow: 1px 2px 30px -5px #000;
     position: fixed;
     height: 100%;
     z-index: 1;
@@ -18,7 +19,7 @@
 .SideNav>.close-side>svg {
     width: 10%;
     padding: 10px;
-    color: #fff;
+    color: #000;
 }
 
 .SideNav>.logo {
@@ -28,7 +29,7 @@
 }
 
 .SideNav>.logo>h1 {
-    color: #fff;   
+    color: #000;   
     font-size: 20px;
 }
 
@@ -45,7 +46,7 @@
 }
 
 .SideNav>.nav>a {
-    color: #fff;
+    color: #000;
     font-size: 18px;
     height: 60px;
     width: 90%;
@@ -60,7 +61,7 @@
 }
 
 .SideNav>.nav>a:hover {
-    background-color: rgba(14, 54, 1, 0.92);
+background-color: #f1f1f1;
 }
 
 @media (max-width: 460px) {

@@ -24,7 +24,7 @@
 /* Modal Content/Box */
 .modal-content-update {
   display: flex;
-  border-left: 10px solid green;
+  border-left: 10px solid #3f51b5;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -397,7 +397,7 @@ input[type="number"]::-webkit-inner-spin-button {
   > .disc
   > .subBtn
   > button {
-  background: rgba(21, 78, 1, 0.92);
+  background: #3f51b5;
   border-radius: 11px;
   border: none;
   color: #fff;
@@ -409,7 +409,7 @@ input[type="number"]::-webkit-inner-spin-button {
 @media (max-width: 800px) {
   .modal-content-update {
     display: flex;
-    border-left: 5px solid green !important;
+    border-left: 5px solid #3f51b5 !important;
     flex-direction: column;
     justify-content: center;
     align-items: center;

@@ -41,7 +41,7 @@ const Header = ({ setSideNavOpen }) => {
                     />
                 </div>
                 <div className="right">
-                    <h3>Welcome, {loggedUser.name}</h3>
+                    <h3>{loggedUser.name}</h3>
                     <button onClick={handleLogout} style={{cursor: 'pointer'}}>Logout</button>
                 </div>
             </div>

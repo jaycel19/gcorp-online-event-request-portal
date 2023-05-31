@@ -102,10 +102,6 @@ console.log(data.cater_open_public)
         <td>{data.cater == "1" ? "YES" : "NO"}</td>
       </tr>
       <tr>
-        <td>Open to the Public?</td>
-        <td>{data.cater_open_public == "1" ? "YES" : "NO"}</td>
-      </tr>
-      <tr>
         <td>Additional Information:</td>
         <td>{data.additional_info}</td>
       </tr>

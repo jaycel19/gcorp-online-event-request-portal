@@ -18,8 +18,8 @@
   width: 90%;
   justify-content: "center";
   align-items: center;
-  border: 2px solid rgb(26, 96, 2);
-  border-left: 10px solid rgb(26, 96, 2);
+  border: 2px solid #3f51b5;
+  border-left: 10px solid #3f51b5;
   border-radius: 10px;
   padding: 50px;
 }
@@ -66,7 +66,7 @@
     width: 90%;
     justify-content: "center";
     align-items: center;
-    border: 2px solid rgb(26, 96, 2);
+    border: 2px solid #3f51b5;
     border-left: 5px solid rgb(26, 96, 2);
     border-radius: 10px;
     padding: 10px;

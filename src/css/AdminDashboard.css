@@ -31,7 +31,7 @@
 
 .eventModal > .modal-content > button {
   font-size: 16px;
-  background-color: green;
+  background-color: #3f51b5;
   border: none;
   color: #fff;
   padding: 10px 20px;
@@ -75,7 +75,7 @@
   }
 
   .grid > .approved-request {
-    background-color: green;
+    background-color: #3f51b5;
     color: white;
     width: 60px !important;
     height: 100px !important;
@@ -101,8 +101,8 @@
 }
 
 .grid > .left {
-  border: 1px solid green;
-  border-left: 10px solid green;
+  border: 1px solid #3f51b5;
+  border-left: 10px solid #3f51b5;
   width: 40%;
   border-radius: 10px;
   padding: 10px;

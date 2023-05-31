@@ -8,7 +8,7 @@ const LoginLogos = () => {
         <img src={gcLogo} alt="logo" />
       </div>
         <h1>GORDON COLLEGE EVENT REQUEST</h1>
-        <h2>STUDENTS PORTAL</h2>
+        <h2>USER PORTAL</h2>
     </div>
   )
 }
