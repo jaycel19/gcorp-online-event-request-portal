@@ -138,13 +138,9 @@ const UserRequestUpdate = ({
       const monoblock =
         name === "monoblock_single"
           ? parseInt(newValue)
-          : parseInt(materialData.monoblock_single);
-      const attendOutFin = attendOut === "" ? 0 : attendOut;
-      const attendSum = parseInt(attendOutFin) + parseInt(attendGc);
+          : parseInt(data.monoblock_single);
+      const attendSum = parseInt(attendOut) + parseInt(attendGc);
       setIsAttendIsEqual(attendSum === monoblock);
-      console.log(monoblock);
-      console.log(isAttendIsEqual);
-      console.log(attendSum);
     }
 
     if (name === "duration_from" || name === "duration_to") {

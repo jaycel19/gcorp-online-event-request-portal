@@ -25,7 +25,6 @@ const UserRequests = () => {
     hour12: true,
   };
 
-
   const exportToExcel = (data) => {
     const worksheet = utils.json_to_sheet(data);
     const workbook = utils.book_new();
@@ -105,11 +104,10 @@ const UserRequests = () => {
   const entriesPerPage = 3;
 
   const filteredData = data.filter((item) => {
-    // Check if the search term exists in the selected filter property
-    return searchTerm
-      .toString()
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    return Object.values(item).some((value) =>
+      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  
   });
 
   const indexOfLastEntry = (currentPage + 1) * entriesPerPage;
@@ -188,7 +186,6 @@ const UserRequests = () => {
     });
     doc.save("user-requests.pdf");
   };
-
 
   const handleDateRequestedSort = () => {
     setIsLoading(true);

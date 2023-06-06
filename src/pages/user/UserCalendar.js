@@ -15,9 +15,9 @@ const CustomEvent = ({ event }) => {
         {loggedUser.id === event.user_id ? event.title_event : "RESERVED"}
       </strong>
       {loggedUser.id === event.user_id ? (
-        <p>Other event details...</p>
+        <p>Facility: {event.facility}</p>
       ) : (
-        <p>{`${event.duration_from} to ${event.duration_to}`}</p>
+        <p></p>
       )}
     </div>
   );
@@ -147,13 +147,21 @@ const UserCalendar = () => {
           }}
         >
           {selectedEvent && (
-            <div style={{display: "flex", flexDirection: 'column', alignItems: 'center'}}>
-              <div style={{
-                width: "100%",
-                display: 'flex',
-                justifyContent: 'flex-end',
-                alignItems: 'center'
-              }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  alignItems: "center",
+                }}
+              >
                 <button
                   style={{
                     backgroundColor: "white",
@@ -172,8 +180,8 @@ const UserCalendar = () => {
               )}
               <p>
                 {loggedUser.id === selectedEvent.user_id
-                  ? "Other event details..."
-                  : `${selectedEvent.duration_from} to ${selectedEvent.duration_to}`}
+                  ? `Facility: ${selectedEvent.facility}`
+                  : `Facility: ${selectedEvent.facility}`}
               </p>
             </div>
           )}

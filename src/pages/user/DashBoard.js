@@ -169,7 +169,13 @@ const DashBoard = () => {
 
   const downloadPDF = () => {
     const input = pdfRef.current;
-    html2canvas(input).then((canvas) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1000; // Set the desired width of the canvas
+    canvas.height = 2070;
+    const context = canvas.getContext("2d");
+
+    // Draw the content onto the canvas
+    html2canvas(input, { canvas, context }).then(() => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4", true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -178,7 +184,7 @@ const DashBoard = () => {
       const imgHeight = canvas.height;
       const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = -5;
+      const imgY = -2;
       pdf.addImage(
         imgData,
         "PNG",
@@ -293,7 +299,7 @@ const DashBoard = () => {
                     padding: "10px",
                     cursor: data?.id ? "pointer" : "not-allowed",
                     backgroundColor: data?.id ? "#3f51b5" : "lightblue",
-                    disabled: data?.id ? true : false
+                    disabled: data?.id ? true : false,
                   }}
                 >
                   Download PDF
@@ -309,10 +315,16 @@ const DashBoard = () => {
                 <p>FACILITY: </p>
                 <p>{data?.facility}</p>
               </div>
+
               {expandRequest ? (
                 <div
                   className="RequestForm"
-                  style={{ marginTop: "0px", width: "100%", border: "none" }}
+                  style={{
+                    marginTop: "0px",
+                    padding: "0px",
+                    width: "100%",
+                    border: "none",
+                  }}
                   ref={pdfRef}
                 >
                   <div className="title">
@@ -370,7 +382,7 @@ const DashBoard = () => {
                       <div className="info">
                         <p>TITLE OF EVENT:</p>
                         <input
-                          style={{ padding: "10px" , lineHeight: '20px'}}
+                          style={{ padding: "10px", lineHeight: "20px" }}
                           type="text"
                           name="title_event"
                           value={data.title_event}
@@ -380,7 +392,7 @@ const DashBoard = () => {
                       <div className="info">
                         <p>REQUESTOR'S FULL NAME:</p>
                         <input
-                          style={{ padding: "10px" , lineHeight: '20px'}}
+                          style={{ padding: "10px", lineHeight: "20px" }}
                           type="text"
                           name="user_name"
                           value={data.user_name}
@@ -407,7 +419,7 @@ const DashBoard = () => {
                         <p>CONTACT NUMBER:</p>
                         <input
                           type="text"
-                          style={{ padding: "10px" , lineHeight: '20px'}}
+                          style={{ padding: "10px", lineHeight: "20px" }}
                           name="contact_number"
                           value={data.contact_number}
                           //onChange={handleInputChange}
@@ -580,7 +592,7 @@ const DashBoard = () => {
                             disabled={true}
                             inputMode="numeric"
                             pattern="[0-9]*"
-                            style={{ padding: "10px" , lineHeight: '20px'}}
+                            style={{ padding: "10px", lineHeight: "20px" }}
                           />
                         </div>
                         <div className="everyItem">
@@ -597,7 +609,7 @@ const DashBoard = () => {
                           </div>
                           <input
                             type="number"
-                            style={{ padding: "10px" , lineHeight: '20px'}}
+                            style={{ padding: "10px", lineHeight: "20px" }}
                             max="150"
                             min="0"
                             name="armchairs"
@@ -621,7 +633,11 @@ const DashBoard = () => {
                             <p>Tables</p>
                           </div>
                           <input
-                            style={{ width: "50px", padding: "10px" , lineHeight: '20px'}}
+                            style={{
+                              width: "50px",
+                              padding: "10px",
+                              lineHeight: "20px",
+                            }}
                             type="number"
                             max="6"
                             min="0"
@@ -646,7 +662,11 @@ const DashBoard = () => {
                             <p>Microphones</p>
                           </div>
                           <input
-                            style={{ width: "50px", padding: "10px" , lineHeight: '20px'}}
+                            style={{
+                              width: "50px",
+                              padding: "10px",
+                              lineHeight: "20px",
+                            }}
                             type="number"
                             max="2"
                             min="0"
@@ -671,7 +691,11 @@ const DashBoard = () => {
                             <p>Speakers</p>
                           </div>
                           <input
-                            style={{ width: "50px", padding: "10px" , lineHeight: '20px'}}
+                            style={{
+                              width: "50px",
+                              padding: "10px",
+                              lineHeight: "20px",
+                            }}
                             type="number"
                             max="2"
                             min="0"
@@ -696,7 +720,11 @@ const DashBoard = () => {
                             <p>Whiteboard</p>
                           </div>
                           <input
-                            style={{ width: "50px", padding: "10px", lineHeight: '20px' }}
+                            style={{
+                              width: "50px",
+                              padding: "10px",
+                              lineHeight: "20px",
+                            }}
                             type="number"
                             max="1"
                             min="0"
@@ -826,6 +854,7 @@ const DashBoard = () => {
                           WRITE THEIR NAMES BELOW TO NOTIFY THE SECURITY:
                         </p>
                         <textarea
+                          style={{ width: "100%", minWidth: "680px" }}
                           name="additional_info"
                           value={data.additional_info}
                           //onChange={handleInputChange}
@@ -841,6 +870,7 @@ const DashBoard = () => {
           )}
         </div>
       </div>
+
       <UserRequestUpdate
         data={data}
         setData={setData}

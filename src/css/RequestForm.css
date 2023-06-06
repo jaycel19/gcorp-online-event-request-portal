@@ -189,7 +189,6 @@ input[type="text"] {
 .RequestForm > .third > .equipQuan > .checkQuan > .everyItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .RequestForm > .third > .equipQuan > .checkQuan > .everyItem > .nthItems {
@@ -199,6 +198,11 @@ input[type="text"] {
 
 .RequestForm > .third > .equipQuan > .checkQuan > .everyItem > .nthItems > * {
   margin-left: 6px;
+}
+
+.RequestForm > .third > .equipQuan > .checkQuan > .everyItem > .nthItems > p {
+  width: 100px;
+  margin-right: 150px;
 }
 
 .RequestForm > .fourth {
@@ -285,19 +289,20 @@ input[type="text"] {
   min-height: 200px;
 }
 
-.RequestForm > .fourth > .addInfo > .disc > .subBtn {
+.RequestForm .subBtn {
   display: flex;
   justify-content: flex-end;
 }
 
-.RequestForm > .fourth > .addInfo > .disc > .subBtn > button {
+.RequestForm .subBtn > button {
   background: #3f51b5;
   border-radius: 11px;
   border: none;
   color: #fff;
-  padding: 20px;
-  font-size: 17px;
+  padding: 10px;
+  font-size: 15px;
   cursor: pointer;
+  margin: 10px;
 }
 
 @media (max-width: 1280px) {
@@ -343,14 +348,15 @@ input[type="text"] {
     width: 100% !important;
   }
 
-  .RequestForm > .fourth > .addInfo > .disc > .subBtn > button {
+  .RequestForm .subBtn > button {
     background: #3f51b5;
-    border-radius: 11px;
+    border-radius: 6px;
     border: none;
     color: #fff;
-    padding: 10px;
-    font-size: 12px !important;
+    padding: 7px;
+    font-size: 10px !important;
     cursor: pointer;
+    margin: 5px;
   }
   .titleHead > p {
     font-size: 13px !important;
@@ -407,9 +413,8 @@ input[type="text"] {
 @media (max-width: 800px) {
   .info > .deps {
     width: 150px !important;
-
   }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1380px) {
 }
