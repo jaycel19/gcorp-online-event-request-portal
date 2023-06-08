@@ -1,0 +1,35 @@
+.mainTable * {
+    color: rgb(0, 0, 89);
+}
+
+.mainTable .boxes{
+    border: 1px solid black;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.mainTable p {
+    margin-left: 10px;
+}
+
+.mainTable th{
+    background-color: transparent;
+    color: rgb(0, 0, 89);
+    font-size: 15px;
+    padding: 0px;
+}
+
+.mainTable td{
+    font-size: 14px;
+    padding: 0px;
+    text-align: left;
+}
+
+
+.event p {
+    margin: 0px;
+}

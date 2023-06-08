@@ -101,7 +101,7 @@ const AdminDashboard = () => {
                 counts.Approved || 0,
                 counts.Disapproved || 0,
               ],
-              backgroundColor: ["red", "blue", "#A5402D", "green", "#721121"],
+              backgroundColor: ["red", "blue", "#e6b800", "green", "red"],
             },
           ],
         };
@@ -134,7 +134,7 @@ const AdminDashboard = () => {
                 counts.Approved || 0,
                 counts.Disapproved || 0,
               ],
-              backgroundColor: ["red", "blue", "#A5402D", "green", "#721121"],
+              backgroundColor: ["red", "blue", "#e6b800", "green", "red"],
             },
           ],
         };
@@ -238,7 +238,7 @@ const AdminDashboard = () => {
             </div>
             <div
               className="approved-request"
-              style={{ backgroundColor: "#721121" }}
+              style={{ backgroundColor: "red" }}
             >
               <span>TOTAL DISAPPROVED:</span> <span>{total.disapproved}</span>
             </div>

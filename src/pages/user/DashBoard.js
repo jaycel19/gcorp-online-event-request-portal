@@ -6,17 +6,22 @@ import "../../css/DashBoard.css";
 import UserRequestUpdate from "../../components/UserRequestUpdate";
 import Swal from "sweetalert2";
 import "../../css/RequestForm.css";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Document,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  PDFDownloadLink,
-} from "@react-pdf/renderer";
+  faArrowDown,
+  faArrowDown19,
+  faArrowDownUpAcrossLine,
+  faArrowUp,
+  faBookOpenReader,
+  faCancel,
+  faEdit,
+  faExternalLink,
+  faEye,
+  faEyeSlash,
+  faFilePdf,
+  faLink,
+} from "@fortawesome/free-solid-svg-icons";
 
 const DashBoard = () => {
   const { loggedUser } = useAuthContext();
@@ -65,7 +70,7 @@ const DashBoard = () => {
     month: "long",
     day: "numeric",
   };
-  const pdfRef = useRef();
+
   const timeOptions = {
     hour: "numeric",
     minute: "numeric",
@@ -74,7 +79,6 @@ const DashBoard = () => {
 
   const [data, setData] = useState({});
   const [materialData, setMaterialData] = useState({});
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -122,6 +126,7 @@ const DashBoard = () => {
         };
 
         setData(converted);
+
         setIsLoading(false);
       } catch (error) {
         console.error(error);
@@ -167,35 +172,15 @@ const DashBoard = () => {
     });
   };
 
-  const downloadPDF = () => {
-    const input = pdfRef.current;
-    const canvas = document.createElement("canvas");
-    canvas.width = 1000; // Set the desired width of the canvas
-    canvas.height = 2070;
-    const context = canvas.getContext("2d");
+  const textColor = status[loggedUser.id]?.status === "Pending"
+  ? "yellow"
+  : status[loggedUser.id]?.status === "Approved"
+    ? "green"
+    : status[loggedUser.id]?.status === "Disapproved"
+      ? "red"
+      : "black"; // fallback color
 
-    // Draw the content onto the canvas
-    html2canvas(input, { canvas, context }).then(() => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4", true);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = -2;
-      pdf.addImage(
-        imgData,
-        "PNG",
-        imgX,
-        imgY,
-        imgWidth * ratio,
-        imgHeight * ratio
-      );
-      pdf.save(`request-id-${data.id}.pdf`);
-    });
-  };
+
   return (
     <div className="DashBoard">
       <div className="header">
@@ -204,59 +189,85 @@ const DashBoard = () => {
       </div>
       <div className="content">
         <div className="content-sub">
-          <p>Hello! {loggedUser.name}</p>
-          <div className="time">
-            <p>You logged in your account at {formattedDate},</p>
-            <p>{formattedTime}</p>
-          </div>
-          <p style={{ display: "flex", alignItems: "center" }}>
-            Status Request:{" "}
-            {statusIsLoading ? (
-              <span>Loading...</span>
-            ) : (
-              status[loggedUser.id]?.status
-            )}{" "}
-            {data?.id && (
-              <>
-                <button
-                  onClick={() => setShowUpdate(!showUpdate)}
-                  style={{
-                    cursor: data?.id ? "pointer" : "not-allowed",
-                    backgroundColor: data?.id ? "#3f51b5" : "lightblue",
-                    color: "#fff",
-                    borderRadius: "5px",
-                    padding: "10px 10px",
-                    border: "none",
-                    fontWeight: "550",
-                    marginLeft: "10px",
-                    display: data?.status === "Cancelled" ? "none" : "block",
-                  }}
-                  disabled={data?.id ? false : true}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div style={{ width: "50%", borderRight: "2px solid darkblue" }}>
+              <p style={{ fontWeight: "600", fontSize: "20px" }}>
+                Hello! {loggedUser.name}
+              </p>
+              <div className="time">
+                <p>You logged in your account at {formattedDate},</p>
+                <p>{formattedTime}</p>
+              </div>
+            </div>
+            <p
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "50%",
+                padding: "20px",
+              }}
+            >
+              Request Status:{" "}
+              {statusIsLoading ? (
+                <span>Loading...</span>
+              ) : (
+                <span
+                  style={{ color: textColor}}
                 >
-                  EDIT REQUEST
-                </button>
+                  {status[loggedUser.id]?.status}
+                </span>
+              )}{" "}
+              {data?.id && (
+                <>
+                  <button
+                    onClick={() => setShowUpdate(!showUpdate)}
+                    style={{
+                      cursor: data?.id ? "pointer" : "not-allowed",
+                      backgroundColor: data?.id ? "#3f51b5" : "lightblue",
+                      color: "#fff",
+                      borderRadius: "5px",
+                      padding: "10px 10px",
+                      border: "none",
+                      fontWeight: "550",
+                      marginLeft: "10px",
+                      display: data?.status === "Cancelled" ? "none" : "block",
+                    }}
+                    disabled={data?.id ? false : true}
+                  >
+                    <FontAwesomeIcon icon={faEdit} />
+                  </button>
 
-                <button
-                  onClick={handleCancelRequest}
-                  style={{
-                    cursor:
-                      data?.status === "Cancelled" ? "not-allowed" : "pointer",
-                    backgroundColor:
-                      data?.status === "Cancelled" ? "#c1c1c1" : "red",
-                    color: "#fff",
-                    borderRadius: "5px",
-                    padding: "10px 10px",
-                    border: "none",
-                    fontWeight: "550",
-                    marginLeft: "10px",
-                  }}
-                  disabled={data?.status === "Cancelled" ? true : false}
-                >
-                  CANCEL REQUEST
-                </button>
-              </>
-            )}
-          </p>
+                  <button
+                    onClick={handleCancelRequest}
+                    style={{
+                      cursor:
+                        data?.status === "Cancelled"
+                          ? "not-allowed"
+                          : "pointer",
+                      backgroundColor:
+                        data?.status === "Cancelled" ? "#c1c1c1" : "red",
+                      color: "#fff",
+                      borderRadius: "5px",
+                      padding: "10px 10px",
+                      border: "none",
+                      fontWeight: "550",
+                      marginLeft: "10px",
+                    }}
+                    disabled={data?.status === "Cancelled" ? true : false}
+                  >
+                    <FontAwesomeIcon icon={faCancel} />
+                  </button>
+                </>
+              )}
+            </p>
+          </div>
           {isLoading ? (
             <p>Loading...</p>
           ) : (
@@ -265,12 +276,16 @@ const DashBoard = () => {
               style={{
                 flexDirection: "column",
                 display: data?.status === "Cancelled" ? "none" : "flex",
+                alignItems: "center",
+                marginTop: "10px;",
+                justifyContent: "flex-end",
               }}
             >
               <h2
                 style={{
                   display: "flex",
                   alignItems: "center",
+                  marginTop: "30px",
                 }}
               >
                 REQUEST INFO:
@@ -287,34 +302,40 @@ const DashBoard = () => {
                   }}
                   disabled={data?.id ? false : true}
                 >
-                  EXPAND
+                  <FontAwesomeIcon icon={expandRequest ? faEyeSlash : faEye} />
                 </button>
-                <button
-                  onClick={downloadPDF}
-                  style={{
-                    marginLeft: "10px",
-                    borderRadius: "5px",
-                    border: "none",
-                    color: "#fff",
-                    padding: "10px",
-                    cursor: data?.id ? "pointer" : "not-allowed",
-                    backgroundColor: data?.id ? "#3f51b5" : "lightblue",
-                    disabled: data?.id ? true : false,
-                  }}
-                >
-                  Download PDF
-                </button>
+                {data?.id ? (
+                  <Link to="/gcorp/pdf-download" state={{ data: data }}>
+                    <button
+                      style={{
+                        marginLeft: "10px",
+                        borderRadius: "5px",
+                        border: "none",
+                        color: "#fff",
+                        padding: "10px",
+                        cursor: data?.id ? "pointer" : "not-allowed",
+                        backgroundColor: data?.id ? "#3f51b5" : "lightblue",
+                      }}
+                    >
+                      PDF <FontAwesomeIcon icon={faExternalLink} />{" "}
+                    </button>
+                  </Link>
+                ) : (
+                  <button
+                    style={{
+                      marginLeft: "10px",
+                      borderRadius: "5px",
+                      border: "none",
+                      color: "#fff",
+                      padding: "10px",
+                      cursor: data?.id ? "pointer" : "not-allowed",
+                      backgroundColor: data?.id ? "#3f51b5" : "lightblue",
+                    }}
+                  >
+                    PDF <FontAwesomeIcon icon={faExternalLink} />
+                  </button>
+                )}
               </h2>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
-              >
-                <p>FACILITY: </p>
-                <p>{data?.facility}</p>
-              </div>
 
               {expandRequest ? (
                 <div
@@ -325,11 +346,8 @@ const DashBoard = () => {
                     width: "100%",
                     border: "none",
                   }}
-                  ref={pdfRef}
                 >
-                  <div className="title">
-                    <h2>REQUEST FORM FOR USE OF GC FACILITIES</h2>
-                  </div>
+                  <div className="title"></div>
                   <div className="first">
                     <div className="titleHead">
                       <p>
@@ -382,7 +400,7 @@ const DashBoard = () => {
                       <div className="info">
                         <p>TITLE OF EVENT:</p>
                         <input
-                          style={{ padding: "10px", lineHeight: "20px" }}
+                          style={{ padding: "10px" }}
                           type="text"
                           name="title_event"
                           value={data.title_event}
@@ -392,7 +410,7 @@ const DashBoard = () => {
                       <div className="info">
                         <p>REQUESTOR'S FULL NAME:</p>
                         <input
-                          style={{ padding: "10px", lineHeight: "20px" }}
+                          style={{ padding: "10px" }}
                           type="text"
                           name="user_name"
                           value={data.user_name}
@@ -419,7 +437,7 @@ const DashBoard = () => {
                         <p>CONTACT NUMBER:</p>
                         <input
                           type="text"
-                          style={{ padding: "10px", lineHeight: "20px" }}
+                          style={{ padding: "10px" }}
                           name="contact_number"
                           value={data.contact_number}
                           //onChange={handleInputChange}
@@ -592,7 +610,7 @@ const DashBoard = () => {
                             disabled={true}
                             inputMode="numeric"
                             pattern="[0-9]*"
-                            style={{ padding: "10px", lineHeight: "20px" }}
+                            style={{ padding: "10px" }}
                           />
                         </div>
                         <div className="everyItem">
@@ -609,7 +627,7 @@ const DashBoard = () => {
                           </div>
                           <input
                             type="number"
-                            style={{ padding: "10px", lineHeight: "20px" }}
+                            style={{ padding: "10px" }}
                             max="150"
                             min="0"
                             name="armchairs"
@@ -636,7 +654,6 @@ const DashBoard = () => {
                             style={{
                               width: "50px",
                               padding: "10px",
-                              lineHeight: "20px",
                             }}
                             type="number"
                             max="6"
@@ -665,7 +682,6 @@ const DashBoard = () => {
                             style={{
                               width: "50px",
                               padding: "10px",
-                              lineHeight: "20px",
                             }}
                             type="number"
                             max="2"
@@ -694,7 +710,6 @@ const DashBoard = () => {
                             style={{
                               width: "50px",
                               padding: "10px",
-                              lineHeight: "20px",
                             }}
                             type="number"
                             max="2"
@@ -723,7 +738,6 @@ const DashBoard = () => {
                             style={{
                               width: "50px",
                               padding: "10px",
-                              lineHeight: "20px",
                             }}
                             type="number"
                             max="1"
@@ -783,7 +797,6 @@ const DashBoard = () => {
                             style={{
                               width: "23%",
                               padding: "10px",
-                              lineHeight: "20px",
                             }}
                             type="number"
                             value={data.expected_num_attend_gc}
@@ -810,7 +823,6 @@ const DashBoard = () => {
                             style={{
                               width: "23%",
                               padding: "10px",
-                              lineHeight: "20px",
                             }}
                             type="number"
                             name="expected_num_attend_out"

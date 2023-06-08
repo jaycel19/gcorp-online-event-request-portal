@@ -18,6 +18,11 @@ const RequestUpdate = ({
   const [isAttendIsEqual, setIsAttendIsEqual] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [requestDatas, setRequestDatas] = useState({});
+  const [equipmentLimit, setEquipmentLimit] = useState({
+    name: "",
+    limit: "",
+    reachedLimit: false,
+  });
   console.log(requestData);
   useEffect(() => {
     const getSingleRequest = async () => {
@@ -132,6 +137,69 @@ const RequestUpdate = ({
     }
   };
 
+  const handleCheckIfEmpty = () => {
+    const {
+      facility,
+      title_event,
+      user_name,
+      department,
+      contact_number,
+      type_of_event,
+      duration_from,
+      duration_from_time,
+      duration_to,
+      duration_to_time,
+      description_of_activity,
+      expected_num_attend_gc,
+      expected_num_attend_out,
+      additional_info,
+    } = data;
+
+    if (
+      facility === "" ||
+      title_event === "" ||
+      user_name === "" ||
+      contact_number === "" ||
+      type_of_event === "" ||
+      duration_from === "" ||
+      duration_from_time === "" ||
+      duration_to === "" ||
+      duration_to_time === ""
+    ) {
+      MySwal.fire({
+        title: "Empty Fields",
+        text: "Please fill in all the fields.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+    } else if (!isAttendIsEqual) {
+      MySwal.fire({
+        title: "Monoblock not enough for the attendees",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+    } else {
+      MySwal.fire({
+        title: "Confirmation",
+        text: "Are you sure you want to submit the request?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "OK",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          MySwal.fire({
+            title: "Request Submitted",
+            text: "Kindly wait for the approval of the admin.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+          handleSubmit();
+        }
+      });
+    }
+  };
+
   const handleSubmit = () => {
     Swal.fire({
       title: "Are you sure?",
@@ -155,6 +223,66 @@ const RequestUpdate = ({
     setRequestData((prevData) => ({ ...prevData, [name]: newValue }));
     const newValueMat = type === "checkbox" ? checked : value;
     setMaterialData((prevData) => ({ ...prevData, [name]: newValueMat }));
+
+    if (name === "monoblock_single") {
+      if (parseInt(value) > 150) {
+        setMaterialData((prev) => ({ ...prev, monoblock_single: 0 }));
+        setEquipmentLimit({
+          name: "Monoblock",
+          limit: "150",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
+      }
+    } else if (name === "tables") {
+      if (parseInt(value) > 6) {
+        setMaterialData((prev) => ({ ...prev, tables: 0 }));
+        setEquipmentLimit({ name: "Tables", limit: "6", reachedLimit: true });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
+      }
+    } else if (name === "microphones") {
+      if (parseInt(value) > 2) {
+        setMaterialData((prev) => ({ ...prev, microphones: 0 }));
+        setEquipmentLimit({
+          name: "Microphones",
+          limit: "2",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
+      }
+    } else if (name === "whiteboard") {
+      if (parseInt(value) > 1) {
+        setMaterialData((prev) => ({ ...prev, whiteboard: 0 }));
+        setEquipmentLimit({
+          name: "Whiteboard",
+          limit: "1",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
+      }
+    } else if (name === "armchairs") {
+      if (parseInt(value) > 50) {
+        setMaterialData((prev) => ({ ...prev, armchairs: 0 }));
+        setEquipmentLimit({
+          name: "Armchairs",
+          limit: "50",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
+      }
+    } else if (name === "speakers") {
+      if (parseInt(value) > 2) {
+        setMaterialData((prev) => ({ ...prev, speakers: 0 }));
+        setEquipmentLimit({ name: "Speakers", limit: "2", reachedLimit: true });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
+      }
+    }
 
     if (
       name === "expected_num_attend_out" ||
@@ -486,8 +614,8 @@ const RequestUpdate = ({
             <p>DESCRIPTION OF ACTIVITY:</p>
             <textarea
               style={{
-                width: '25%',
-                padding: '10px'
+                width: "25%",
+                padding: "10px",
               }}
               name="description_of_activity"
               value={requestData.description_of_activity}
@@ -504,6 +632,11 @@ const RequestUpdate = ({
               <h3>QUANTITY</h3>
             </div>
             <div className="checkQuan">
+              {equipmentLimit.reachedLimit && (
+                <span style={{ color: "red" }}>
+                  Reached limit: {equipmentLimit.limit} of {equipmentLimit.name}
+                </span>
+              )}
               <div className="everyItem">
                 <div className="nthItems">
                   <input

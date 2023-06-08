@@ -10,6 +10,12 @@
   padding: 30px;
 }
 
+.RequestForm > .first > .eventInfo > .info > .info-inputs > span,
+.RequestForm > .first > .eventInfo > .info > .info-inputs > input {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .RequestForm > .first,
 .RequestForm > .second,
 .RequestForm > .third,
@@ -317,8 +323,13 @@ input[type="text"] {
     width: 100%;
     min-height: 200px;
   }
-  .RequestForm > .first > .eventInfo > .info > span {
-    font-size: 11px;
+  .RequestForm > .first > .eventInfo > .info > .info-inputs > span {
+    font-size: 10px;
+  }
+  .RequestForm > .first > .eventInfo > .info > .info-inputs > span,
+  .RequestForm > .first > .eventInfo > .info > .info-inputs > input {
+    margin-right: 5px;
+    margin-left: 5px;
   }
   .RequestForm > .first > .facilityList > .other {
     max-width: 100% !important;

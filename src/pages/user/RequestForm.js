@@ -222,9 +222,9 @@ const RequestForm = () => {
   };
 
   const [equipmentLimit, setEquipmentLimit] = useState({
-    name: '',
-    limit: '',
-    reachedLimit: false
+    name: "",
+    limit: "",
+    reachedLimit: false,
   });
 
   const handleInputChange = (e) => {
@@ -237,32 +237,60 @@ const RequestForm = () => {
     if (name === "monoblock_single") {
       if (parseInt(value) > 150) {
         setMaterialData((prev) => ({ ...prev, monoblock_single: 0 }));
-        setEquipmentLimit({name: 'Monoblock', limit: '50', reachedLimit: true});
+        setEquipmentLimit({
+          name: "Monoblock",
+          limit: "150",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
       }
     } else if (name === "tables") {
       if (parseInt(value) > 6) {
         setMaterialData((prev) => ({ ...prev, tables: 0 }));
-        setEquipmentLimit({name: 'Tables', limit: '50', reachedLimit: true});
+        setEquipmentLimit({ name: "Tables", limit: "6", reachedLimit: true });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
       }
     } else if (name === "microphones") {
       if (parseInt(value) > 2) {
         setMaterialData((prev) => ({ ...prev, microphones: 0 }));
-        setEquipmentLimit({name: 'Microphones', limit: '50', reachedLimit: true});
+        setEquipmentLimit({
+          name: "Microphones",
+          limit: "2",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
       }
     } else if (name === "whiteboard") {
       if (parseInt(value) > 1) {
         setMaterialData((prev) => ({ ...prev, whiteboard: 0 }));
-        setEquipmentLimit({name: 'Whiteboard', limit: '50', reachedLimit: true});
+        setEquipmentLimit({
+          name: "Whiteboard",
+          limit: "1",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
       }
     } else if (name === "armchairs") {
       if (parseInt(value) > 50) {
         setMaterialData((prev) => ({ ...prev, armchairs: 0 }));
-        setEquipmentLimit({name: 'Armchairs', limit: '50', reachedLimit: true});
+        setEquipmentLimit({
+          name: "Armchairs",
+          limit: "50",
+          reachedLimit: true,
+        });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
       }
     } else if (name === "speakers") {
       if (parseInt(value) > 2) {
         setMaterialData((prev) => ({ ...prev, speakers: 0 }));
-        setEquipmentLimit({name: 'Speakers', limit: '2', reachedLimit: true});
+        setEquipmentLimit({ name: "Speakers", limit: "2", reachedLimit: true });
+      } else {
+        setEquipmentLimit((prev) => ({ ...prev, reachedLimit: false }));
       }
     }
 
@@ -462,50 +490,74 @@ const RequestForm = () => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="info">
+            <div className="info" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
               <p>TYPE OF EVENT:</p>
-              <input
-                type="checkbox"
-                name="type_of_event"
-                value="Conference"
-                onChange={handleCheckboxChange}
-              />
-              <span>CONFERENCE</span>
-              <input
-                type="checkbox"
-                name="type_of_event"
-                value="Training"
-                onChange={handleCheckboxChange}
-              />
-              <span>TRAINING</span>
-              <input
-                type="checkbox"
-                name="type_of_event"
-                value="Seminar"
-                onChange={handleCheckboxChange}
-              />
-              <span>SEMINAR</span>
-              <input
-                type="checkbox"
-                name="type_of_event"
-                value="OTHER"
-                onChange={handleCheckboxChange}
-              />
-              <span>OTHER: </span>
-              <input
-                className=""
-                style={{
-                  backgroundColor: "#fff",
-                  borderBottom: "1px solid #000",
-                  padding: "5px",
-                  width: "100%",
-                  maxWidth: "15%",
-                }}
-                type="text"
-                name="type_of_event"
-                value={requestData.type_of_event}
-                onChange={handleInputChange}
-              />
+              <div className="info-inputs" style={{width: '100%'}}>
+                <input
+                  type="checkbox"
+                  name="type_of_event"
+                  value="Conference"
+                  onChange={handleCheckboxChange}
+                />
+                <span>CONFERENCE</span>
+                <input
+                  type="checkbox"
+                  name="type_of_event"
+                  value="Training"
+                  onChange={handleCheckboxChange}
+                />
+                <span>TRAINING</span>
+                <input
+                  type="checkbox"
+                  name="type_of_event"
+                  value="Seminar"
+                  onChange={handleCheckboxChange}
+                />
+                <span>SEMINAR</span>
+                <input
+                  type="checkbox"
+                  name="type_of_event"
+                  value="Orientation"
+                  onChange={handleCheckboxChange}
+                />
+                <span>ORIENTATION</span>
+                <input
+                  type="checkbox"
+                  name="type_of_event"
+                  value="Forum"
+                  onChange={handleCheckboxChange}
+                />
+                <span>FORUM</span>
+                <input
+                  type="checkbox"
+                  name="type_of_event"
+                  value="Colloquium"
+                  onChange={handleCheckboxChange}
+                />
+                <span>COLLOQUIUM</span>
+                <input
+                  type="checkbox"
+                  name="type_of_event"
+                  value="OTHER"
+                  onChange={handleCheckboxChange}
+                />
+
+                <span>OTHER: </span>
+                <input
+                  className=""
+                  style={{
+                    backgroundColor: "#fff",
+                    borderBottom: "1px solid #000",
+                    padding: "5px",
+                    width: "100%",
+                    maxWidth: "15%",
+                  }}
+                  type="text"
+                  name="type_of_event"
+                  value={requestData.type_of_event}
+                  onChange={handleInputChange}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -595,6 +647,11 @@ const RequestForm = () => {
           </div>
           <div className="equipQuan">
             <div className="checkQuan">
+              {equipmentLimit.reachedLimit && (
+                <span style={{ color: "red" }}>
+                  Reached limit: {equipmentLimit.limit} of {equipmentLimit.name}
+                </span>
+              )}
               <div className="everyItem">
                 <div className="nthItems">
                   <input
@@ -867,7 +924,7 @@ const RequestForm = () => {
           justifyContent: "flex-start",
           alignItems: "center",
           flexDirection: "row-reverse",
-          marginTop: '20px'
+          marginTop: "20px",
         }}
       >
         {toSubmit ? (
@@ -886,7 +943,10 @@ const RequestForm = () => {
         )}
         <div className="subBtn">
           <button
-            style={{ backgroundColor: formPagination.back && "lightblue", cursor: formPagination.back ? 'not-allowed' : 'pointer' }}
+            style={{
+              backgroundColor: formPagination.back && "lightblue",
+              cursor: formPagination.back ? "not-allowed" : "pointer",
+            }}
             onClick={handleBackClass}
             disabled={formPagination.back}
           >

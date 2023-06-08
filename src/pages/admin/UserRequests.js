@@ -75,7 +75,7 @@ const UserRequests = () => {
           })
         );
         // Update the state variable with the updated data
-        const converted = updatedData.map((obj) => ({
+        const converted = updatedData.map((obj, index) => ({
           ...obj,
           duration_from: new Date(obj.duration_from).toLocaleString(
             "en-US",
@@ -91,6 +91,7 @@ const UserRequests = () => {
           duration_to_time: new Date(
             obj.duration_to + " " + obj.duration_to_time
           ).toLocaleTimeString("en-US", timeOptions),
+          uniqueId: index + 1,
         }));
         setData(converted);
         setIsLoading(false);
@@ -303,7 +304,7 @@ const UserRequests = () => {
               {searchTerm === ""
                 ? currentEntries?.map((data, index) => (
                     <UserRequest
-                      data={{ ...data, uniqueId: index + 1 }}
+                      data={{ ...data }}
                       key={index}
                       setRerenderCounter={setRerenderCounter}
                       rerenderCounter={rerenderCounter}

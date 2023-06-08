@@ -19,12 +19,16 @@ import EventRequestInfo from "./pages/user/EventRequestInfo";
 import { faCalendar, faCircleInfo, faDatabase, faFileCirclePlus, faFileLines, faGear, faHouse } from "@fortawesome/free-solid-svg-icons";
 import Signup from "./pages/user/Signup";
 import UserCalendar from "./pages/user/UserCalendar";
+import PdfDownload from "./pages/user/PdfDownload";
+import { useLocation } from "react-router-dom";
 
 
 function App() {
   const { loggedUser, isAdminLogged } = useAuthContext();
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const [title, setTitle] = useState('GCORP');
+  const location = useLocation();
+  const currentUrl = location.pathname;
   useEffect(() => {
     if (isAdminLogged.login === true) {
       setTitle('GCORP-ADMIN');
@@ -36,8 +40,11 @@ function App() {
       document.title = title;
     }
   }, [])
+
+  console.log(currentUrl)
   return (
     <div className="App">
+     {currentUrl !== '/gcorp/pdf-download' &&
       <div className="side-con">
         {isAdminLogged?.login &&
           <SideNav
@@ -92,15 +99,16 @@ function App() {
             ]}
           />}
       </div>
+     }
       <div className="main-con"
         style={{
           width: isAdminLogged.login || loggedUser.login ? '80%': '100%',
-          marginLeft: isAdminLogged.login || loggedUser.login ? '20%': '0'
+          marginLeft: isAdminLogged.login || loggedUser.login && currentUrl !== '/gcorp/pdf-download' ? '20%': '0',
         }}
       >
-        {loggedUser?.login && <Header setSideNavOpen={setSideNavOpen} />}
-        {isAdminLogged?.login && <AdminHeader setSideNavOpen={setSideNavOpen} />}
-        <div className="container" style={{ marginTop: isAdminLogged.login  && '200px', paddingTop: loggedUser.login && '200px' }}>
+        {loggedUser?.login && currentUrl !== '/gcorp/pdf-download' && <Header setSideNavOpen={setSideNavOpen} />}
+        {isAdminLogged?.login && currentUrl !== '/gcorp/pdf-download' && <AdminHeader setSideNavOpen={setSideNavOpen} />}
+        <div className="container" style={{ marginTop: isAdminLogged.login  && '200px', paddingTop: loggedUser.login && currentUrl !== "/gcorp/pdf-download" && '200px' }}>
           {isAdminLogged?.login &&
             <Routes>
               <Route path="/gcorp/" element={isAdminLogged?.login ? <AdminDashboard /> : <Login />} />
@@ -116,6 +124,7 @@ function App() {
               <Route path="/gcorp/admin-login" element={loggedUser?.login ? <DashBoard /> : <AdminLogin />} />
               <Route path="/gcorp/event-info" element={loggedUser?.login ? <EventRequestInfo /> : <Login />} />
               <Route path="/gcorp/calendar" element={loggedUser?.login ? <UserCalendar /> : <Login />} />
+              <Route path="/gcorp/pdf-download" element={loggedUser?.login ? <PdfDownload /> : <Login />} />
             </Routes>
           }
           {!loggedUser?.login && !isAdminLogged?.login &&
