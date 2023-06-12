@@ -14,13 +14,7 @@ const PdfDownload = () => {
   const pdfRef = useRef();
   const downloadPDF = () => {
     const input = pdfRef.current;
-    const canvas = document.createElement("canvas");
-    canvas.width = 1083; // Set the desired width of the canvas
-    canvas.height = 2070;
-    const context = canvas.getContext("2d");
-
-    // Draw the content onto the canvas
-    html2canvas(input, { canvas, context }).then(() => {
+    html2canvas(input).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4", true);
       const pdfWidth = pdf.internal.pageSize.getWidth();
@@ -29,7 +23,7 @@ const PdfDownload = () => {
       const imgHeight = canvas.height;
       const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
       const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 5;
+      const imgY = 0;
       pdf.addImage(
         imgData,
         "PNG",
