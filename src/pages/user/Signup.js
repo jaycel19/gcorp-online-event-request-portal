@@ -275,7 +275,7 @@ const Signup = () => {
                 value={idNo}
                 onChange={handleIdNoChange}
               />
-              <select
+              <input
                 style={{
                   width: "90%",
                   padding: "10px",
@@ -284,17 +284,11 @@ const Signup = () => {
                   borderRadius: "7px",
                   boxShadow: "0px 5px 6px 0px grey",
                 }}
+                type="text"
                 value={department}
                 onChange={handleDepartmentChange}
                 placeholder="Department"
-              >
-                <option value="">CHOOSE DEPARTMENT</option>
-                <option value="CCS">CCS</option>
-                <option value="CHTM">CHTM</option>
-                <option value="CEAS">CEAS</option>
-                <option value="CAHS">CAHS</option>
-                <option value="CBA">CBA</option>
-              </select>
+              />
             </div>
           )}
           <div

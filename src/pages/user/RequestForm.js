@@ -57,29 +57,18 @@ const RequestForm = () => {
       facility,
       title_event,
       user_name,
-      department,
       contact_number,
       type_of_event,
-      duration_from,
-      duration_from_time,
-      duration_to,
-      duration_to_time,
       description_of_activity,
-      expected_num_attend_gc,
-      expected_num_attend_out,
-      additional_info,
     } = requestData;
 
     if (
-      facility === "" ||
-      title_event === "" ||
-      user_name === "" ||
-      contact_number === "" ||
-      type_of_event === "" ||
-      duration_from === "" ||
-      duration_from_time === "" ||
-      duration_to === "" ||
-      duration_to_time === ""
+      facility == "" ||
+      title_event == "" ||
+      user_name == "" ||
+      contact_number == "" ||
+      type_of_event == "" ||
+      description_of_activity == ""
     ) {
       MySwal.fire({
         title: "Empty Fields",
@@ -87,13 +76,7 @@ const RequestForm = () => {
         icon: "warning",
         confirmButtonText: "OK",
       });
-    } else if (!isAttendIsEqual) {
-      MySwal.fire({
-        title: "Monoblock not enough for the attendees",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-    } else {
+    }  else {
       const hasPendingRequest = requestDatas.some(
         (request) =>
           request.user_id === loggedUser.id && request.status === "pending"
@@ -165,13 +148,18 @@ const RequestForm = () => {
       }
     }
   }, [currentClass]);
-  const isDateReserved = (date) => {
+  const isDateReserved = (date, facility) => {
     for (const requestData of requestDatas) {
-      if (
-        date >= requestData.duration_from &&
-        date <= requestData.duration_to
-      ) {
-        return true;
+      if (facility !== requestData.facility) {
+        return false;
+      } else {
+        if (
+          date >= requestData.duration_from &&
+          date <= requestData.duration_to
+        ) {
+          console.log(facility);
+          return true;
+        }
       }
     }
     return false;
@@ -348,7 +336,7 @@ const RequestForm = () => {
         });
       }
 
-      if (isDateReserved(newValue)) {
+      if (isDateReserved(newValue, requestData.facility)) {
         MySwal.fire({
           title: "Date Reserved",
           text: "Please pick another date.",
@@ -373,10 +361,6 @@ const RequestForm = () => {
       const newValue = checked === true && value;
       setRequestData((prevData) => ({ ...prevData, [name]: newValue }));
     }
-  };
-
-  const handleMaterialInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
   };
 
   const handleMaterialCheckboxChange = (e) => {
@@ -467,19 +451,13 @@ const RequestForm = () => {
             </div>
             <div className="info">
               <p>DEPARTMENT:</p>
-              <select
+              <input
                 className="deps"
-                style={{ width: "175px" }}
                 value={requestData.department}
                 onChange={handleInputChange}
                 name="department"
-              >
-                <option value="CBA">CBA</option>
-                <option value="CCS">CCS</option>
-                <option value="CEAS">CEAS</option>
-                <option value="CHTM">CHTM</option>
-                <option value="CAHS">CAHS</option>
-              </select>
+                type="text"
+              />
             </div>
             <div className="info">
               <p>CONTACT NUMBER:</p>
@@ -490,9 +468,16 @@ const RequestForm = () => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="info" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start'}}>
+            <div
+              className="info"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
               <p>TYPE OF EVENT:</p>
-              <div className="info-inputs" style={{width: '100%'}}>
+              <div className="info-inputs" style={{ width: "100%" }}>
                 <input
                   type="checkbox"
                   name="type_of_event"
@@ -815,32 +800,20 @@ const RequestForm = () => {
           </div>
           <div className="otherSpec">
             <div className="attendGc">
-              <div className="attendP">
-                <p>Expected Number of Attedees</p>
-                <p>From Gordon College:</p>
+              <div className="attendP" style={{width: '55%'}}>
+                <p>Expected Number of Attendees <br/> From Gordon College:</p>
               </div>
               <div
                 style={{
-                  width: "200px",
+                  width: "100%",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
+                  marginLeft: '10px'
                 }}
               >
-                {!isAttendIsEqual && (
-                  <span
-                    style={{
-                      fontSize: "12px",
-                      color: "red",
-                    }}
-                  >
-                    The Monoblocks and attendees does not match
-                  </span>
-                )}
                 <input
                   style={{
-                    width: "23%",
+                    width: "10%",
                   }}
                   type="number"
                   value={requestData.expected_num_attend_gc}
@@ -852,20 +825,19 @@ const RequestForm = () => {
           </div>
           <div className="otherSpec">
             <div className="attendGc">
-              <div className="attendP">
-                <p>Expected Number of Attedees</p>
-                <p>Outside of Gordon College:</p>
+              <div className="attendP" style={{width: '55%'}}>
+                <p>Expected Number of Attendees <br /> Outside of Gordon College:</p>
               </div>
               <div
                 style={{
-                  width: "200px",
+                  width: "100%",
                   display: "flex",
-                  justifyContent: "flex-end",
+                  marginLeft: '10px'
                 }}
               >
                 <input
                   style={{
-                    width: "23%",
+                    width: "10%",
                   }}
                   type="number"
                   name="expected_num_attend_out"

@@ -194,23 +194,23 @@ const PdfDownload = () => {
                 }}
               >
                 <div className="boxes">
-                  {data.facility === "FUNCTION HALL" ? "/" : ""}
+                  {data.facility === "Function Hall" ? "/" : ""}
                 </div>
-                <p>FUNCTOIN HALL</p>
+                <p>FUNCTION HALL</p>
                 <div className="boxes">
                   {data.facility === "P.E ROOM" ? "/" : ""}
                 </div>
                 <p>PE ROOM</p>
                 <div className="boxes">
-                  {data.facility !== "FUNCTION HALL" ||
+                  {data.facility !== "Function Hall" &&
                   data.facility !== "P.E ROOM"
-                    ? ""
-                    : "/"}
+                    ? "/"
+                    : ""}
                 </div>
                 <p>
                   OTHER:{" "}
-                  {data.facility !== "FUNCTION HALL" ||
-                    (data.facility !== "P.E ROOM" && data.facility)}
+                  {data.facility !== "Function Hall" &&
+                    data.facility !== "P.E ROOM" ? data.facility : ''}
                 </p>
               </div>
             </div>
@@ -223,7 +223,7 @@ const PdfDownload = () => {
                 borderBottom: "1px solid black",
               }}
             >
-              <p>{data.title_event}</p>
+              <p className="data-input">{data.title_event}</p>
               <p>{`(TITLE OF EVENT)`}</p>
             </div>
             <div
@@ -234,7 +234,7 @@ const PdfDownload = () => {
               }}
             >
               <p>REQUESTOR'S FULL NAME:</p>
-              <p style={{ marginLeft: "50px" }}>{data.user_name}</p>
+              <p style={{ marginLeft: "50px" }} className="data-input">{data.user_name}</p>
             </div>
             <div
               style={{
@@ -251,7 +251,7 @@ const PdfDownload = () => {
                 }}
               >
                 <p>DEPARTMENT: </p>
-                <p style={{ marginLeft: "50px" }}>{data.department}</p>
+                <p style={{ marginLeft: "50px" }} className="data-input">{data.department}</p>
               </div>
               <div
                 style={{
@@ -262,7 +262,7 @@ const PdfDownload = () => {
                 }}
               >
                 <p>CONTACT NUMBER: </p>
-                <p style={{ marginLeft: "50px" }}>{data.contact_number}</p>
+                <p style={{ marginLeft: "50px" }} className="data-input">{data.contact_number}</p>
               </div>
             </div>
             <div
@@ -410,13 +410,13 @@ const PdfDownload = () => {
                   <p>Others</p>
                 </div>
                 <p>{`(please specify below:)`}</p>
-                <p style={{ height: "40px" }}>
+                <p style={{ height: "40px" }} className="data-input">
                   {data.type_of_event !== "Orientation" ||
                     data.type_of_event !== "Colloquium" ||
                     data.type_of_event !== "Seminar" ||
                     data.type_of_event !== "Training" ||
                     data.type_of_event !== "Forum" ||
-                    (data.type_of_event !== "Conference" && data.type_of_event)}
+                    data.type_of_event !== "Conference" && data.type_of_event}
                 </p>
               </div>
             </div>
@@ -470,10 +470,10 @@ const PdfDownload = () => {
                       <th>TIME</th>
                     </tr>
                     <tr>
-                      <td style={{ fontSize: "16px", padding: "15px 10px" }}>
+                      <td style={{ fontSize: "16px", padding: "15px 10px" }} className="data-input">
                         {data.duration_from}
                       </td>
-                      <td style={{ fontSize: "16px", padding: "15px 10px" }}>
+                      <td style={{ fontSize: "16px", padding: "15px 10px" }} className="data-input">
                         {data.duration_from_time}
                       </td>
                     </tr>
@@ -487,10 +487,10 @@ const PdfDownload = () => {
                       <th>TIME</th>
                     </tr>
                     <tr>
-                      <td style={{ fontSize: "16px", padding: "15px 10px" }}>
+                      <td style={{ fontSize: "16px", padding: "15px 10px" }} className="data-input">
                         {data.duration_to}
                       </td>
-                      <td style={{ fontSize: "16px", padding: "15px 10px" }}>
+                      <td style={{ fontSize: "16px", padding: "15px 10px" }} className="data-input">
                         {data.duration_to_time}
                       </td>
                     </tr>
@@ -508,7 +508,7 @@ const PdfDownload = () => {
                 >
                   <p>DESCRIPTION OF ACTIVITY</p>
                 </div>
-                <p>{data.description_of_activity}</p>
+                <p className="data-input">{data.description_of_activity}</p>
               </div>
             </div>
             <div
@@ -543,7 +543,7 @@ const PdfDownload = () => {
                     </div>
                     <p>Single Mono-block Chairs</p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.material.monoblock_single}
                   </td>
                 </tr>
@@ -562,7 +562,7 @@ const PdfDownload = () => {
                     </div>
                     <p>Armchairs</p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.material.armchairs}
                   </td>
                 </tr>
@@ -581,7 +581,7 @@ const PdfDownload = () => {
                     </div>
                     <p>Tables</p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.material.tables}
                   </td>
                 </tr>
@@ -600,7 +600,7 @@ const PdfDownload = () => {
                     </div>
                     <p>Microphones {`(Max. 2)`}</p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.material.microphones}
                   </td>
                 </tr>
@@ -619,7 +619,7 @@ const PdfDownload = () => {
                     </div>
                     <p>Speakers</p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.material.speakers}
                   </td>
                 </tr>
@@ -638,7 +638,7 @@ const PdfDownload = () => {
                     </div>
                     <p>Whiteboard</p>
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.material.whiteboard}
                   </td>
                 </tr>
@@ -675,7 +675,7 @@ const PdfDownload = () => {
                   <td style={{ padding: "10px" }}>
                     Expected Number of Attendees From Gordon College:
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.expected_num_attend_gc}
                   </td>
                 </tr>
@@ -683,7 +683,7 @@ const PdfDownload = () => {
                   <td style={{ padding: "10px" }}>
                     Expected Number of Attendees Outside of Gordon College:
                   </td>
-                  <td style={{ textAlign: "center" }}>
+                  <td style={{ textAlign: "center" }} className="data-input">
                     {data.expected_num_attend_out}
                   </td>
                 </tr>
@@ -744,6 +744,7 @@ const PdfDownload = () => {
                         display: "flex",
                         padding: "10px",
                       }}
+                      className="data-input"
                     >
                       {data.additional_info}
                     </td>

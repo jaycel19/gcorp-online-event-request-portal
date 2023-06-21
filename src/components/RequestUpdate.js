@@ -172,12 +172,6 @@ const RequestUpdate = ({
         icon: "warning",
         confirmButtonText: "OK",
       });
-    } else if (!isAttendIsEqual) {
-      MySwal.fire({
-        title: "Monoblock not enough for the attendees",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
     } else {
       MySwal.fire({
         title: "Confirmation",
@@ -475,19 +469,14 @@ const RequestUpdate = ({
             </div>
             <div className="info">
               <p>DEPARTMENT:</p>
-              <select
+              <input
+                type="text"
                 className="deps"
                 style={{ width: "180px" }}
                 value={requestData.department}
                 onChange={handleInputChange}
                 name="department"
-              >
-                <option value="CBA">CBA</option>
-                <option value="CCS">CCS</option>
-                <option value="CEAS">CEAS</option>
-                <option value="CHTM">CHTM</option>
-                <option value="CAHS">CAHS</option>
-              </select>
+              />
             </div>
             <div className="info">
               <p>CONTACT NUMBER:</p>
@@ -795,32 +784,20 @@ const RequestUpdate = ({
           </div>
           <div className="otherSpec">
             <div className="attendGc">
-              <div className="attendP">
-                <p>Expected Number of Attedees</p>
-                <p>From Gordon College:</p>
+              <div className="attendP" style={{width: '50%'}}>
+                <p>Expected Number of Attendees <br />From Gordon College:</p>
               </div>
               <div
                 style={{
-                  width: "200px",
+                  width: "100%",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "flex-end",
-                  alignItems: "flex-end",
+                  marginLeft: '10px'
                 }}
               >
-                {isAttendIsEqual && (
-                  <span
-                    style={{
-                      fontSize: "12px",
-                      color: "red",
-                    }}
-                  >
-                    The monoblocks and attendees does not match
-                  </span>
-                )}
                 <input
                   style={{
-                    width: "23%",
+                    width: "10%",
                   }}
                   type="number"
                   value={requestData.expected_num_attend_gc}
@@ -832,20 +809,19 @@ const RequestUpdate = ({
           </div>
           <div className="otherSpec">
             <div className="attendGc">
-              <div className="attendP">
-                <p>Expected Number of Attedees</p>
-                <p>Outside of Gordon College:</p>
+              <div className="attendP" style={{width: "50%"}}>
+                <p>Expected Number of Attendee <br />Outside of Gordon College:</p>
               </div>
               <div
                 style={{
-                  width: "200px",
+                  width: "100%",
                   display: "flex",
-                  justifyContent: "flex-end",
+                  marginLeft: '10px'
                 }}
               >
                 <input
                   style={{
-                    width: "23%",
+                    width: "10%",
                   }}
                   type="number"
                   name="expected_num_attend_out"

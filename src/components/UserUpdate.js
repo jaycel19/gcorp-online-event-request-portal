@@ -135,16 +135,11 @@ const handleAddressChange = (event) => {
           <h1>UPDATE USER</h1>
           {data.userType === "stdUser" ? (
             <>
-              <select
+              <input
+                type="text"
                 value={userData.department}
                 onChange={handleDepartmentChange}
-              >
-                <option value="CBA">CBA</option>
-                <option value="CCS">CCS</option>
-                <option value="CEAS">CEAS</option>
-                <option value="CHTM">CHTM</option>
-                <option value="CAHS">CAHS</option>
-              </select>
+              />
               <input
                 type="text"
                 placeholder="Name"

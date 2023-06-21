@@ -10,6 +10,12 @@
     align-items: center;
     justify-content: center;
     margin-left: 10px;
+    color: #000;
+}
+
+.mainTable .data-input {
+    font-size: 18px;
+    color: #000;
 }
 
 .mainTable p {

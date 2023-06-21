@@ -78,13 +78,16 @@ input[type="text"] {
 .RequestForm > .first > .eventInfo > .info {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .RequestForm > .first > .eventInfo > .info > input {
   padding: 5px;
   background: #d9d9d9;
   border: none;
+}
+
+.RequestForm > .first > .eventInfo > .info > p {
+  width: 30%;
 }
 
 .RequestForm > .second {
@@ -423,7 +426,12 @@ input[type="text"] {
 
 @media (max-width: 800px) {
   .info > .deps {
-    width: 150px !important;
+    min-width: 10% !important;
+  }
+  .RequestForm > .first > .eventInfo > .info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 
